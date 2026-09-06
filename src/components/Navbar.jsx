@@ -83,7 +83,10 @@ export default function Navbar() {
                 : "تبديل إلى الوضع الداكن"
             }
           >
-            {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
+            {theme === "dark" ? "☀️" : "🌙"}
+            <span className="theme-label">
+              {theme === "dark" ? " Light" : " Dark"}
+            </span>
           </button>
 
           {token ? (
@@ -108,6 +111,34 @@ export default function Navbar() {
                 دخول
               </NavLink>
               <NavLink to="/register" className="btn btn-primary btn-sm">
+                حساب جديد
+              </NavLink>
+            </>
+          )}
+        </div>
+
+        {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
+        <div className="nav-user-mobile" aria-hidden={!menuOpen}>
+          {token ? (
+            <>
+              <NavLink to="/profile" className="nav-link mobile-profile">
+                <img
+                  className="nav-avatar"
+                  src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                  alt={user?.name || "الملف الشخصي"}
+                />
+                <span className="mobile-name">{user?.name || "..."}</span>
+              </NavLink>
+              <button className="btn btn-ghost btn-block" onClick={handleLogout}>
+                خروج
+              </button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login" className="btn btn-ghost btn-block">
+                دخول
+              </NavLink>
+              <NavLink to="/register" className="btn btn-primary btn-block">
                 حساب جديد
               </NavLink>
             </>
