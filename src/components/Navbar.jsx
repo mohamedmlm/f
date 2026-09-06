@@ -10,6 +10,13 @@ export default function Navbar() {
     () => localStorage.getItem("theme") || "dark",
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    // prevent background scroll when mobile menu is open
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -46,7 +53,10 @@ export default function Navbar() {
           ☰
         </button>
 
-        <nav className={`nav-links${menuOpen ? " open" : ""}`} onClick={() => setMenuOpen(false)}>
+        <nav
+          className={`nav-links${menuOpen ? " open" : ""}`}
+          onClick={() => setMenuOpen(false)}
+        >
           <NavLink
             to="/"
             end
@@ -129,7 +139,10 @@ export default function Navbar() {
                 />
                 <span className="mobile-name">{user?.name || "..."}</span>
               </NavLink>
-              <button className="btn btn-ghost btn-block" onClick={handleLogout}>
+              <button
+                className="btn btn-ghost btn-block"
+                onClick={handleLogout}
+              >
                 خروج
               </button>
             </>
