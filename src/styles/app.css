@@ -223,12 +223,17 @@
     gap: 10px;
     padding: 6px 0 12px;
     border-top: 1px solid var(--line);
-    align-items: stretch;
+    /* push to bottom of the panel */
+    margin-top: auto;
+    align-items: center; /* center buttons horizontally */
   }
 
   .nav-user-mobile .btn {
     padding: 12px 14px;
     font-size: 1rem;
+    width: 80%;
+    max-width: 320px;
+    justify-content: center;
   }
 
   .navbar-inner {
