@@ -171,20 +171,23 @@
   .nav-links {
     display: flex;
     position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0; /* open from right so brand on left stays visible */
+    top: 12px;
+    bottom: 12px;
+    right: 12px;
     left: auto;
-    width: min(88vw, 420px);
-    max-width: 420px;
-    background: var(--surface);
+    width: min(86vw, 360px);
+    max-width: 360px;
+    background: rgba(17, 20, 30, 0.96);
+    backdrop-filter: blur(14px);
     flex-direction: column;
-    gap: 0;
-    padding: 12px 14px;
-    border-left: 1px solid var(--line);
+    gap: 8px;
+    padding: 14px 12px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 22px;
     z-index: 60;
     transform-origin: right center;
     justify-content: flex-start;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
   }
 
   /* Make the mobile menu more touch-friendly */
@@ -192,7 +195,7 @@
     /* hidden by default; transform for smooth animation (slide from right) */
     display: flex;
     transform-origin: right center;
-    transform: translateX(12px) scaleX(0.98);
+    transform: translateX(18px) scaleX(0.96);
     opacity: 0;
     pointer-events: none;
     transition:
@@ -204,22 +207,31 @@
     opacity: 1;
     pointer-events: auto;
     transform: translateX(0) scaleX(1);
-    padding: 16px 14px 24px;
+    padding: 16px 12px 14px;
     gap: 10px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
   .nav-link {
     padding: 12px 14px;
     width: 100%;
-    border-radius: 8px;
+    border-radius: 12px;
     font-size: 1rem;
-    text-align: left; /* force left alignment inside menu */
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: transparent;
+    border: 1px solid transparent;
   }
 
   .nav-link + .nav-link {
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+    margin-top: 2px;
+  }
+
+  .nav-link.active {
+    background: rgba(227, 166, 62, 0.12);
+    border-color: rgba(227, 166, 62, 0.2);
+    color: var(--accent-hi);
   }
 
   .nav-backdrop {
@@ -236,10 +248,14 @@
     align-items: center;
     gap: 12px;
     padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
   }
 
   .mobile-name {
     font-weight: 700;
+    color: var(--text);
   }
 
   .nav-user {
@@ -249,25 +265,28 @@
   /* mobile user actions: centered row at bottom */
   .nav-user-mobile {
     display: flex;
-    flex-direction: row; /* side-by-side */
-    gap: 12px;
-    padding: 10px 0 0;
-    border-top: none; /* remove the separating line */
+    flex-direction: row;
+    gap: 10px;
+    padding: 10px 8px 6px;
+    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     position: static;
     transform: none;
-    margin-top: auto;
     justify-content: center;
     align-items: center;
     width: 100%;
     max-width: 420px;
+    background: rgba(255, 255, 255, 0.015);
+    border-radius: 14px;
   }
 
   .nav-user-mobile .btn {
     padding: 12px 14px;
-    font-size: 1rem;
+    font-size: 0.96rem;
     flex: 1;
     min-width: 0;
     justify-content: center;
+    border-radius: 12px;
   }
 
   .navbar-inner {
