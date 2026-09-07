@@ -151,6 +151,10 @@
     display: inline-block;
   }
 
+  .brand {
+    margin-inline-start: 12px; /* add gap on the inline start (RTL: right) */
+  }
+
   .nav-links {
     display: flex;
     position: fixed;
@@ -158,7 +162,7 @@
     bottom: 0;
     right: 0; /* open from right so brand on left stays visible */
     left: auto;
-    width: 66%; /* slimmer so brand/logo on left doesn't get covered */
+    width: 60%; /* slimmer so brand/logo on left doesn't get covered */
     max-width: 420px;
     background: var(--surface);
     flex-direction: column;
@@ -225,7 +229,8 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.28);
-    z-index: 44;
+    z-index: 58; /* sit under the nav (60) but above page */
+    pointer-events: auto;
     backdrop-filter: blur(2px);
   }
 

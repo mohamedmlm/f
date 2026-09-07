@@ -72,6 +72,15 @@ export default function Navbar() {
           ☰
         </button>
 
+        {/* backdrop for mobile menu */}
+        {menuOpen && (
+          <div
+            className="nav-backdrop"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden={!menuOpen}
+          />
+        )}
+
         <nav
           className={`nav-links${menuOpen ? " open" : ""}`}
           onClick={() => setMenuOpen(false)}
