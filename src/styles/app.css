@@ -66,16 +66,29 @@
 .brand-mark {
   width: 32px;
   height: 32px;
+  min-width: 32px;
   border-radius: 10px;
-  display: grid;
-  text-align: center;
-  place-items: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   background: linear-gradient(135deg, var(--accent-hi), var(--accent));
   color: var(--accent-ink);
   font-size: 1rem;
+  line-height: 1;
   font-weight: 900;
   box-shadow: 0 8px 20px rgba(227, 166, 62, 0.22);
   transition: rotate 0.3s ease;
+}
+
+.btn .brand-mark,
+.nav-link .brand-mark {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 7px;
+  font-size: 0.7rem;
+  box-shadow: none;
 }
 .brand-name {
   font-size: 1.2rem;
