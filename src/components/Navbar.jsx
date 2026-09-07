@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
 
@@ -10,6 +10,9 @@ export default function Navbar() {
     () => localStorage.getItem("theme") || "dark",
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  const navLinksRef = useRef(null);
+  const navToggleRef = useRef(null);
+  const navBackdropRef = useRef(null);
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia
@@ -35,6 +38,24 @@ export default function Navbar() {
     return () => {
       document.body.style.overflow = "";
     };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handlePointerDown = (event) => {
+      const target = event.target;
+      const clickedInsideMenu = navLinksRef.current?.contains(target);
+      const clickedToggle = navToggleRef.current?.contains(target);
+      const clickedBackdrop = navBackdropRef.current?.contains(target);
+
+      if (!clickedInsideMenu && !clickedToggle && !clickedBackdrop) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
   }, [menuOpen]);
 
   useEffect(() => {
@@ -65,6 +86,7 @@ export default function Navbar() {
         </NavLink>
 
         <button
+          ref={navToggleRef}
           className={`nav-toggle${menuOpen ? " is-open" : ""}`}
           aria-label={menuOpen ? "إغلاق القائمة" : "قائمة التنقل"}
           aria-expanded={menuOpen}
@@ -76,13 +98,17 @@ export default function Navbar() {
         {/* backdrop for mobile menu */}
         {menuOpen && (
           <div
+            ref={navBackdropRef}
             className="nav-backdrop"
             onClick={() => setMenuOpen(false)}
             aria-hidden={!menuOpen}
           />
         )}
 
-        <nav className={`nav-links${menuOpen ? " open" : ""}`}>
+        <nav
+          ref={navLinksRef}
+          className={`nav-links${menuOpen ? " open" : ""}`}
+        >
           <NavLink
             to="/"
             end
