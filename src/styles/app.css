@@ -152,7 +152,7 @@
   }
 
   .brand {
-    margin-inline-start: 12px; /* add gap on the inline start (RTL: right) */
+    margin-inline-start: 6px; /* nudge brand slightly left on mobile */
   }
 
   .nav-links {
@@ -230,7 +230,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.28);
-    z-index: 58; /* sit under the nav (60) but above page */
+    z-index: 49; /* sit under the navbar (50) but behind the mobile nav (60) */
     pointer-events: auto;
     backdrop-filter: blur(2px);
   }
