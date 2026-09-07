@@ -467,7 +467,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-inline-start: px;
+  padding-inline-start: 10px;
   margin-inline-start: 2px;
   border-inline-start: 1px solid var(--line);
   height: 28px;
