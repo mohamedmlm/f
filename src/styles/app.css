@@ -125,36 +125,21 @@
   display: none;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 899px) {
   .nav-toggle {
     display: inline-flex;
-    margin-inline-start: auto;
-  }
-
-  /* position hamburger on the left instead of near brand on mobile */
-  .nav-toggle {
-    position: absolute;
-    right: 12px; /* keep hamburger on right */
-    left: auto;
-    top: 12px;
     margin-inline-start: 0;
+    position: absolute;
+    /* opposite side from the brand (brand sits at inline-start / right in RTL) */
+    inset-inline-end: 12px;
+    inset-inline-start: auto;
+    top: 12px;
     z-index: 80;
   }
 
-  /* hide the brand mark on mobile so the hamburger sits visually on the left */
-  /* show brand mark/name on mobile (user requested) */
-  .brand-mark {
-    display: inline-flex;
-  }
-
-  .brand-name {
-    display: inline-block;
-  }
-
   .brand {
-    margin-inline-start: 6px !important; /* nudge brand slightly left on mobile */
     position: relative;
-    z-index: 61; /* keep brand above the backdrop so it stays visible */
+    z-index: 61;
   }
 
   .nav-links {
@@ -162,25 +147,18 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    right: 0; /* open from right so brand on left stays visible */
-    left: auto;
-    width: 60%; /* slimmer so brand/logo on left doesn't get covered */
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    width: 60%;
     max-width: 420px;
     background: var(--surface);
     flex-direction: column;
     gap: 0;
     padding: 12px 14px;
-    border-left: 1px solid var(--line);
+    border-inline-end: 1px solid var(--line);
     z-index: 60;
-    transform-origin: right center;
-  }
-
-  /* Make the mobile menu more touch-friendly */
-  .nav-links {
-    /* hidden by default; transform for smooth animation (slide from right) */
-    display: flex;
-    transform-origin: right center;
-    transform: translateX(12px) scaleX(0.98);
+    transform-origin: left center;
+    transform: translateX(-12px) scaleX(0.98);
     opacity: 0;
     pointer-events: none;
     transition:
@@ -195,15 +173,14 @@
     padding: 16px 14px;
     gap: 10px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
+
   .nav-link {
     padding: 12px 14px;
     width: 100%;
     border-radius: 8px;
     font-size: 1rem;
-    text-align: left; /* force left alignment inside menu */
+    text-align: start;
   }
 
   .nav-link + .nav-link {
@@ -214,7 +191,7 @@
     display: inline-flex; /* show on mobile */
     position: absolute;
     top: 12px;
-    right: 12px;
+    inset-inline-end: 12px;
     margin: 0;
     background: transparent;
     border: none;
@@ -232,7 +209,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.28);
-    z-index: 70; /* sit above the navbar (50) but under the mobile nav (60) */
+    z-index: 59; /* sit above the navbar (50) but under the mobile nav (60) */
     pointer-events: auto;
     backdrop-filter: blur(2px);
   }
@@ -255,11 +232,10 @@
   /* mobile user actions: centered row at bottom */
   .nav-user-mobile {
     display: flex;
-    flex-direction: row; /* side-by-side */
+    flex-direction: row;
     gap: 12px;
     padding: 10px 0 16px;
-    border-top: none; /* remove the separating line */
-    /* position slightly above bottom */
+    border-top: none;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -284,163 +260,143 @@
   }
 
   .brand-name {
-    font-size: 1rem;
+    font-size: clamp(0.95rem, 1.2vw + 0.4rem, 1.4rem);
   }
 
   .theme-toggle {
     padding: 8px 10px;
   }
 
-  /* Very small screens: full-screen menu and compact brand */
-  @media (max-width: 480px) {
-    .nav-links {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 100vh;
-      padding-top: 64px;
-      align-items: flex-start;
-      background: var(--surface);
-      overflow-y: auto;
-    }
-
-    .nav-links.open {
-      display: flex;
-      padding: 18px 14px;
-      gap: 8px;
-    }
-
-    .brand-name {
-      display: none;
-    }
-
-    .brand-mark {
-      width: 28px;
-      height: 28px;
-    }
-
-    .nav-avatar {
-      width: 28px;
-      height: 28px;
-    }
-
-    .theme-label {
-      display: none;
-    }
-
-    .nav-link {
-      font-size: 1rem;
-      padding: 12px 14px;
-    }
-
-    .nav-user-mobile {
-      padding-bottom: 14px;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .nav-link {
-      font-size: 0.98rem;
-      padding: 10px 12px;
-    }
-
-    .btn {
-      padding: 10px 12px;
-      font-size: 0.95rem;
-    }
-  }
-
-  /* ================= Fluid sizing + extra breakpoints ================= */
-  :root {
-    --nav-font-min: 0.92rem;
-    --nav-font-max: 1.08rem;
-    --brand-font-min: 0.95rem;
-    --brand-font-max: 1.4rem;
-  }
-
-  /* Fluid scaling using clamp for smoother transitions */
-  .brand-name {
-    font-size: clamp(
-      var(--brand-font-min),
-      1.2vw + 0.4rem,
-      var(--brand-font-max)
-    );
-  }
   .nav-link {
-    font-size: clamp(var(--nav-font-min), 0.9vw + 0.45rem, var(--nav-font-max));
+    font-size: clamp(0.92rem, 0.9vw + 0.45rem, 1.08rem);
   }
+
   .btn {
     padding: clamp(8px, 0.6vw + 6px, 14px) clamp(10px, 0.8vw + 8px, 20px);
-  }
-
-  /* Larger tablets and small desktops: show menu inline and hide hamburger */
-  @media (min-width: 900px) {
-    .nav-toggle {
-      display: none !important;
-    }
-    /* hide mobile close '×' on larger screens */
-    .nav-close {
-      display: none !important;
-    }
-    .nav-links {
-      display: flex !important;
-      position: static;
-      height: auto;
-      padding: 0;
-      gap: 8px;
-      inset-inline-start: auto;
-      inset-inline-end: auto;
-      background: transparent;
-      flex-direction: row;
-    }
-    .nav-links.open {
-      box-shadow: none;
-    }
-    .nav-user {
-      display: flex;
-    }
-    .nav-user-mobile {
-      display: none;
-    }
-  }
-
-  /* Medium screens: slightly larger tap targets, keep hamburger for narrower widths */
-  @media (min-width: 720px) and (max-width: 899px) {
-    .nav-toggle {
-      display: inline-flex;
-    }
-    .nav-links {
-      position: absolute;
-      top: 64px;
-      left: 0;
-      right: 0;
-      padding: 8px 12px;
-    }
-  }
-
-  /* Ensure toolbar spacing on very wide screens */
-  @media (min-width: 1280px) {
-    .navbar-inner {
-      max-width: 1200px;
-      margin: 0 auto;
-      gap: 28px;
-    }
-  }
-
-  /* Accessibility: increase focus ring for keyboard users */
-  .nav-link:focus,
-  .btn:focus,
-  .nav-toggle:focus,
-  .theme-toggle:focus {
-    outline: 3px solid rgba(100, 140, 255, 0.18);
-    outline-offset: 2px;
   }
 
   .nav-user {
     border-inline-start: none;
     padding-inline-start: 0;
   }
+}
+
+/* Tablet range: keep the hamburger menu but let the drawer sit a bit lower / narrower */
+@media (min-width: 720px) and (max-width: 899px) {
+  .nav-links {
+    width: 45%;
+  }
+}
+
+/* Very small screens: full-screen menu and compact brand */
+@media (max-width: 480px) {
+  .nav-links {
+    inset-inline-start: 0;
+    inset-inline-end: 0;
+    width: auto;
+    max-width: none;
+    height: 100vh;
+    padding-top: 64px;
+    align-items: flex-start;
+    background: var(--surface);
+    overflow-y: auto;
+  }
+
+  .nav-links.open {
+    display: flex;
+    padding: 18px 14px;
+    gap: 8px;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nav-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .theme-label {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    padding: 12px 14px;
+  }
+
+  .nav-user-mobile {
+    padding-bottom: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-link {
+    font-size: 0.98rem;
+    padding: 10px 12px;
+  }
+
+  .btn {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Desktop / larger tablets: inline nav, no hamburger */
+@media (min-width: 900px) {
+  .nav-toggle {
+    display: none !important;
+  }
+  .nav-close {
+    display: none !important;
+  }
+  .nav-links {
+    display: flex !important;
+    position: static;
+    height: auto;
+    padding: 0;
+    gap: 8px;
+    inset-inline-start: auto;
+    inset-inline-end: auto;
+    background: transparent;
+    flex-direction: row;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-links.open {
+    box-shadow: none;
+  }
+  .nav-user {
+    display: flex;
+  }
+  .nav-user-mobile {
+    display: none;
+  }
+}
+
+/* Ensure toolbar spacing on very wide screens */
+@media (min-width: 1280px) {
+  .navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 28px;
+  }
+}
+
+/* Accessibility: increase focus ring for keyboard users */
+.nav-link:focus,
+.btn:focus,
+.nav-toggle:focus,
+.theme-toggle:focus {
+  outline: 3px solid rgba(100, 140, 255, 0.18);
+  outline-offset: 2px;
 }
 .nav-link {
   padding: 9px 14px;
