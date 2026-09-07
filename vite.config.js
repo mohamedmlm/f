@@ -36,6 +36,14 @@ export default defineConfig({
     host: "localhost",
     port: 5173,
     https: readHttps(),
+    proxy: {
+      "/api": {
+        target: "https://backend-zeta-steel-44.vercel.app",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
   preview: {
     host: "localhost",
