@@ -209,8 +209,7 @@
   }
 
   .nav-close {
-    display: none !important;
-    /* hidden by design */
+    display: inline-flex; /* show on mobile */
     position: absolute;
     top: 12px;
     right: 12px;
@@ -223,6 +222,8 @@
     cursor: pointer;
     color: var(--text);
     z-index: 70;
+    align-items: center;
+    justify-content: center;
   }
 
   .nav-backdrop {

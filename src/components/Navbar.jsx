@@ -57,6 +57,7 @@ export default function Navbar() {
         <NavLink
           to="/"
           className="brand"
+          onClick={() => setMenuOpen(false)}
           aria-label="العودة إلى الصفحة الرئيسية"
         >
           <span className="brand-mark">C</span>
@@ -124,7 +125,11 @@ export default function Navbar() {
           <div className="nav-user-mobile" aria-hidden={!menuOpen}>
             {token ? (
               <>
-                <NavLink to="/profile" className="nav-link mobile-profile">
+                <NavLink
+                  to="/profile"
+                  className="nav-link mobile-profile"
+                  onClick={() => setMenuOpen(false)}
+                >
                   <img
                     className="nav-avatar"
                     src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
@@ -182,7 +187,12 @@ export default function Navbar() {
 
           {token ? (
             <>
-              <NavLink to="/profile" className="row" style={{ gap: 8 }}>
+              <NavLink
+                to="/profile"
+                className="row"
+                style={{ gap: 8 }}
+                onClick={() => setMenuOpen(false)}
+              >
                 <img
                   className="nav-avatar"
                   src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
@@ -198,10 +208,18 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <NavLink to="/login" className="btn btn-ghost btn-sm">
+              <NavLink
+                to="/login"
+                className="btn btn-ghost btn-sm"
+                onClick={() => setMenuOpen(false)}
+              >
                 دخول
               </NavLink>
-              <NavLink to="/register" className="btn btn-primary btn-sm">
+              <NavLink
+                to="/register"
+                className="btn btn-primary btn-sm"
+                onClick={() => setMenuOpen(false)}
+              >
                 حساب جديد
               </NavLink>
             </>
