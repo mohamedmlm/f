@@ -217,22 +217,23 @@
     display: none;
   }
 
+  /* mobile user actions: centered row at bottom */
   .nav-user-mobile {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 6px 0 12px;
-    border-top: 1px solid var(--line);
-    /* push to bottom of the panel */
-    margin-top: auto;
-    align-items: center; /* center buttons horizontally */
+    flex-direction: row; /* side-by-side */
+    gap: 12px;
+    padding: 10px 0 16px;
+    border-top: none; /* remove the separating line */
+    margin-top: auto; /* push to bottom */
+    justify-content: center;
+    align-items: center;
   }
 
   .nav-user-mobile .btn {
     padding: 12px 14px;
     font-size: 1rem;
-    width: 80%;
-    max-width: 320px;
+    width: 48%;
+    max-width: 260px;
     justify-content: center;
   }
 
@@ -335,6 +336,10 @@
   /* Larger tablets and small desktops: show menu inline and hide hamburger */
   @media (min-width: 900px) {
     .nav-toggle {
+      display: none !important;
+    }
+    /* hide mobile close '×' on larger screens */
+    .nav-close {
       display: none !important;
     }
     .nav-links {
