@@ -124,10 +124,12 @@
   font-size: 1.05rem;
   cursor: pointer;
   color: var(--text);
-}
-
-.nav-toggle {
   z-index: 60;
+  min-width: 42px;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .theme-label {
@@ -142,19 +144,18 @@
 @media (max-width: 899px) {
   .nav-toggle {
     display: inline-flex;
-    margin-inline-start: auto;
-  }
-
-  /* position hamburger opposite the brand: brand is the first flex item
-     and in this RTL layout it naturally sits on the right, so the toggle
-     goes on the left to avoid sitting on top of the brand mark */
-  .nav-toggle {
     position: absolute;
     left: 12px;
     right: auto;
     top: 12px;
     margin-inline-start: 0;
     z-index: 80;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
   }
 
   /* show brand mark/name on mobile */
