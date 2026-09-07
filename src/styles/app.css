@@ -129,7 +129,7 @@
   min-height: 42px;
   align-items: center;
   justify-content: center;
-  line-height: 1;
+  line-height: 0;
 }
 
 .theme-label {
