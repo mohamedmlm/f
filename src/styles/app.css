@@ -249,7 +249,15 @@
     background: rgba(15, 17, 23, 0.18);
     z-index: 59; /* sit above the navbar (50) but under the mobile nav (60) */
     pointer-events: auto;
-    backdrop-filter: blur(1.5px);
+    backdrop-filter: none;
+  }
+
+  .nav-links.open {
+    position: fixed;
+    z-index: 60;
+    isolation: isolate;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    background: var(--surface);
   }
 
   .mobile-profile {
