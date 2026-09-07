@@ -46,11 +46,11 @@
   content: "";
   display: block;
   width: 0;
-  height: 1.5px;
+  height: 2px;
   background: var(--accent);
   position: absolute;
   left: 0;
-  bottom: -2px;
+  bottom: -4px;
   border-radius: 999px;
   transition: width 0.2s ease;
 }
@@ -467,7 +467,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-inline-start: 12px;
+  padding-inline-start: 1px;
   margin-inline-start: 6px;
   border-inline-start: 1px solid var(--line);
 }
