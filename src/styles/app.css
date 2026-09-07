@@ -152,7 +152,7 @@
     z-index: 80;
     min-width: 40px;
     min-height: 40px;
-    padding: 8px 10px;
+    padding: 8px 8px;
     border-radius: 10px;
     background: var(--surface);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
