@@ -129,12 +129,6 @@
   .nav-toggle {
     display: inline-flex;
     margin-inline-start: auto;
-  }
-
-  /* position hamburger opposite the brand: brand is the first flex item
-     and in this RTL layout it naturally sits on the right, so the toggle
-     goes on the left to avoid sitting on top of the brand mark */
-  .nav-toggle {
     position: absolute;
     left: 12px;
     right: auto;
@@ -143,84 +137,69 @@
     z-index: 80;
   }
 
-  /* show brand mark/name on mobile */
   .brand-mark {
     display: inline-flex;
   }
 
   .brand-name {
     display: inline-block;
-  }
-
-  .brand {
-    position: relative;
-    z-index: 61; /* keep brand above the backdrop so it stays visible */
-    margin-inline-start: 6px !important;
-    /* leave room for the toggle button so long brand names truncate
-       instead of running under it */
-    max-width: calc(100% - 64px);
-  }
-
-  .brand-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     text-align: center;
+    font-size: 1rem;
+  }
+
+  .brand {
+    position: relative;
+    z-index: 61;
+    margin-inline-start: 6px !important;
+    max-width: calc(100% - 64px);
   }
 
   .nav-links {
-    display: flex;
     position: fixed;
     top: 12px;
-    bottom: 12px;
     right: 12px;
+    bottom: 12px;
     left: auto;
     width: min(86vw, 360px);
     max-width: 360px;
-    background: rgba(17, 20, 30, 0.96);
-    backdrop-filter: blur(14px);
+    display: flex;
     flex-direction: column;
     gap: 8px;
-    padding: 14px 12px 12px;
+    padding: 14px 12px;
+    background: rgba(17, 20, 30, 0.96);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 22px;
-    z-index: 60;
-    transform-origin: right center;
-    justify-content: flex-start;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-  }
-
-  /* Make the mobile menu more touch-friendly */
-  .nav-links {
-    /* hidden by default; transform for smooth animation (slide from right) */
-    display: flex;
-    transform-origin: right center;
-    transform: translateX(18px) scaleX(0.96);
+    z-index: 60;
+    transform: translateX(110%);
     opacity: 0;
     pointer-events: none;
     transition:
       transform 220ms ease,
       opacity 180ms ease;
+    overflow-y: auto;
   }
 
   .nav-links.open {
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(0) scaleX(1);
-    padding: 16px 12px 14px;
-    gap: 10px;
+    transform: translateX(0);
   }
+
   .nav-link {
-    padding: 12px 14px;
     width: 100%;
+    padding: 12px 14px;
     border-radius: 12px;
-    font-size: 1rem;
-    text-align: left;
+    border: 1px solid transparent;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background: transparent;
-    border: 1px solid transparent;
+    font-size: 1rem;
+    text-align: left;
   }
 
   .nav-link + .nav-link {
@@ -238,7 +217,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.28);
-    z-index: 59; /* sit above the navbar (50) but under the mobile nav (60) */
+    z-index: 59;
     pointer-events: auto;
     backdrop-filter: blur(2px);
   }
@@ -262,40 +241,32 @@
     display: none;
   }
 
-  /* mobile user actions: centered row at bottom */
   .nav-user-mobile {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    padding: 10px 8px 6px;
-    margin-top: auto;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-    position: static;
-    transform: none;
-    justify-content: center;
-    align-items: center;
     width: 100%;
-    max-width: 420px;
+    margin-top: auto;
+    padding: 10px 8px 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     background: rgba(255, 255, 255, 0.015);
     border-radius: 14px;
+    justify-content: center;
+    align-items: center;
   }
 
   .nav-user-mobile .btn {
-    padding: 12px 14px;
-    font-size: 0.96rem;
     flex: 1;
     min-width: 0;
-    justify-content: center;
+    padding: 12px 14px;
+    font-size: 0.96rem;
     border-radius: 12px;
+    justify-content: center;
   }
 
   .navbar-inner {
     height: 64px;
     gap: 12px;
-  }
-
-  .brand-name {
-    font-size: 1rem;
   }
 
   .theme-toggle {
