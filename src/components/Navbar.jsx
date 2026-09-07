@@ -109,78 +109,82 @@ export default function Navbar() {
             ref={navLinksRef}
             className={`nav-links${menuOpen ? " open" : ""}`}
           >
-          <NavLink
-            to="/"
-            end
-            onClick={() => setMenuOpen(false)}
-            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-          >
-            المتجر
-          </NavLink>
-          <NavLink
-            to="/purchases"
-            onClick={() => setMenuOpen(false)}
-            className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
-          >
-            مشترياتي
-          </NavLink>
-          {isStaff && (
             <NavLink
-              to="/admin"
+              to="/"
+              end
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
             >
-              لوحة التحكم
+              المتجر
             </NavLink>
-          )}
-          {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
-          <div className="nav-user-mobile" aria-hidden={!menuOpen}>
-            {token ? (
-              <>
-                <NavLink
-                  to="/profile"
-                  className="nav-link mobile-profile"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <img
-                    className="nav-avatar"
-                    src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
-                    alt={user?.name || "الملف الشخصي"}
-                  />
-                  <span className="mobile-name">{user?.name || "..."}</span>
-                </NavLink>
-                <button
-                  className="btn btn-ghost btn-block"
-                  onClick={() => {
-                    setMenuOpen(false);
-                    handleLogout();
-                  }}
-                >
-                  خروج
-                </button>
-              </>
-            ) : (
-              <>
-                <NavLink
-                  to="/login"
-                  onClick={() => setMenuOpen(false)}
-                  className="btn btn-ghost btn-block"
-                >
-                  دخول
-                </NavLink>
-                <NavLink
-                  to="/register"
-                  onClick={() => setMenuOpen(false)}
-                  className="btn btn-primary btn-block"
-                >
-                  حساب جديد
-                </NavLink>
-              </>
+            <NavLink
+              to="/purchases"
+              onClick={() => setMenuOpen(false)}
+              className={({ isActive }) =>
+                `nav-link${isActive ? " active" : ""}`
+              }
+            >
+              مشترياتي
+            </NavLink>
+            {isStaff && (
+              <NavLink
+                to="/admin"
+                onClick={() => setMenuOpen(false)}
+                className={({ isActive }) =>
+                  `nav-link${isActive ? " active" : ""}`
+                }
+              >
+                لوحة التحكم
+              </NavLink>
             )}
-          </div>
-        </nav>
+            {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
+            <div className="nav-user-mobile" aria-hidden={!menuOpen}>
+              {token ? (
+                <>
+                  <NavLink
+                    to="/profile"
+                    className="nav-link mobile-profile"
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <img
+                      className="nav-avatar"
+                      src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                      alt={user?.name || "الملف الشخصي"}
+                    />
+                    <span className="mobile-name">{user?.name || "..."}</span>
+                  </NavLink>
+                  <button
+                    className="btn btn-ghost btn-block"
+                    onClick={() => {
+                      setMenuOpen(false);
+                      handleLogout();
+                    }}
+                  >
+                    خروج
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink
+                    to="/login"
+                    onClick={() => setMenuOpen(false)}
+                    className="btn btn-ghost btn-block"
+                  >
+                    دخول
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    onClick={() => setMenuOpen(false)}
+                    className="btn btn-primary btn-block"
+                  >
+                    حساب جديد
+                  </NavLink>
+                </>
+              )}
+            </div>
+          </nav>
 
           <div className="nav-user">
             <button
