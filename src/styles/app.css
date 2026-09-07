@@ -171,10 +171,11 @@
   .brand {
     position: relative;
     z-index: 61; /* keep brand above the backdrop so it stays visible */
-    margin-inline-start: 6px !important;
+    margin-inline-start: 8px !important;
+    margin-inline-end: 44px !important;
     /* leave room for the toggle button so long brand names truncate
        instead of running under it */
-    max-width: calc(100% - 64px);
+    max-width: calc(100% - 92px);
   }
 
   .brand-name {
