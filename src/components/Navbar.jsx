@@ -81,10 +81,7 @@ export default function Navbar() {
           />
         )}
 
-        <nav
-          className={`nav-links${menuOpen ? " open" : ""}`}
-          onClick={() => setMenuOpen(false)}
-        >
+        <nav className={`nav-links${menuOpen ? " open" : ""}`}>
           {isMobile && (
             <button
               className="nav-close"
@@ -100,12 +97,14 @@ export default function Navbar() {
           <NavLink
             to="/"
             end
+            onClick={() => setMenuOpen(false)}
             className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
           >
             المتجر
           </NavLink>
           <NavLink
             to="/purchases"
+            onClick={() => setMenuOpen(false)}
             className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
           >
             مشترياتي
@@ -113,6 +112,7 @@ export default function Navbar() {
           {isStaff && (
             <NavLink
               to="/admin"
+              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -134,32 +134,34 @@ export default function Navbar() {
                 </NavLink>
                 <button
                   className="btn btn-ghost btn-block"
-                  onClick={handleLogout}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    handleLogout();
+                  }}
                 >
                   خروج
                 </button>
               </>
             ) : (
               <>
-                <NavLink to="/login" className="btn btn-ghost btn-block">
+                <NavLink
+                  to="/login"
+                  onClick={() => setMenuOpen(false)}
+                  className="btn btn-ghost btn-block"
+                >
                   دخول
                 </NavLink>
-                <NavLink to="/register" className="btn btn-primary btn-block">
+                <NavLink
+                  to="/register"
+                  onClick={() => setMenuOpen(false)}
+                  className="btn btn-primary btn-block"
+                >
                   حساب جديد
                 </NavLink>
               </>
             )}
           </div>
         </nav>
-
-        {/* backdrop for mobile menu */}
-        {menuOpen && (
-          <div
-            className="nav-backdrop"
-            onClick={() => setMenuOpen(false)}
-            aria-hidden={!menuOpen}
-          />
-        )}
 
         <div className="nav-user">
           <button
