@@ -152,7 +152,9 @@
   }
 
   .brand {
-    margin-inline-start: 6px; /* nudge brand slightly left on mobile */
+    margin-inline-start: 6px !important; /* nudge brand slightly left on mobile */
+    position: relative;
+    z-index: 61; /* keep brand above the backdrop so it stays visible */
   }
 
   .nav-links {
@@ -230,7 +232,7 @@
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.28);
-    z-index: 49; /* sit under the navbar (50) but behind the mobile nav (60) */
+    z-index: 59; /* sit above the navbar (50) but under the mobile nav (60) */
     pointer-events: auto;
     backdrop-filter: blur(2px);
   }
