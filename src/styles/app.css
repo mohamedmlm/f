@@ -145,8 +145,8 @@
   .nav-toggle {
     display: inline-flex;
     position: fixed;
-    left: 12px;
-    right: auto;
+    right: 12px;
+    left: auto;
     top: 12px;
     margin-inline-start: 0;
     z-index: 80;
