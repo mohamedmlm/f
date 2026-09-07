@@ -126,6 +126,20 @@
     margin-inline-start: auto;
   }
 
+  /* position hamburger on the left instead of near brand on mobile */
+  .nav-toggle {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    margin-inline-start: 0;
+    z-index: 80;
+  }
+
+  /* hide the brand mark on mobile so the hamburger sits visually on the left */
+  .brand-mark {
+    display: none;
+  }
+
   .nav-links {
     display: flex;
     position: fixed;
@@ -180,7 +194,8 @@
   }
 
   .nav-close {
-    display: inline-flex;
+    display: none !important;
+    /* hidden by design */
     position: absolute;
     top: 12px;
     right: 12px;
@@ -229,7 +244,7 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    bottom: 18px;
+    bottom: 40px;
     justify-content: center;
     align-items: center;
     width: calc(100% - 36px);
@@ -345,10 +360,7 @@
     .nav-toggle {
       display: none !important;
     }
-    /* hide mobile close '×' on larger screens */
-    .nav-close {
-      display: none !important;
-    }
+    /* keep nav-close visible on desktop */
     .nav-links {
       display: flex !important;
       position: static;
