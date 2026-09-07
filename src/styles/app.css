@@ -143,8 +143,7 @@
     z-index: 80;
   }
 
-  /* show brand mark/name on mobile, centered in the header regardless of
-     the toggle button's width so it never collides with it */
+  /* show brand mark/name on mobile */
   .brand-mark {
     display: inline-flex;
   }
@@ -154,16 +153,12 @@
   }
 
   .brand {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0 !important;
+    position: relative;
     z-index: 61; /* keep brand above the backdrop so it stays visible */
-    /* leave room on both sides for the toggle button so long brand
-       names truncate instead of running under it */
-    max-width: calc(100% - 120px);
-    justify-content: center;
+    margin-inline-start: 6px !important;
+    /* leave room for the toggle button so long brand names truncate
+       instead of running under it */
+    max-width: calc(100% - 64px);
   }
 
   .brand-name {
