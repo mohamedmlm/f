@@ -156,25 +156,25 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    left: 0; /* open from left */
-    right: auto;
-    width: 78%;
+    right: 0; /* open from right so brand on left stays visible */
+    left: auto;
+    width: 66%; /* slimmer so brand/logo on left doesn't get covered */
     max-width: 420px;
     background: var(--surface);
     flex-direction: column;
     gap: 0;
     padding: 12px 14px;
-    border-right: 1px solid var(--line);
+    border-left: 1px solid var(--line);
     z-index: 60;
-    transform-origin: left center;
+    transform-origin: right center;
   }
 
   /* Make the mobile menu more touch-friendly */
   .nav-links {
-    /* hidden by default; transform for smooth animation */
+    /* hidden by default; transform for smooth animation (slide from right) */
     display: flex;
-    transform-origin: top center;
-    transform: translateY(-6px) scaleY(0.98);
+    transform-origin: right center;
+    transform: translateX(12px) scaleX(0.98);
     opacity: 0;
     pointer-events: none;
     transition:
