@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS,POST,PUT,DELETE");
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, X-Requested-With"
+    "Content-Type, Authorization, X-Requested-With",
   );
 
   // handle preflight
@@ -16,8 +16,12 @@ export default async function handler(req, res) {
 
   try {
     // Parse query params safely — they may be strings or arrays depending on platform
-    const rawPage = Array.isArray(req.query?.page) ? req.query.page[0] : req.query?.page;
-    const rawLimit = Array.isArray(req.query?.limit) ? req.query.limit[0] : req.query?.limit;
+    const rawPage = Array.isArray(req.query?.page)
+      ? req.query.page[0]
+      : req.query?.page;
+    const rawLimit = Array.isArray(req.query?.limit)
+      ? req.query.limit[0]
+      : req.query?.limit;
     const page = Math.max(1, parseInt(rawPage || "1", 10) || 1);
     const limit = Math.max(1, parseInt(rawLimit || "12", 10) || 12);
 
@@ -35,6 +39,8 @@ export default async function handler(req, res) {
   } catch (err) {
     // Log the full stack to Vercel logs for debugging
     console.error("/api/items error:", err && (err.stack || err));
-    return res.status(500).json({ error: err?.message || "Internal server error" });
+    return res
+      .status(500)
+      .json({ error: err?.message || "Internal server error" });
   }
 }
