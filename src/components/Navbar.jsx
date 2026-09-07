@@ -57,6 +57,16 @@ export default function Navbar() {
           className={`nav-links${menuOpen ? " open" : ""}`}
           onClick={() => setMenuOpen(false)}
         >
+          <button
+            className="nav-close"
+            aria-label="إغلاق القائمة"
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuOpen(false);
+            }}
+          >
+            ×
+          </button>
           <NavLink
             to="/"
             end
@@ -111,6 +121,15 @@ export default function Navbar() {
             )}
           </div>
         </nav>
+
+        {/* backdrop for mobile menu */}
+        {menuOpen && (
+          <div
+            className="nav-backdrop"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden={!menuOpen}
+          />
+        )}
 
         <div className="nav-user">
           <button
