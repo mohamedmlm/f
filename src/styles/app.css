@@ -125,7 +125,7 @@
   display: none;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 899px) {
   .nav-toggle {
     display: inline-flex;
     margin-inline-start: auto;
@@ -143,8 +143,8 @@
     z-index: 80;
   }
 
-  /* hide the brand mark on mobile so the hamburger sits visually on the left */
-  /* show brand mark/name on mobile (user requested) */
+  /* show brand mark/name on mobile, centered in the header regardless of
+     the toggle button's width so it never collides with it */
   .brand-mark {
     display: inline-flex;
   }
@@ -154,18 +154,23 @@
   }
 
   .brand {
-    margin-inline-start: 6px !important; /* nudge brand slightly left on mobile */
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 !important;
     z-index: 61; /* keep brand above the backdrop so it stays visible */
-    /* leave room for the toggle button (right: 12px, ~40px wide) so long
-       brand names truncate instead of running under/behind it */
-    max-width: calc(100% - 64px);
+    /* leave room on both sides for the toggle button so long brand
+       names truncate instead of running under it */
+    max-width: calc(100% - 120px);
+    justify-content: center;
   }
 
   .brand-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: center;
   }
 
   .nav-links {
@@ -403,20 +408,6 @@
   }
   .nav-user-mobile {
     display: none;
-  }
-}
-
-/* Medium screens: slightly larger tap targets, keep hamburger for narrower widths */
-@media (min-width: 720px) and (max-width: 899px) {
-  .nav-toggle {
-    display: inline-flex;
-  }
-  .nav-links {
-    position: absolute;
-    top: 64px;
-    left: 0;
-    right: 0;
-    padding: 8px 12px;
   }
 }
 
