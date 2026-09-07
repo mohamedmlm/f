@@ -467,9 +467,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-inline-start: 12px;
-  margin-inline-start: 6px;
-  border-inline-start: 1px solid var(--line);
+  padding-inline-start: 10px;
 }
 .theme-toggle {
   border: 1px solid var(--line);
