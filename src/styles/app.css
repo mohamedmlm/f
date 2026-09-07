@@ -145,7 +145,7 @@
   .nav-toggle {
     display: inline-flex;
     position: fixed;
-    right: 12px;
+    right: px;
     left: auto;
     top: 12px;
     margin-inline-start: 0;
