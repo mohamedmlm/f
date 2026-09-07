@@ -144,7 +144,7 @@
 @media (max-width: 899px) {
   .nav-toggle {
     display: inline-flex;
-    position: absolute;
+    position: fixed;
     left: 12px;
     right: auto;
     top: 12px;
