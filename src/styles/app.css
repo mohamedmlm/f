@@ -181,17 +181,18 @@
 
   .nav-close {
     display: inline-flex;
-    /* place close button on left inside LTR menu panel */
-    margin-left: 0;
-    margin-right: auto;
-    margin-bottom: 6px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    margin: 0;
     background: transparent;
     border: none;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     line-height: 1;
     padding: 6px 8px;
     cursor: pointer;
     color: var(--text);
+    z-index: 70;
   }
 
   .nav-backdrop {
@@ -224,9 +225,15 @@
     gap: 12px;
     padding: 10px 0 16px;
     border-top: none; /* remove the separating line */
-    margin-top: auto; /* push to bottom */
+    /* position slightly above bottom */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 18px;
     justify-content: center;
     align-items: center;
+    width: calc(100% - 36px);
+    max-width: 420px;
   }
 
   .nav-user-mobile .btn {
