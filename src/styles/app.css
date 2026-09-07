@@ -46,11 +46,11 @@
   content: "";
   display: block;
   width: 0;
-  height: 2px;
+  height: 1.5px;
   background: var(--accent);
   position: absolute;
   left: 0;
-  bottom: -4px;
+  bottom: -2px;
   border-radius: 999px;
   transition: width 0.2s ease;
 }
@@ -467,9 +467,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding-inline-start: 12px;
-  margin-inline-start: 6px;
-  border-inline-start: 1px solid var(--line);
+  padding-inline-start: 10px;
+  margin-inline-start: 8px;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.08);
+  height: 24px;
+  align-self: center;
 }
 .theme-toggle {
   border: 1px solid var(--line);
