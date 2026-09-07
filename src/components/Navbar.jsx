@@ -73,42 +73,42 @@ export default function Navbar() {
   };
 
   return (
-    <header className="navbar">
-      <div className="container navbar-inner">
-        <NavLink
-          to="/"
-          className="brand"
+    <>
+      {menuOpen && (
+        <div
+          ref={navBackdropRef}
+          className="nav-backdrop"
           onClick={() => setMenuOpen(false)}
-          aria-label="العودة إلى الصفحة الرئيسية"
-        >
-          <span className="brand-mark">C</span>
-          <span className="brand-name">Crocs Store</span>
-        </NavLink>
+          aria-hidden={!menuOpen}
+        />
+      )}
 
-        <button
-          ref={navToggleRef}
-          className={`nav-toggle${menuOpen ? " is-open" : ""}`}
-          aria-label={menuOpen ? "إغلاق القائمة" : "قائمة التنقل"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((v) => !v)}
-        >
-          {menuOpen ? "×" : "☰"}
-        </button>
-
-        {/* backdrop for mobile menu */}
-        {menuOpen && (
-          <div
-            ref={navBackdropRef}
-            className="nav-backdrop"
+      <header className="navbar">
+        <div className="container navbar-inner">
+          <NavLink
+            to="/"
+            className="brand"
             onClick={() => setMenuOpen(false)}
-            aria-hidden={!menuOpen}
-          />
-        )}
+            aria-label="العودة إلى الصفحة الرئيسية"
+          >
+            <span className="brand-mark">C</span>
+            <span className="brand-name">Crocs Store</span>
+          </NavLink>
 
-        <nav
-          ref={navLinksRef}
-          className={`nav-links${menuOpen ? " open" : ""}`}
-        >
+          <button
+            ref={navToggleRef}
+            className={`nav-toggle${menuOpen ? " is-open" : ""}`}
+            aria-label={menuOpen ? "إغلاق القائمة" : "قائمة التنقل"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? "×" : "☰"}
+          </button>
+
+          <nav
+            ref={navLinksRef}
+            className={`nav-links${menuOpen ? " open" : ""}`}
+          >
           <NavLink
             to="/"
             end
@@ -182,64 +182,65 @@ export default function Navbar() {
           </div>
         </nav>
 
-        <div className="nav-user">
-          <button
-            type="button"
-            className="theme-toggle"
-            onClick={toggleTheme}
-            aria-label={
-              theme === "dark"
-                ? "تبديل إلى الوضع المضيء"
-                : "تبديل إلى الوضع الداكن"
-            }
-          >
-            {theme === "dark" ? "☀️" : "🌙"}
-            <span className="theme-label">
-              {theme === "dark" ? " Light" : " Dark"}
-            </span>
-          </button>
+          <div className="nav-user">
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label={
+                theme === "dark"
+                  ? "تبديل إلى الوضع المضيء"
+                  : "تبديل إلى الوضع الداكن"
+              }
+            >
+              {theme === "dark" ? "☀️" : "🌙"}
+              <span className="theme-label">
+                {theme === "dark" ? " Light" : " Dark"}
+              </span>
+            </button>
 
-          {token ? (
-            <>
-              <NavLink
-                to="/profile"
-                className="row"
-                style={{ gap: 8 }}
-                onClick={() => setMenuOpen(false)}
-              >
-                <img
-                  className="nav-avatar"
-                  src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
-                  alt={user?.name || "الملف الشخصي"}
-                />
-                <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>
-                  {user?.name || "..."}
-                </span>
-              </NavLink>
-              <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
-                خروج
-              </button>
-            </>
-          ) : (
-            <>
-              <NavLink
-                to="/login"
-                className="btn btn-ghost btn-sm"
-                onClick={() => setMenuOpen(false)}
-              >
-                دخول
-              </NavLink>
-              <NavLink
-                to="/register"
-                className="btn btn-primary btn-sm"
-                onClick={() => setMenuOpen(false)}
-              >
-                حساب جديد
-              </NavLink>
-            </>
-          )}
+            {token ? (
+              <>
+                <NavLink
+                  to="/profile"
+                  className="row"
+                  style={{ gap: 8 }}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <img
+                    className="nav-avatar"
+                    src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                    alt={user?.name || "الملف الشخصي"}
+                  />
+                  <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>
+                    {user?.name || "..."}
+                  </span>
+                </NavLink>
+                <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
+                  خروج
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  دخول
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  className="btn btn-primary btn-sm"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  حساب جديد
+                </NavLink>
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
