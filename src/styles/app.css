@@ -131,11 +131,13 @@
     margin-inline-start: auto;
   }
 
-  /* position hamburger on the left instead of near brand on mobile */
+  /* position hamburger opposite the brand: brand is the first flex item
+     and in this RTL layout it naturally sits on the right, so the toggle
+     goes on the left to avoid sitting on top of the brand mark */
   .nav-toggle {
     position: absolute;
-    right: 12px; /* keep hamburger on right */
-    left: auto;
+    left: 12px;
+    right: auto;
     top: 12px;
     margin-inline-start: 0;
     z-index: 80;
