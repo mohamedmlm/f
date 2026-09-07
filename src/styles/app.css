@@ -125,21 +125,36 @@
   display: none;
 }
 
-@media (max-width: 899px) {
+@media (max-width: 720px) {
   .nav-toggle {
     display: inline-flex;
-    margin-inline-start: 0;
+    margin-inline-start: auto;
+  }
+
+  /* position hamburger on the left instead of near brand on mobile */
+  .nav-toggle {
     position: absolute;
-    /* opposite side from the brand (brand sits at inline-start / right in RTL) */
-    inset-inline-end: 12px;
-    inset-inline-start: auto;
+    right: 12px; /* keep hamburger on right */
+    left: auto;
     top: 12px;
+    margin-inline-start: 0;
     z-index: 80;
   }
 
+  /* hide the brand mark on mobile so the hamburger sits visually on the left */
+  /* show brand mark/name on mobile (user requested) */
+  .brand-mark {
+    display: inline-flex;
+  }
+
+  .brand-name {
+    display: inline-block;
+  }
+
   .brand {
+    margin-inline-start: 6px !important; /* nudge brand slightly left on mobile */
     position: relative;
-    z-index: 61;
+    z-index: 61; /* keep brand above the backdrop so it stays visible */
   }
 
   .nav-links {
@@ -147,18 +162,25 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    inset-inline-start: 0;
-    inset-inline-end: auto;
-    width: 60%;
+    right: 0; /* open from right so brand on left stays visible */
+    left: auto;
+    width: 60%; /* slimmer so brand/logo on left doesn't get covered */
     max-width: 420px;
     background: var(--surface);
     flex-direction: column;
     gap: 0;
     padding: 12px 14px;
-    border-inline-end: 1px solid var(--line);
+    border-left: 1px solid var(--line);
     z-index: 60;
-    transform-origin: left center;
-    transform: translateX(-12px) scaleX(0.98);
+    transform-origin: right center;
+  }
+
+  /* Make the mobile menu more touch-friendly */
+  .nav-links {
+    /* hidden by default; transform for smooth animation (slide from right) */
+    display: flex;
+    transform-origin: right center;
+    transform: translateX(12px) scaleX(0.98);
     opacity: 0;
     pointer-events: none;
     transition:
@@ -173,14 +195,15 @@
     padding: 16px 14px;
     gap: 10px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
-
   .nav-link {
     padding: 12px 14px;
     width: 100%;
     border-radius: 8px;
     font-size: 1rem;
-    text-align: start;
+    text-align: left; /* force left alignment inside menu */
   }
 
   .nav-link + .nav-link {
@@ -191,7 +214,7 @@
     display: inline-flex; /* show on mobile */
     position: absolute;
     top: 12px;
-    inset-inline-end: 12px;
+    right: 12px;
     margin: 0;
     background: transparent;
     border: none;
@@ -232,10 +255,11 @@
   /* mobile user actions: centered row at bottom */
   .nav-user-mobile {
     display: flex;
-    flex-direction: row;
+    flex-direction: row; /* side-by-side */
     gap: 12px;
     padding: 10px 0 16px;
-    border-top: none;
+    border-top: none; /* remove the separating line */
+    /* position slightly above bottom */
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -260,19 +284,11 @@
   }
 
   .brand-name {
-    font-size: clamp(0.95rem, 1.2vw + 0.4rem, 1.4rem);
+    font-size: 1rem;
   }
 
   .theme-toggle {
     padding: 8px 10px;
-  }
-
-  .nav-link {
-    font-size: clamp(0.92rem, 0.9vw + 0.45rem, 1.08rem);
-  }
-
-  .btn {
-    padding: clamp(8px, 0.6vw + 6px, 14px) clamp(10px, 0.8vw + 8px, 20px);
   }
 
   .nav-user {
@@ -281,20 +297,13 @@
   }
 }
 
-/* Tablet range: keep the hamburger menu but let the drawer sit a bit lower / narrower */
-@media (min-width: 720px) and (max-width: 899px) {
-  .nav-links {
-    width: 45%;
-  }
-}
-
 /* Very small screens: full-screen menu and compact brand */
 @media (max-width: 480px) {
   .nav-links {
-    inset-inline-start: 0;
-    inset-inline-end: 0;
-    width: auto;
-    max-width: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
     height: 100vh;
     padding-top: 64px;
     align-items: flex-start;
@@ -348,11 +357,37 @@
   }
 }
 
-/* Desktop / larger tablets: inline nav, no hamburger */
+/* ================= Fluid sizing + extra breakpoints ================= */
+:root {
+  --nav-font-min: 0.92rem;
+  --nav-font-max: 1.08rem;
+  --brand-font-min: 0.95rem;
+  --brand-font-max: 1.4rem;
+}
+
+@media (max-width: 720px) {
+  /* Fluid scaling using clamp for smoother transitions */
+  .brand-name {
+    font-size: clamp(
+      var(--brand-font-min),
+      1.2vw + 0.4rem,
+      var(--brand-font-max)
+    );
+  }
+  .nav-link {
+    font-size: clamp(var(--nav-font-min), 0.9vw + 0.45rem, var(--nav-font-max));
+  }
+  .btn {
+    padding: clamp(8px, 0.6vw + 6px, 14px) clamp(10px, 0.8vw + 8px, 20px);
+  }
+}
+
+/* Larger tablets and small desktops: show menu inline and hide hamburger */
 @media (min-width: 900px) {
   .nav-toggle {
     display: none !important;
   }
+  /* hide mobile close '×' on larger screens */
   .nav-close {
     display: none !important;
   }
@@ -366,9 +401,6 @@
     inset-inline-end: auto;
     background: transparent;
     flex-direction: row;
-    transform: none;
-    opacity: 1;
-    pointer-events: auto;
   }
   .nav-links.open {
     box-shadow: none;
@@ -378,6 +410,20 @@
   }
   .nav-user-mobile {
     display: none;
+  }
+}
+
+/* Medium screens: slightly larger tap targets, keep hamburger for narrower widths */
+@media (min-width: 720px) and (max-width: 899px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+  .nav-links {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    padding: 8px 12px;
   }
 }
 
