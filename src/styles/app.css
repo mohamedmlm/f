@@ -171,18 +171,24 @@
   .brand {
     position: relative;
     z-index: 61; /* keep brand above the backdrop so it stays visible */
+    display: flex;
+    align-items: center;
     margin-inline-start: 0 !important;
-    margin-inline-end: 36px !important;
-    /* leave room for the toggle button so long brand names truncate
-       instead of running under it */
-    max-width: calc(100% - 80px);
+    margin-inline-end: 48px !important;
+    padding-right: 8px;
+    max-width: calc(100% - 84px);
   }
 
   .brand-name {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    text-align: center;
+    text-align: left;
+    display: inline-block;
+  }
+
+  .navbar-inner {
+    padding-right: 52px;
   }
 
   .nav-links {
