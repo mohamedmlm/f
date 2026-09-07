@@ -10,6 +10,25 @@ export default function Navbar() {
     () => localStorage.getItem("theme") || "dark",
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia
+      ? window.matchMedia("(max-width: 899px)").matches
+      : false;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(max-width: 899px)");
+    const handler = (e) => setIsMobile(e.matches);
+    // modern browsers
+    if (mq.addEventListener) mq.addEventListener("change", handler);
+    else mq.addListener(handler);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", handler);
+      else mq.removeListener(handler);
+    };
+  }, []);
   useEffect(() => {
     // prevent background scroll when mobile menu is open
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -57,16 +76,18 @@ export default function Navbar() {
           className={`nav-links${menuOpen ? " open" : ""}`}
           onClick={() => setMenuOpen(false)}
         >
-          <button
-            className="nav-close"
-            aria-label="إغلاق القائمة"
-            onClick={(e) => {
-              e.stopPropagation();
-              setMenuOpen(false);
-            }}
-          >
-            ×
-          </button>
+          {isMobile && (
+            <button
+              className="nav-close"
+              aria-label="إغلاق القائمة"
+              onClick={(e) => {
+                e.stopPropagation();
+                setMenuOpen(false);
+              }}
+            >
+              ×
+            </button>
+          )}
           <NavLink
             to="/"
             end

@@ -24,6 +24,11 @@
   gap: 24px;
   height: 72px;
 }
+/* Make header layout use space-between so brand is left and controls on right */
+.navbar-inner {
+  justify-content: space-between;
+  position: relative;
+}
 .brand {
   display: flex;
   align-items: center;
@@ -129,7 +134,7 @@
   /* position hamburger on the left instead of near brand on mobile */
   .nav-toggle {
     position: absolute;
-    right: 12px; /* place on the right where brand lives (RTL) */
+    right: 12px; /* keep hamburger on right */
     left: auto;
     top: 12px;
     margin-inline-start: 0;
@@ -137,13 +142,13 @@
   }
 
   /* hide the brand mark on mobile so the hamburger sits visually on the left */
+  /* show brand mark/name on mobile (user requested) */
   .brand-mark {
-    display: none;
+    display: inline-flex;
   }
 
-  /* also hide brand name on very small screens so hamburger replaces it cleanly */
   .brand-name {
-    display: none;
+    display: inline-block;
   }
 
   .nav-links {
