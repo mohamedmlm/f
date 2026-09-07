@@ -131,8 +131,8 @@
     position: absolute;
     left: 12px;
     top: 12px;
-    z-index: 80;
     margin-inline-start: 0;
+    z-index: 80;
   }
 
   .brand-mark {
@@ -145,6 +145,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    text-align: center;
   }
 
   .brand {
@@ -228,7 +229,6 @@
 
   .mobile-name {
     font-weight: 700;
-    color: var(--text);
   }
 
   .nav-user {
@@ -275,13 +275,21 @@
 /* Very small screens: full-screen menu and compact brand */
 @media (max-width: 480px) {
   .nav-links {
-    width: min(86vw, 340px);
-    max-width: 340px;
-    padding: 14px 10px 10px;
+    position: fixed;
     top: 0;
+    left: 0;
     right: 0;
-    bottom: 0;
-    left: auto;
+    height: 100vh;
+    padding-top: 64px;
+    align-items: flex-start;
+    background: var(--surface);
+    overflow-y: auto;
+  }
+
+  .nav-links.open {
+    display: flex;
+    padding: 18px 14px;
+    gap: 8px;
   }
 
   .brand-name {
@@ -308,7 +316,7 @@
   }
 
   .nav-user-mobile {
-    padding-top: 10px;
+    padding-bottom: 14px;
   }
 }
 
