@@ -312,19 +312,24 @@
 @media (max-width: 480px) {
   .nav-links {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    padding-top: 64px;
-    align-items: flex-start;
-    background: var(--surface);
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    max-width: none;
+    height: auto;
+    padding: 12px 10px;
+    border-radius: 20px;
+    align-items: stretch;
+    background: rgba(17, 20, 30, 0.97);
     overflow-y: auto;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.24);
   }
 
   .nav-links.open {
     display: flex;
-    padding: 18px 14px;
+    padding: 14px 10px 10px;
     gap: 8px;
   }
 
@@ -352,7 +357,8 @@
   }
 
   .nav-user-mobile {
-    padding-bottom: 14px;
+    padding: 8px 6px 4px;
+    margin-top: auto;
   }
 }
 
