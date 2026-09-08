@@ -51,16 +51,18 @@ export default function Navbar() {
     document.body.style.overflow = "";
   };
 
-  const handleNavClick = () => {
+  const handleNavClick = (to, e) => {
+    e.preventDefault();
+    closeMenu();
     setTimeout(() => {
-      closeMenu();
-    }, 50);
+      navigate(to);
+    }, 100);
   };
 
   const handleLogout = () => {
     logout();
-    navigate("/");
     closeMenu();
+    navigate("/");
   };
 
   const toggleTheme = () => {
@@ -72,22 +74,24 @@ export default function Navbar() {
       {menuOpen && (
         <div
           className="nav-backdrop"
-          onClick={() => closeMenu()}
+          onClick={closeMenu}
           aria-hidden={!menuOpen}
         />
       )}
 
       <header className="navbar">
         <div className="container navbar-inner">
-          <NavLink
-            to="/"
+          <button
+            onClick={() => {
+              closeMenu();
+              navigate("/");
+            }}
             className="brand"
-            onClick={handleNavClick}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
-          </NavLink>
+          </button>
 
           <button
             ref={navToggleRef}
@@ -100,43 +104,32 @@ export default function Navbar() {
           </button>
 
           <nav className={`nav-links${menuOpen ? " open" : ""}`}>
-            <NavLink
-              to="/"
-              end
-              onClick={handleNavClick}
-              className={({ isActive }) =>
-                `nav-link${isActive ? " active" : ""}`
-              }
+            <button
+              onClick={(e) => handleNavClick("/", e)}
+              className="nav-link"
             >
               المتجر
-            </NavLink>
-            <NavLink
-              to="/purchases"
-              onClick={handleNavClick}
-              className={({ isActive }) =>
-                `nav-link${isActive ? " active" : ""}`
-              }
+            </button>
+            <button
+              onClick={(e) => handleNavClick("/purchases", e)}
+              className="nav-link"
             >
               مشترياتي
-            </NavLink>
+            </button>
             {isStaff && (
-              <NavLink
-                to="/admin"
-                onClick={handleNavClick}
-                className={({ isActive }) =>
-                  `nav-link${isActive ? " active" : ""}`
-                }
+              <button
+                onClick={(e) => handleNavClick("/admin", e)}
+                className="nav-link"
               >
                 لوحة التحكم
-              </NavLink>
+              </button>
             )}
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
-                  <NavLink
-                    to="/profile"
+                  <button
+                    onClick={(e) => handleNavClick("/profile", e)}
                     className="nav-link mobile-profile"
-                    onClick={handleNavClick}
                   >
                     <img
                       className="nav-avatar"
@@ -144,32 +137,28 @@ export default function Navbar() {
                       alt={user?.name || "الملف الشخصي"}
                     />
                     <span className="mobile-name">{user?.name || "..."}</span>
-                  </NavLink>
+                  </button>
                   <button
                     className="btn btn-ghost btn-block"
-                    onClick={() => {
-                      handleLogout();
-                    }}
+                    onClick={handleLogout}
                   >
                     خروج
                   </button>
                 </>
               ) : (
                 <>
-                  <NavLink
-                    to="/login"
+                  <button
+                    onClick={(e) => handleNavClick("/login", e)}
                     className="btn btn-ghost btn-block"
-                    onClick={handleNavClick}
                   >
                     دخول
-                  </NavLink>
-                  <NavLink
-                    to="/register"
+                  </button>
+                  <button
+                    onClick={(e) => handleNavClick("/register", e)}
                     className="btn btn-primary btn-block"
-                    onClick={handleNavClick}
                   >
                     حساب جديد
-                  </NavLink>
+                  </button>
                 </>
               )}
             </div>
@@ -194,11 +183,10 @@ export default function Navbar() {
 
             {token ? (
               <>
-                <NavLink
-                  to="/profile"
+                <button
+                  onClick={(e) => handleNavClick("/profile", e)}
                   className="row"
                   style={{ gap: 8 }}
-                  onClick={handleNavClick}
                 >
                   <img
                     className="nav-avatar"
@@ -208,27 +196,25 @@ export default function Navbar() {
                   <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>
                     {user?.name || "..."}
                   </span>
-                </NavLink>
+                </button>
                 <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
                   خروج
                 </button>
               </>
             ) : (
               <>
-                <NavLink
-                  to="/login"
+                <button
+                  onClick={(e) => handleNavClick("/login", e)}
                   className="btn btn-ghost btn-sm"
-                  onClick={handleNavClick}
                 >
                   دخول
-                </NavLink>
-                <NavLink
-                  to="/register"
+                </button>
+                <button
+                  onClick={(e) => handleNavClick("/register", e)}
                   className="btn btn-primary btn-sm"
-                  onClick={handleNavClick}
                 >
                   حساب جديد
-                </NavLink>
+                </button>
               </>
             )}
           </div>
