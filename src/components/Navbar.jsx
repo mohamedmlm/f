@@ -66,14 +66,14 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
-  const handleNavClick = (path) => {
+  const handleNavClick = (to) => (e) => {
+    e.preventDefault();
     closeMenu();
-    navigate(path);
+    navigate(to);
   };
 
   const handleLogout = () => {
     logout();
-    closeMenu();
     navigate("/");
   };
 
@@ -94,14 +94,15 @@ export default function Navbar() {
 
       <header className="navbar">
         <div className="container navbar-inner">
-          <button
-            onClick={() => handleNavClick("/")}
+          <NavLink
+            to="/"
             className="brand"
+            onClick={handleNavClick("/")}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
-          </button>
+          </NavLink>
 
           <button
             ref={navToggleRef}
@@ -117,32 +118,43 @@ export default function Navbar() {
             ref={navLinksRef}
             className={`nav-links${menuOpen ? " open" : ""}`}
           >
-            <button
-              onClick={() => handleNavClick("/")}
-              className="nav-link"
+            <NavLink
+              to="/"
+              end
+              onClick={handleNavClick("/")}
+              className={({ isActive }) =>
+                `nav-link${isActive ? " active" : ""}`
+              }
             >
               المتجر
-            </button>
-            <button
-              onClick={() => handleNavClick("/purchases")}
-              className="nav-link"
+            </NavLink>
+            <NavLink
+              to="/purchases"
+              onClick={handleNavClick("/purchases")}
+              className={({ isActive }) =>
+                `nav-link${isActive ? " active" : ""}`
+              }
             >
               مشترياتي
-            </button>
+            </NavLink>
             {isStaff && (
-              <button
-                onClick={() => handleNavClick("/admin")}
-                className="nav-link"
+              <NavLink
+                to="/admin"
+                onClick={handleNavClick("/admin")}
+                className={({ isActive }) =>
+                  `nav-link${isActive ? " active" : ""}`
+                }
               >
                 لوحة التحكم
-              </button>
+              </NavLink>
             )}
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
-                  <button
-                    onClick={() => handleNavClick("/profile")}
+                  <NavLink
+                    to="/profile"
                     className="nav-link mobile-profile"
+                    onClick={handleNavClick("/profile")}
                   >
                     <img
                       className="nav-avatar"
@@ -150,7 +162,7 @@ export default function Navbar() {
                       alt={user?.name || "الملف الشخصي"}
                     />
                     <span className="mobile-name">{user?.name || "..."}</span>
-                  </button>
+                  </NavLink>
                   <button
                     className="btn btn-ghost btn-block"
                     onClick={() => {
@@ -163,18 +175,20 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <button
-                    onClick={() => handleNavClick("/login")}
+                  <NavLink
+                    to="/login"
+                    onClick={handleNavClick("/login")}
                     className="btn btn-ghost btn-block"
                   >
                     دخول
-                  </button>
-                  <button
-                    onClick={() => handleNavClick("/register")}
+                  </NavLink>
+                  <NavLink
+                    to="/register"
+                    onClick={handleNavClick("/register")}
                     className="btn btn-primary btn-block"
                   >
                     حساب جديد
-                  </button>
+                  </NavLink>
                 </>
               )}
             </div>
@@ -199,10 +213,11 @@ export default function Navbar() {
 
             {token ? (
               <>
-                <button
-                  onClick={() => handleNavClick("/profile")}
+                <NavLink
+                  to="/profile"
                   className="row"
                   style={{ gap: 8 }}
+                  onClick={handleNavClick("/profile")}
                 >
                   <img
                     className="nav-avatar"
@@ -212,25 +227,27 @@ export default function Navbar() {
                   <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>
                     {user?.name || "..."}
                   </span>
-                </button>
+                </NavLink>
                 <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
                   خروج
                 </button>
               </>
             ) : (
               <>
-                <button
-                  onClick={() => handleNavClick("/login")}
+                <NavLink
+                  to="/login"
                   className="btn btn-ghost btn-sm"
+                  onClick={handleNavClick("/login")}
                 >
                   دخول
-                </button>
-                <button
-                  onClick={() => handleNavClick("/register")}
+                </NavLink>
+                <NavLink
+                  to="/register"
                   className="btn btn-primary btn-sm"
+                  onClick={handleNavClick("/register")}
                 >
                   حساب جديد
-                </button>
+                </NavLink>
               </>
             )}
           </div>
