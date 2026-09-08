@@ -752,7 +752,11 @@ textarea {
   padding: 22px 20px 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, rgba(227, 166, 62, 0.08), rgba(32, 122, 118, 0.08));
+  background: linear-gradient(
+    135deg,
+    rgba(227, 166, 62, 0.08),
+    rgba(32, 122, 118, 0.08)
+  );
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.04);
 }
 .section-head {
