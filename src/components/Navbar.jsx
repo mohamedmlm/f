@@ -10,7 +10,9 @@ export default function Navbar() {
     () => localStorage.getItem("theme") || "dark",
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  const navLinksRef = useRef(null);
   const navToggleRef = useRef(null);
+  const navBackdropRef = useRef(null);
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia
@@ -39,11 +41,27 @@ export default function Navbar() {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (!menuOpen) return;
+
+    const handlePointerDown = (event) => {
+      const target = event.target;
+      const clickedInsideMenu = navLinksRef.current?.contains(target);
+      const clickedToggle = navToggleRef.current?.contains(target);
+      const clickedBackdrop = navBackdropRef.current?.contains(target);
+
+      if (!clickedInsideMenu && !clickedToggle && !clickedBackdrop) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [menuOpen]);
+
+  useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
-
-  const closeMenu = () => setMenuOpen(false);
 
   const handleLogout = () => {
     logout();
@@ -58,6 +76,7 @@ export default function Navbar() {
     <>
       {menuOpen && (
         <div
+          ref={navBackdropRef}
           className="nav-backdrop"
           onClick={() => setMenuOpen(false)}
           aria-hidden={!menuOpen}
@@ -86,11 +105,14 @@ export default function Navbar() {
             {menuOpen ? "×" : "☰"}
           </button>
 
-          <nav className={`nav-links${menuOpen ? " open" : ""}`}>
+          <nav
+            ref={navLinksRef}
+            className={`nav-links${menuOpen ? " open" : ""}`}
+          >
             <NavLink
               to="/"
               end
-              onClick={closeMenu}
+              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -99,7 +121,7 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
-              onClick={closeMenu}
+              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -109,7 +131,7 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
-                onClick={closeMenu}
+                onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -124,7 +146,7 @@ export default function Navbar() {
                   <NavLink
                     to="/profile"
                     className="nav-link mobile-profile"
-                    onClick={closeMenu}
+                    onClick={() => setMenuOpen(false)}
                   >
                     <img
                       className="nav-avatar"
@@ -147,15 +169,15 @@ export default function Navbar() {
                 <>
                   <NavLink
                     to="/login"
+                    onClick={() => setMenuOpen(false)}
                     className="btn btn-ghost btn-block"
-                    onClick={closeMenu}
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
+                    onClick={() => setMenuOpen(false)}
                     className="btn btn-primary btn-block"
-                    onClick={closeMenu}
                   >
                     حساب جديد
                   </NavLink>
