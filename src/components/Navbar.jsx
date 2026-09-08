@@ -94,7 +94,6 @@ export default function Navbar() {
             <NavLink
               to="/"
               end
-              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -103,7 +102,6 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
-              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -113,7 +111,6 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
-                onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -128,7 +125,6 @@ export default function Navbar() {
                   <NavLink
                     to="/profile"
                     className="nav-link mobile-profile"
-                    onClick={() => setMenuOpen(false)}
                   >
                     <img
                       className="nav-avatar"
@@ -151,14 +147,12 @@ export default function Navbar() {
                 <>
                   <NavLink
                     to="/login"
-                    onClick={() => setMenuOpen(false)}
                     className="btn btn-ghost btn-block"
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
-                    onClick={() => setMenuOpen(false)}
                     className="btn btn-primary btn-block"
                   >
                     حساب جديد
