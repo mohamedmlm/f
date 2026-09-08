@@ -22,7 +22,6 @@ export default function Navbar() {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(max-width: 899px)");
     const handler = (e) => setIsMobile(e.matches);
-    // modern browsers
     if (mq.addEventListener) mq.addEventListener("change", handler);
     else mq.addListener(handler);
     return () => {
@@ -30,9 +29,13 @@ export default function Navbar() {
       else mq.removeListener(handler);
     };
   }, []);
+
   useEffect(() => {
-    // prevent background scroll when mobile menu is open
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
     return () => {
       document.body.style.overflow = "";
     };
@@ -43,7 +46,10 @@ export default function Navbar() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const closeMenu = () => setMenuOpen(false);
+  const handleNavClick = () => {
+    setMenuOpen(false);
+    document.body.style.overflow = "";
+  };
 
   const handleLogout = () => {
     logout();
@@ -59,7 +65,7 @@ export default function Navbar() {
       {menuOpen && (
         <div
           className="nav-backdrop"
-          onClick={() => setMenuOpen(false)}
+          onClick={handleNavClick}
           aria-hidden={!menuOpen}
         />
       )}
@@ -69,7 +75,7 @@ export default function Navbar() {
           <NavLink
             to="/"
             className="brand"
-            onClick={() => setMenuOpen(false)}
+            onClick={handleNavClick}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
@@ -90,7 +96,7 @@ export default function Navbar() {
             <NavLink
               to="/"
               end
-              onClick={closeMenu}
+              onClick={handleNavClick}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -99,7 +105,7 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
-              onClick={closeMenu}
+              onClick={handleNavClick}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -109,7 +115,7 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
-                onClick={closeMenu}
+                onClick={handleNavClick}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -117,14 +123,13 @@ export default function Navbar() {
                 لوحة التحكم
               </NavLink>
             )}
-            {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
                   <NavLink
                     to="/profile"
                     className="nav-link mobile-profile"
-                    onClick={closeMenu}
+                    onClick={handleNavClick}
                   >
                     <img
                       className="nav-avatar"
@@ -136,7 +141,7 @@ export default function Navbar() {
                   <button
                     className="btn btn-ghost btn-block"
                     onClick={() => {
-                      setMenuOpen(false);
+                      handleNavClick();
                       handleLogout();
                     }}
                   >
@@ -148,14 +153,14 @@ export default function Navbar() {
                   <NavLink
                     to="/login"
                     className="btn btn-ghost btn-block"
-                    onClick={closeMenu}
+                    onClick={handleNavClick}
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
                     className="btn btn-primary btn-block"
-                    onClick={closeMenu}
+                    onClick={handleNavClick}
                   >
                     حساب جديد
                   </NavLink>
@@ -187,7 +192,7 @@ export default function Navbar() {
                   to="/profile"
                   className="row"
                   style={{ gap: 8 }}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={handleNavClick}
                 >
                   <img
                     className="nav-avatar"
@@ -207,14 +212,14 @@ export default function Navbar() {
                 <NavLink
                   to="/login"
                   className="btn btn-ghost btn-sm"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={handleNavClick}
                 >
                   دخول
                 </NavLink>
                 <NavLink
                   to="/register"
                   className="btn btn-primary btn-sm"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={handleNavClick}
                 >
                   حساب جديد
                 </NavLink>
