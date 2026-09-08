@@ -145,10 +145,18 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <NavLink to="/login" className="btn btn-ghost btn-block" onClick={closeMenu}>
+                  <NavLink
+                    to="/login"
+                    className="btn btn-ghost btn-block"
+                    onClick={closeMenu}
+                  >
                     دخول
                   </NavLink>
-                  <NavLink to="/register" className="btn btn-primary btn-block" onClick={closeMenu}>
+                  <NavLink
+                    to="/register"
+                    className="btn btn-primary btn-block"
+                    onClick={closeMenu}
+                  >
                     حساب جديد
                   </NavLink>
                 </>
