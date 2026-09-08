@@ -62,16 +62,6 @@ export default function Navbar() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
-
-  const handleNavClick = (to) => (e) => {
-    e.preventDefault();
-    closeMenu();
-    navigate(to);
-  };
-
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -87,7 +77,7 @@ export default function Navbar() {
         <div
           ref={navBackdropRef}
           className="nav-backdrop"
-          onClick={closeMenu}
+          onClick={() => setMenuOpen(false)}
           aria-hidden={!menuOpen}
         />
       )}
@@ -97,7 +87,7 @@ export default function Navbar() {
           <NavLink
             to="/"
             className="brand"
-            onClick={handleNavClick("/")}
+            onClick={() => setMenuOpen(false)}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
@@ -121,7 +111,7 @@ export default function Navbar() {
             <NavLink
               to="/"
               end
-              onClick={handleNavClick("/")}
+              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -130,7 +120,7 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
-              onClick={handleNavClick("/purchases")}
+              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -140,7 +130,7 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
-                onClick={handleNavClick("/admin")}
+                onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -154,7 +144,7 @@ export default function Navbar() {
                   <NavLink
                     to="/profile"
                     className="nav-link mobile-profile"
-                    onClick={handleNavClick("/profile")}
+                    onClick={() => setMenuOpen(false)}
                   >
                     <img
                       className="nav-avatar"
@@ -166,7 +156,7 @@ export default function Navbar() {
                   <button
                     className="btn btn-ghost btn-block"
                     onClick={() => {
-                      closeMenu();
+                      setMenuOpen(false);
                       handleLogout();
                     }}
                   >
@@ -177,15 +167,15 @@ export default function Navbar() {
                 <>
                   <NavLink
                     to="/login"
-                    onClick={handleNavClick("/login")}
                     className="btn btn-ghost btn-block"
+                    onClick={() => setMenuOpen(false)}
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
-                    onClick={handleNavClick("/register")}
                     className="btn btn-primary btn-block"
+                    onClick={() => setMenuOpen(false)}
                   >
                     حساب جديد
                   </NavLink>
@@ -217,7 +207,7 @@ export default function Navbar() {
                   to="/profile"
                   className="row"
                   style={{ gap: 8 }}
-                  onClick={handleNavClick("/profile")}
+                  onClick={() => setMenuOpen(false)}
                 >
                   <img
                     className="nav-avatar"
@@ -237,14 +227,14 @@ export default function Navbar() {
                 <NavLink
                   to="/login"
                   className="btn btn-ghost btn-sm"
-                  onClick={handleNavClick("/login")}
+                  onClick={() => setMenuOpen(false)}
                 >
                   دخول
                 </NavLink>
                 <NavLink
                   to="/register"
                   className="btn btn-primary btn-sm"
-                  onClick={handleNavClick("/register")}
+                  onClick={() => setMenuOpen(false)}
                 >
                   حساب جديد
                 </NavLink>
