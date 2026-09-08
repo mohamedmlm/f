@@ -51,7 +51,11 @@ export default function Navbar() {
       const clickedToggle = navToggleRef.current?.contains(target);
       const clickedBackdrop = navBackdropRef.current?.contains(target);
 
-      if (clickedInsideMenu || clickedToggle || clickedBackdrop) return;
+      if (clickedInsideMenu || clickedToggle) return;
+      if (clickedBackdrop) {
+        setMenuOpen(false);
+        return;
+      }
       setMenuOpen(false);
     };
 
