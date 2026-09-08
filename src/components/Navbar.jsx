@@ -46,14 +46,21 @@ export default function Navbar() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  const handleNavClick = () => {
+  const closeMenu = () => {
     setMenuOpen(false);
     document.body.style.overflow = "";
+  };
+
+  const handleNavClick = () => {
+    setTimeout(() => {
+      closeMenu();
+    }, 50);
   };
 
   const handleLogout = () => {
     logout();
     navigate("/");
+    closeMenu();
   };
 
   const toggleTheme = () => {
@@ -65,7 +72,7 @@ export default function Navbar() {
       {menuOpen && (
         <div
           className="nav-backdrop"
-          onClick={handleNavClick}
+          onClick={() => closeMenu()}
           aria-hidden={!menuOpen}
         />
       )}
@@ -141,7 +148,6 @@ export default function Navbar() {
                   <button
                     className="btn btn-ghost btn-block"
                     onClick={() => {
-                      handleNavClick();
                       handleLogout();
                     }}
                   >
