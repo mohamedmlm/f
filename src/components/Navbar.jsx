@@ -66,12 +66,10 @@ export default function Navbar() {
     setMenuOpen(false);
   };
 
-  const handleNavClick = (to, e) => {
-    e.preventDefault();
-    closeMenu();
+  const handleNavClick = () => {
     setTimeout(() => {
-      navigate(to);
-    }, 150);
+      closeMenu();
+    }, 50);
   };
 
   const handleLogout = () => {
@@ -100,7 +98,7 @@ export default function Navbar() {
           <NavLink
             to="/"
             className="brand"
-            onClick={closeMenu}
+            onClick={handleNavClick}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
@@ -124,7 +122,7 @@ export default function Navbar() {
             <NavLink
               to="/"
               end
-              onClick={(e) => handleNavClick("/", e)}
+              onClick={handleNavClick}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -133,7 +131,7 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
-              onClick={(e) => handleNavClick("/purchases", e)}
+              onClick={handleNavClick}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -143,7 +141,7 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
-                onClick={(e) => handleNavClick("/admin", e)}
+                onClick={handleNavClick}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -157,7 +155,7 @@ export default function Navbar() {
                   <NavLink
                     to="/profile"
                     className="nav-link mobile-profile"
-                    onClick={(e) => handleNavClick("/profile", e)}
+                    onClick={handleNavClick}
                   >
                     <img
                       className="nav-avatar"
@@ -180,14 +178,14 @@ export default function Navbar() {
                 <>
                   <NavLink
                     to="/login"
-                    onClick={(e) => handleNavClick("/login", e)}
+                    onClick={handleNavClick}
                     className="btn btn-ghost btn-block"
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
-                    onClick={(e) => handleNavClick("/register", e)}
+                    onClick={handleNavClick}
                     className="btn btn-primary btn-block"
                   >
                     حساب جديد
@@ -220,7 +218,7 @@ export default function Navbar() {
                   to="/profile"
                   className="row"
                   style={{ gap: 8 }}
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                 >
                   <img
                     className="nav-avatar"
@@ -240,14 +238,14 @@ export default function Navbar() {
                 <NavLink
                   to="/login"
                   className="btn btn-ghost btn-sm"
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                 >
                   دخول
                 </NavLink>
                 <NavLink
                   to="/register"
                   className="btn btn-primary btn-sm"
-                  onClick={closeMenu}
+                  onClick={handleNavClick}
                 >
                   حساب جديد
                 </NavLink>
