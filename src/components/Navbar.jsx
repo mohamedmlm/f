@@ -7,10 +7,12 @@ export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
   const navigate = useNavigate();
   const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "dark"
+    () => localStorage.getItem("theme") || "dark",
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  const navLinksRef = useRef(null);
   const navToggleRef = useRef(null);
+  const navBackdropRef = useRef(null);
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.matchMedia
@@ -22,6 +24,7 @@ export default function Navbar() {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(max-width: 899px)");
     const handler = (e) => setIsMobile(e.matches);
+    // modern browsers
     if (mq.addEventListener) mq.addEventListener("change", handler);
     else mq.addListener(handler);
     return () => {
@@ -29,8 +32,8 @@ export default function Navbar() {
       else mq.removeListener(handler);
     };
   }, []);
-
   useEffect(() => {
+    // prevent background scroll when mobile menu is open
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
@@ -38,11 +41,27 @@ export default function Navbar() {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (!menuOpen) return;
+
+    const handlePointerDown = (event) => {
+      const target = event.target;
+      const clickedInsideMenu = navLinksRef.current?.contains(target);
+      const clickedToggle = navToggleRef.current?.contains(target);
+      const clickedBackdrop = navBackdropRef.current?.contains(target);
+
+      if (!clickedInsideMenu && !clickedToggle && !clickedBackdrop) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [menuOpen]);
+
+  useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
-
-  const closeMenu = () => setMenuOpen(false);
 
   const handleLogout = () => {
     logout();
@@ -57,6 +76,7 @@ export default function Navbar() {
     <>
       {menuOpen && (
         <div
+          ref={navBackdropRef}
           className="nav-backdrop"
           onClick={() => setMenuOpen(false)}
           aria-hidden={!menuOpen}
@@ -85,7 +105,10 @@ export default function Navbar() {
             {menuOpen ? "×" : "☰"}
           </button>
 
-          <nav className={`nav-links${menuOpen ? " open" : ""}`}>
+          <nav
+            ref={navLinksRef}
+            className={`nav-links${menuOpen ? " open" : ""}`}
+          >
             <NavLink
               to="/"
               end
@@ -116,6 +139,7 @@ export default function Navbar() {
                 لوحة التحكم
               </NavLink>
             )}
+            {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
@@ -145,15 +169,15 @@ export default function Navbar() {
                 <>
                   <NavLink
                     to="/login"
-                    className="btn btn-ghost btn-block"
                     onClick={() => setMenuOpen(false)}
+                    className="btn btn-ghost btn-block"
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
-                    className="btn btn-primary btn-block"
                     onClick={() => setMenuOpen(false)}
+                    className="btn btn-primary btn-block"
                   >
                     حساب جديد
                   </NavLink>
