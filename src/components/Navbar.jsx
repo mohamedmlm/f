@@ -115,12 +115,10 @@ export default function Navbar() {
           <nav
             ref={navLinksRef}
             className={`nav-links${menuOpen ? " open" : ""}`}
-            onClick={(e) => e.stopPropagation()}
           >
             <NavLink
               to="/"
               end
-              onClick={closeMenu}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -129,7 +127,6 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
-              onClick={closeMenu}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -139,7 +136,6 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
-                onClick={closeMenu}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -151,11 +147,7 @@ export default function Navbar() {
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
-                  <NavLink
-                    to="/profile"
-                    className="nav-link mobile-profile"
-                    onClick={closeMenu}
-                  >
+                  <NavLink to="/profile" className="nav-link mobile-profile">
                     <img
                       className="nav-avatar"
                       src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
@@ -175,18 +167,10 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <NavLink
-                    to="/login"
-                    className="btn btn-ghost btn-block"
-                    onClick={closeMenu}
-                  >
+                  <NavLink to="/login" className="btn btn-ghost btn-block">
                     دخول
                   </NavLink>
-                  <NavLink
-                    to="/register"
-                    className="btn btn-primary btn-block"
-                    onClick={closeMenu}
-                  >
+                  <NavLink to="/register" className="btn btn-primary btn-block">
                     حساب جديد
                   </NavLink>
                 </>
