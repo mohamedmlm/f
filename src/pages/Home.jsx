@@ -19,6 +19,25 @@ export default function Home() {
   const [maxPrice, setMaxPrice] = useState("");
   const [appliedFilters, setAppliedFilters] = useState({});
 
+  const mobileItems = items.filter((item) => {
+    const category = String(item?.category || "").toLowerCase();
+    const name = String(item?.name || "").toLowerCase();
+    return (
+      category.includes("mobile") ||
+      category.includes("mobi") ||
+      category.includes("phone") ||
+      category.includes("smartphone") ||
+      category.includes("iphone") ||
+      category.includes("android") ||
+      category.includes("samsung") ||
+      category.includes("موبايل") ||
+      name.includes("mobile") ||
+      name.includes("phone") ||
+      name.includes("موبايل") ||
+      name.includes("هاتف")
+    );
+  });
+
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -97,6 +116,24 @@ export default function Home() {
         />
       ) : (
         <>
+          {mobileItems.length > 0 && (
+            <section className="mobile-showcase">
+              <div className="section-head">
+                <div>
+                  <span className="section-tag">Mobile</span>
+                  <h2>منتجات الموبايل</h2>
+                </div>
+                <span className="section-count">{mobileItems.length} منتج</span>
+              </div>
+
+              <div className="mobile-showcase-grid">
+                {mobileItems.slice(0, 4).map((item, i) => (
+                  <ItemCard key={item._id || item.id || i} item={item} />
+                ))}
+              </div>
+            </section>
+          )}
+
           <div className="item-grid">
             {items.map((item, i) => (
               <ItemCard key={item._id || item.id || i} item={item} />
