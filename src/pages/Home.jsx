@@ -19,27 +19,6 @@ export default function Home() {
   const [maxPrice, setMaxPrice] = useState("");
   const [appliedFilters, setAppliedFilters] = useState({});
 
-  const isMobileItem = (item) => {
-    const category = String(item?.category || "").toLowerCase();
-    const name = String(item?.name || "").toLowerCase();
-    return (
-      category.includes("mobile") ||
-      category.includes("mobi") ||
-      category.includes("phone") ||
-      category.includes("smartphone") ||
-      category.includes("iphone") ||
-      category.includes("android") ||
-      category.includes("samsung") ||
-      category.includes("موبايل") ||
-      name.includes("mobile") ||
-      name.includes("phone") ||
-      name.includes("موبايل") ||
-      name.includes("هاتف")
-    );
-  };
-
-  const mobileItems = items.filter(isMobileItem);
-
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -111,29 +90,18 @@ export default function Home() {
 
       {loading ? (
         <Loader />
-      ) : mobileItems.length === 0 ? (
+      ) : items.length === 0 ? (
         <EmptyState
-          title="لا توجد منتجات موبايل"
-          hint="لا يوجد منتجات هاتف حاليا، جرّب لاحقًا أو استخدم بحثًا مختلفًا."
+          title="لا توجد منتجات مطابقة"
+          hint="جرّب كلمة بحث مختلفة أو وسّع نطاق السعر."
         />
       ) : (
         <>
-          <section className="mobile-showcase">
-            <div className="section-head">
-              <div>
-                <span className="section-tag">Mobile</span>
-                <h2>منتجات الموبايل</h2>
-              </div>
-              <span className="section-count">{mobileItems.length} منتج</span>
-            </div>
-
-            <div className="mobile-showcase-grid">
-              {mobileItems.map((item, i) => (
-                <ItemCard key={item._id || item.id || i} item={item} />
-              ))}
-            </div>
-          </section>
-
+          <div className="item-grid">
+            {items.map((item, i) => (
+              <ItemCard key={item._id || item.id || i} item={item} />
+            ))}
+          </div>
           <div className="pagination">
             <button
               className="btn btn-ghost btn-sm"
@@ -145,7 +113,7 @@ export default function Home() {
             <span className="page-num">صفحة {page}</span>
             <button
               className="btn btn-ghost btn-sm"
-              disabled={mobileItems.length < LIMIT}
+              disabled={items.length < LIMIT}
               onClick={() => setPage((p) => p + 1)}
             >
               التالي
