@@ -34,9 +34,7 @@
   align-items: center;
   gap: 10px;
   color: var(--text);
-
   background: transparent;
-
   font-family: var(--font-display);
   font-weight: 800;
   transition:
