@@ -106,7 +106,7 @@ export default function Navbar() {
               end
               onClick={(e) => handleNavClick("/", e)}
               className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
+                `nav-link${isActive ? " active" : ""}`
               }
             >
               المتجر
@@ -115,7 +115,7 @@ export default function Navbar() {
               to="/purchases"
               onClick={(e) => handleNavClick("/purchases", e)}
               className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
+                `nav-link${isActive ? " active" : ""}`
               }
             >
               مشترياتي
@@ -125,7 +125,7 @@ export default function Navbar() {
                 to="/admin"
                 onClick={(e) => handleNavClick("/admin", e)}
                 className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
+                  `nav-link${isActive ? " active" : ""}`
                 }
               >
                 لوحة التحكم
