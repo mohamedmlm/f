@@ -35,7 +35,6 @@
   gap: 10px;
   background-color: var(--bg-color, transparent);
   color: var(--text-color, inherit);
-
   font-family: var(--font-display);
   font-weight: 800;
   transition:
