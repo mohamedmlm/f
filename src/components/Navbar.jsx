@@ -45,13 +45,12 @@ export default function Navbar() {
 
     const handlePointerDown = (event) => {
       const target = event.target;
-      const clickedInsideMenu = navLinksRef.current?.contains(target);
-      const clickedToggle = navToggleRef.current?.contains(target);
-      const clickedBackdrop = navBackdropRef.current?.contains(target);
+      const clickedInsideMenu = target instanceof Node && navLinksRef.current?.contains(target);
+      const clickedToggle = target instanceof Node && navToggleRef.current?.contains(target);
+      const clickedBackdrop = target instanceof Node && navBackdropRef.current?.contains(target);
 
-      if (!clickedInsideMenu && !clickedToggle && !clickedBackdrop) {
-        setMenuOpen(false);
-      }
+      if (clickedInsideMenu || clickedToggle || clickedBackdrop) return;
+      setMenuOpen(false);
     };
 
     document.addEventListener("mousedown", handlePointerDown);
