@@ -41,9 +41,30 @@ export default function Navbar() {
   }, [menuOpen]);
 
   useEffect(() => {
+    if (!menuOpen) return;
+
+    const handlePointerDown = (event) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+
+      const clickedInsideMenu = navLinksRef.current?.contains(target);
+      const clickedToggle = navToggleRef.current?.contains(target);
+      const clickedBackdrop = navBackdropRef.current?.contains(target);
+
+      if (clickedInsideMenu || clickedToggle || clickedBackdrop) return;
+      setMenuOpen(false);
+    };
+
+    document.addEventListener("mousedown", handlePointerDown);
+    return () => document.removeEventListener("mousedown", handlePointerDown);
+  }, [menuOpen]);
+
+  useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  const closeMenu = () => setMenuOpen(false);
 
   const handleLogout = () => {
     logout();
@@ -90,10 +111,12 @@ export default function Navbar() {
           <nav
             ref={navLinksRef}
             className={`nav-links${menuOpen ? " open" : ""}`}
+            onClick={(e) => e.stopPropagation()}
           >
             <NavLink
               to="/"
               end
+              onClick={closeMenu}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -102,6 +125,7 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
+              onClick={closeMenu}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -111,6 +135,7 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
+                onClick={closeMenu}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -122,7 +147,11 @@ export default function Navbar() {
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
-                  <NavLink to="/profile" className="nav-link mobile-profile">
+                  <NavLink
+                    to="/profile"
+                    className="nav-link mobile-profile"
+                    onClick={closeMenu}
+                  >
                     <img
                       className="nav-avatar"
                       src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
@@ -142,10 +171,10 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <NavLink to="/login" className="btn btn-ghost btn-block">
+                  <NavLink to="/login" className="btn btn-ghost btn-block" onClick={closeMenu}>
                     دخول
                   </NavLink>
-                  <NavLink to="/register" className="btn btn-primary btn-block">
+                  <NavLink to="/register" className="btn btn-primary btn-block" onClick={closeMenu}>
                     حساب جديد
                   </NavLink>
                 </>
