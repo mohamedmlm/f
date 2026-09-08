@@ -33,8 +33,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: var(--bg-color, transparent);
-  color: var(--text-color, inherit);
+  color: var(--text);
   font-family: var(--font-display);
   font-weight: 800;
   transition:
@@ -73,6 +72,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background-color: #e3a63e; /* fallback in case gradient/vars fail to load */
   background: linear-gradient(135deg, var(--accent-hi), var(--accent));
   color: var(--accent-ink);
   font-size: 1rem;
