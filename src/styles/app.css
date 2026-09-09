@@ -448,15 +448,11 @@
   }
   .nav-links {
     display: flex !important;
-    position: static;
-    height: auto;
-    padding: 0;
-    gap: 8px;
-    inset-inline-start: auto;
-    inset-inline-end: auto;
-    background: transparent;
-    flex-direction: row;
+    position: static !important;
+    pointer-events: auto !important;  /* <- تأكد من هذا */
+    transform: none !important;
   }
+
   .nav-links.open {
     box-shadow: none;
   }
