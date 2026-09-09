@@ -431,7 +431,8 @@
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid var(--line);
-}/* ================= Buttons ================= */
+}
+/* ================= Buttons ================= */
 .btn {
   display: inline-flex;
   align-items: center;
