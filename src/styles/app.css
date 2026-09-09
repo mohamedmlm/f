@@ -1,512 +1,267 @@
-/* ================= Layout shell ================= */
+/* ============================================================ */
+/* ======================== ROOT VARIABLES ===================== */
+/* ============================================================ */
+
+:root {
+  /* === Colors === */
+  --bg: #f8f7f4;
+  --surface: #ffffff;
+  --surface-hi: #f0eeea;
+  --text: #1a1a1a;
+  --text-dim: #6b6b6b;
+  --line: #e5e3df;
+  --shadow: rgba(0, 0, 0, 0.06);
+
+  /* === Accent === */
+  --accent: #d4912a;
+  --accent-hi: #e3a63e;
+  --accent-ink: #1a1a1a;
+
+  /* === Status === */
+  --rose: #e4574c;
+  --green: #2d8f5e;
+
+  /* === Radius === */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* === Fonts === */
+  --font-display: 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-body: 'Cairo', system-ui, -apple-system, sans-serif;
+}
+
+/* ===== Dark Theme ===== */
+[data-theme="dark"] {
+  --bg: #121212;
+  --surface: #1e1e1e;
+  --surface-hi: #2a2a2a;
+  --text: #f0ede8;
+  --text-dim: #9a9a9a;
+  --line: #333333;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --accent: #d4912a;
+  --accent-hi: #e3a63e;
+  --accent-ink: #1a1a1a;
+}
+
+/* ============================================================ */
+/* ======================== RESET ============================== */
+/* ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================ */
+/* ======================== CONTAINER ========================== */
+/* ============================================================ */
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding: 0 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 40px;
+  }
+}
+
+/* ============================================================ */
+/* ======================== LAYOUT SHELL ======================= */
+/* ============================================================ */
+
 .app-shell {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
+
 .app-main {
   flex: 1;
   padding: 40px 0 80px;
 }
 
-/* ================= Navbar ================= */
+/* ============================================================ */
+/* ======================== NAVBAR ============================= */
+/* ============================================================ */
+
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 100;
   background: var(--surface);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line);
+  transition: background 0.3s ease, border-color 0.3s ease;
 }
+
 .navbar-inner {
   display: flex;
   align-items: center;
-  gap: 24px;
-  height: 72px;
   justify-content: space-between;
-  position: relative;
+  height: 72px;
+  gap: 16px;
 }
+
+/* ===== Brand ===== */
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  color: var(--text);
+  gap: 12px;
   background: transparent;
-  font-family: var(--font-display);
-  font-weight: 800;
-  transition: transform 0.2s ease, opacity 0.2 ease;
-  position: relative;
-  text-decoration: none;
+  border: none;
   cursor: pointer;
+  color: var(--text);
+  font-family: var(--font-display, inherit);
+  font-weight: 800;
+  text-decoration: none;
+  position: relative;
+  padding: 4px 0;
+  transition: transform 0.2s ease;
 }
 
 .brand::after {
   content: "";
-  display: block;
-  width: 0;
-  height: 1.5px;
-  background: var(--accent);
   position: absolute;
-  left: 0;
   bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
   border-radius: 999px;
-  transition: width 0.2s ease;
+  transition: width 0.3s ease;
+}
+
+.brand:hover::after {
+  width: 100%;
 }
 
 .brand:hover {
   transform: translateY(-1px);
 }
-.brand:hover::after {
-  width: 100%;
-}
 
 .brand-mark {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  background-color: #e3a63e;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 10px;
   background: linear-gradient(135deg, var(--accent-hi), var(--accent));
   color: var(--accent-ink);
-  font-size: 1rem;
-  line-height: 1;
+  font-size: 1.1rem;
   font-weight: 900;
-  box-shadow: 0 8px 20px rgba(227, 166, 62, 0.22);
-  transition: rotate 0.3s ease;
+  box-shadow: 0 8px 24px rgba(227, 166, 62, 0.25);
+  transition: transform 0.3s ease;
 }
 
-.btn .brand-mark,
-.nav-link .brand-mark {
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
-  border-radius: 7px;
-  font-size: 0.7rem;
-  box-shadow: none;
+.brand:hover .brand-mark {
+  transform: rotate(-8deg) scale(1.02);
 }
+
 .brand-name {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   letter-spacing: -0.03em;
-  transition: letter-spacing 0.2s ease, text-shadow 0.2s ease;
+  white-space: nowrap;
+  transition: letter-spacing 0.3s ease;
 }
 
-.brand-mark:hover {
-  rotate: -20deg;
-}
 .brand:hover .brand-name {
   letter-spacing: 0.02em;
-  text-shadow: 0 0 18px rgba(227, 166, 62, 0.2);
 }
 
-.nav-links {
+/* ===== Nav Actions ===== */
+.nav-actions {
   display: flex;
   align-items: center;
-  gap: 4px;
-  margin-inline-start: auto;
+  gap: 12px;
 }
 
-/* Mobile hamburger toggle */
-.nav-toggle {
-  display: none;
-  background: transparent;
-  border: 1px solid var(--line);
-  padding: 8px 8px;
-  border-radius: 8px;
-  font-size: 1.05rem;
-  cursor: pointer;
-  color: var(--text);
-  z-index: 60;
-  min-width: 42px;
-  min-height: 42px;
+/* ===== Theme Toggle ===== */
+.theme-toggle {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  line-height: 1;
-}
-
-.theme-label {
-  display: inline-block;
-  margin-left: 6px;
-}
-
-.nav-user-mobile {
-  display: none;
-}
-
-/* ===== Mobile ===== */
-@media (max-width: 899px) {
-  /* ===== زر الهمبرغر ===== */
-  .nav-toggle {
-    display: inline-flex;
-    position: fixed;
-    right: 12px;
-    left: auto;
-    top: 12px;
-    margin-inline-start: 0;
-    z-index: 80;
-    min-width: 40px;
-    min-height: 40px;
-    padding: 8px 8px;
-    border-radius: 10px;
-    background: var(--surface);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    border: 1px solid var(--line);
-    cursor: pointer;
-    color: var(--text);
-    font-size: 1.05rem;
-    line-height: 1;
-    align-items: center;
-    justify-content: center;
-    transition: background 0.15s, transform 0.15s;
-  }
-
-  .nav-toggle:hover {
-    background: var(--surface-hi);
-  }
-
-  .nav-toggle:active {
-    transform: scale(0.95);
-  }
-
-  /* ===== Brand ===== */
-  .brand-mark {
-    display: inline-flex;
-  }
-  .brand-name {
-    display: inline-block;
-  }
-  .brand {
-    position: relative;
-    z-index: 61;
-    display: flex;
-    align-items: center;
-    margin-inline-start: 0 !important;
-    margin-inline-end: 48px !important;
-    padding-right: 8px;
-    max-width: calc(100% - 84px);
-  }
-  .brand-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: left;
-    display: inline-block;
-  }
-  .navbar-inner {
-    padding-right: 52px;
-  }
-
-  /* ===== القائمة المنزلقة ===== */
-  .nav-links {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: auto;
-    width: 60%;
-    max-width: 420px;
-    background: var(--surface);
-    flex-direction: column;
-    gap: 4px;
-    padding: 64px 14px 20px; /* زيادة padding-top لزر الإغلاق */
-    border-left: 1px solid var(--line);
-    z-index: 60;
-    transform: translateX(100%);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow-y: auto;
-    pointer-events: none;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
-    overscroll-behavior: contain; /* منع التمرير الزائد */
-  }
-
-  .nav-links.open {
-    transform: translateX(0);
-    pointer-events: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-  }
-
-  /* ===== زر الإغلاق داخل القائمة ===== */
-  .nav-close {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    border: none;
-    background: var(--surface-hi);
-    border-radius: 50%;
-    font-size: 1.4rem;
-    cursor: pointer;
-    color: var(--text);
-    transition: background 0.15s, transform 0.15s;
-    z-index: 70;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-    line-height: 1;
-    padding: 0;
-  }
-
-  .nav-close:hover {
-    background: var(--line);
-  }
-
-  .nav-close:active {
-    transform: scale(0.9);
-  }
-
-  /* ===== الروابط ===== */
-  .nav-link {
-    padding: 12px 14px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: left;
-    color: var(--text);
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .nav-link:hover {
-    background: var(--surface-hi);
-  }
-  .nav-link.active {
-    background: var(--surface-hi);
-    color: var(--accent-hi);
-  }
-  .nav-link + .nav-link {
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
-  }
-
-  /* ===== الخلفية الشفافة (Backdrop) ===== */
-  .nav-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 17, 23, 0.45);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    z-index: 59;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    touch-action: none;
-  }
-
-  .nav-backdrop.open {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  /* ===== الموبايل بروفايل ===== */
-  .mobile-profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-  }
-  .mobile-name {
-    font-weight: 700;
-  }
-  .nav-user {
-    display: none;
-  }
-
-  .nav-user-mobile {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    padding: 10px 0 16px;
-    margin-top: auto;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    border-top: 1px solid var(--line);
-  }
-
-  .nav-user-mobile .btn {
-    padding: 12px 14px;
-    font-size: 1rem;
-    width: 48%;
-    max-width: 260px;
-    justify-content: center;
-  }
-
-  .navbar-inner {
-    height: 64px;
-    gap: 12px;
-  }
-  .brand-name {
-    font-size: 1rem;
-  }
-  .theme-toggle {
-    padding: 8px 10px;
-  }
-  .nav-user {
-    border-inline-start: none;
-    padding-inline-start: 0;
-  }
-}
-
-/* Very small screens */
-@media (max-width: 480px) {
-  .nav-links {
-    width: 100%;
-    max-width: 100%;
-    padding: 60px 14px 20px;
-  }
-  .brand-name {
-    display: none;
-  }
-  .brand-mark {
-    width: 28px;
-    height: 28px;
-  }
-  .nav-avatar {
-    width: 28px;
-    height: 28px;
-  }
-  .theme-label {
-    display: none;
-  }
-  .nav-link {
-    font-size: 1rem;
-    padding: 12px 14px;
-  }
-  .nav-user-mobile {
-    padding-bottom: 14px;
-  }
-}
-
-@media (max-width: 360px) {
-  .nav-link {
-    font-size: 0.98rem;
-    padding: 10px 12px;
-  }
-  .btn {
-    padding: 10px 12px;
-    font-size: 0.95rem;
-  }
-}
-
-/* Desktop styles */
-@media (min-width: 900px) {
-  .nav-toggle {
-    display: none !important;
-  }
-  .nav-close {
-    display: none !important;
-  }
-  .nav-links {
-    display: flex !important;
-    position: static;
-    height: auto;
-    padding: 0;
-    gap: 8px;
-    background: transparent;
-    flex-direction: row;
-    transform: none !important;
-    pointer-events: auto !important;
-    box-shadow: none !important;
-    overflow-y: visible;
-  }
-  .nav-links.open {
-    transform: none !important;
-    box-shadow: none;
-  }
-  .nav-user {
-    display: flex;
-  }
-  .nav-user-mobile {
-    display: none !important;
-  }
-  .nav-backdrop {
-    display: none !important;
-  }
-}
-
-/* Extra large screens */
-@media (min-width: 1280px) {
-  .navbar-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 28px;
-  }
-}
-
-/* Accessibility */
-.nav-link:focus,
-.btn:focus,
-.nav-toggle:focus,
-.theme-toggle:focus {
-  outline: 3px solid rgba(100, 140, 255, 0.18);
-  outline-offset: 2px;
-}
-
-.nav-link {
-  padding: 9px 14px;
-  border-radius: var(--radius-sm);
-  color: var(--text-dim);
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: background 0.15s, color 0.15s;
-  text-decoration: none;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-}
-
-.nav-link:hover {
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
   background: var(--surface);
   color: var(--text);
-}
-.nav-link.active {
-  background: var(--surface-hi);
-  color: var(--accent-hi);
-}
-
-.nav-user {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-inline-start: 10px;
-  margin-inline-start: 6px;
-  border-inline-start: 1px solid var(--line);
-}
-
-.theme-toggle {
-  border: 1px solid var(--line);
-  background: linear-gradient(135deg, var(--surface), var(--surface-hi));
-  color: var(--text);
-  border-radius: 999px;
-  padding: 8px 14px;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 6px 16px var(--shadow);
-  transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  transition: all 0.25s ease;
+  white-space: nowrap;
 }
 
 .theme-toggle:hover {
   border-color: var(--accent);
-  background: linear-gradient(135deg, var(--surface-hi), #f7ead3);
-  box-shadow: 0 10px 22px rgba(201, 125, 26, 0.12);
+  background: var(--surface-hi);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(227, 166, 62, 0.15);
 }
+
 .theme-toggle:active {
-  transform: translateY(1px);
+  transform: scale(0.96);
+}
+
+.theme-label {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
+
+/* ===== Nav User ===== */
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--line);
+}
+
+.nav-profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.nav-profile:hover {
+  background: var(--surface-hi);
 }
 
 .nav-avatar {
@@ -514,257 +269,473 @@
   height: 34px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid var(--line);
+  border: 2px solid var(--line);
+  transition: border-color 0.2s ease;
 }
 
-/* ================= Buttons ================= */
+.nav-profile:hover .nav-avatar {
+  border-color: var(--accent);
+}
+
+.nav-username {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ===== Hamburger ===== */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 22px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 200;
+  position: relative;
+}
+
+.hamburger-line {
+  display: block;
+  width: 100%;
+  height: 2.5px;
+  background: var(--text);
+  border-radius: 999px;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: center;
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+  transform: translateY(9.5px) rotate(45deg);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+  transform: translateY(-9.5px) rotate(-45deg);
+}
+
+/* ============================================================ */
+/* ======================== OVERLAY ============================ */
+/* ============================================================ */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.menu-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ============================================================ */
+/* ======================== MOBILE MENU ======================== */
+/* ============================================================ */
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 85%;
+  max-width: 380px;
+  height: 100vh;
+  background: var(--surface);
+  z-index: 160;
+  padding: 24px 20px 30px;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-menu.active {
+  transform: translateX(0);
+}
+
+/* ===== Menu Close ===== */
+.menu-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--surface-hi);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.menu-close:hover {
+  background: var(--line);
+  transform: rotate(90deg);
+}
+
+/* ===== Menu Brand ===== */
+.menu-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0 24px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+
+.menu-brand .brand-mark {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  font-size: 1.2rem;
+}
+
+.menu-brand .brand-name {
+  font-size: 1.2rem;
+}
+
+/* ===== Menu Nav ===== */
+.menu-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: left;
+}
+
+.menu-link:hover {
+  background: var(--surface-hi);
+  color: var(--text);
+}
+
+.menu-link.active {
+  background: var(--surface-hi);
+  color: var(--accent-hi);
+  font-weight: 600;
+}
+
+.menu-icon {
+  font-size: 1.2rem;
+  width: 28px;
+  text-align: center;
+}
+
+/* ===== Menu Divider ===== */
+.menu-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 16px 0;
+}
+
+/* ===== Menu User ===== */
+.menu-user {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.menu-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--surface-hi);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.menu-profile:hover {
+  background: var(--line);
+}
+
+.menu-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.menu-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.menu-user-name {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.menu-user-email {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.menu-logout {
+  padding: 12px;
+  border: 1px solid rgba(228, 87, 76, 0.3);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--rose);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.menu-logout:hover {
+  background: rgba(228, 87, 76, 0.08);
+}
+
+.menu-auth {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-login {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.menu-login:hover {
+  border-color: var(--accent);
+  color: var(--accent-hi);
+}
+
+.menu-register {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--accent-hi), var(--accent));
+  color: var(--accent-ink);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.menu-register:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(227, 166, 62, 0.3);
+}
+
+/* ============================================================ */
+/* ======================== RESPONSIVE ========================= */
+/* ============================================================ */
+
+/* Tablet & Mobile */
+@media (max-width: 899px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-user {
+    display: none;
+  }
+
+  .theme-label {
+    display: none;
+  }
+
+  .theme-toggle {
+    padding: 8px 12px;
+    font-size: 1rem;
+  }
+
+  .navbar-inner {
+    height: 64px;
+  }
+
+  .brand-name {
+    font-size: 1rem;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Small Phones */
+@media (max-width: 480px) {
+  .mobile-menu {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 16px 24px;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    font-size: 0.8rem;
+  }
+
+  .menu-brand .brand-name {
+    display: inline-block;
+    font-size: 1rem;
+  }
+
+  .menu-brand .brand-mark {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    font-size: 1rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 900px) {
+  .mobile-menu {
+    display: none !important;
+  }
+
+  .menu-overlay {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: none !important;
+  }
+}
+
+/* ============================================================ */
+/* ======================== BUTTONS ============================ */
+/* ============================================================ */
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 11px 20px;
-  border-radius: var(--radius-sm);
+  padding: 10px 18px;
+  border-radius: 8px;
   border: 1px solid transparent;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.15s, border-color 0.15s, opacity 0.15s;
+  transition: all 0.2s ease;
   white-space: nowrap;
   text-decoration: none;
 }
+
 .btn:active {
-  transform: translateY(1px);
+  transform: scale(0.96);
 }
-.btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
+
 .btn-primary {
-  background: linear-gradient(160deg, var(--accent-hi), var(--accent));
+  background: linear-gradient(135deg, var(--accent-hi), var(--accent));
   color: var(--accent-ink);
+  border: none;
 }
-.btn-primary:hover:not(:disabled) {
-  filter: brightness(1.06);
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(227, 166, 62, 0.3);
 }
+
 .btn-ghost {
   background: transparent;
   border-color: var(--line);
   color: var(--text);
 }
-.btn-ghost:hover:not(:disabled) {
+
+.btn-ghost:hover {
   border-color: var(--accent);
   color: var(--accent-hi);
+  background: var(--surface-hi);
 }
-.btn-danger {
-  background: transparent;
-  border-color: rgba(228, 87, 76, 0.4);
-  color: var(--rose);
-}
-.btn-danger:hover:not(:disabled) {
-  background: rgba(228, 87, 76, 0.1);
-}
+
 .btn-sm {
-  padding: 7px 12px;
-  font-size: 0.85rem;
+  padding: 7px 14px;
+  font-size: 0.82rem;
 }
+
 .btn-block {
   width: 100%;
 }
 
+/* ============================================================ */
+/* ======================== SCROLLBAR ========================== */
+/* ============================================================ */
 
-
-/* ================= Fluid sizing ================= */
-:root {
-  --nav-font-min: 0.92rem;
-  --nav-font-max: 1.08rem;
-  --brand-font-min: 0.95rem;
-  --brand-font-max: 1.4rem;
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-@media (max-width: 720px) {
-  .brand-name {
-    font-size: clamp(var(--brand-font-min), 1.2vw + 0.4rem, var(--brand-font-max));
-  }
-  .nav-link {
-    font-size: clamp(var(--nav-font-min), 0.9vw + 0.45rem, var(--nav-font-max));
-  }
-  .btn {
-    padding: clamp(8px, 0.6vw + 6px, 14px) clamp(10px, 0.8vw + 8px, 20px);
-  }
+::-webkit-scrollbar-track {
+  background: var(--surface);
 }
 
-@media (min-width: 1280px) {
-  .navbar-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    gap: 28px;
-  }
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
 }
 
-/* ===== زر الإغلاق (إخفاء في الديسكتوب) ===== */
-.nav-close {
-  display: none;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
-/* ===== الخلفية الشفافة (إخفاء في الديسكتوب) ===== */
-.nav-backdrop {
-  display: block;
-}
+/* ============================================================ */
+/* ======================== SELECTION ========================== */
+/* ============================================================ */
 
-/* ===== منع التمرير عند فتح القائمة ===== */
-body.menu-open {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-}
-
-/* ===== SOLUTION FOR TOUCH ISSUES ===== */
-
-/* تأكد من أن الـ Navbar له z-index منخفض */
-.navbar {
-  position: relative;
-  z-index: 10;
-}
-
-/* زر الهمبرغر - يبقى فوق كل شيء */
-.nav-toggle {
-  position: fixed !important;
-  z-index: 9999 !important;
-  top: 12px;
-  right: 12px;
-}
-
-/* الـ Backdrop - يغطي الشاشة بالكامل */
-.nav-backdrop {
-  position: fixed !important;
-  inset: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: rgba(0, 0, 0, 0.5) !important;
-  z-index: 9997 !important;
-  display: none !important;
-  cursor: pointer;
-}
-
-.nav-backdrop.open {
-  display: block !important;
-}
-
-/* القائمة - تأكد من أنها فوق الـ Backdrop */
-.nav-links {
-  position: fixed !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 75% !important;
-  max-width: 350px !important;
-  height: 100vh !important;
-  background: var(--surface) !important;
-  z-index: 9998 !important;
-  transform: translateX(100%) !important;
-  transition: transform 0.3s ease !important;
-  padding: 60px 20px 20px !important;
-  overflow-y: auto !important;
-  box-shadow: -5px 0 30px rgba(0,0,0,0.2) !important;
-}
-
-.nav-links.open {
-  transform: translateX(0) !important;
-}
-
-/* زر الإغلاق */
-.nav-close {
-  position: absolute !important;
-  top: 12px !important;
-  right: 14px !important;
-  width: 40px !important;
-  height: 40px !important;
-  border: none !important;
-  background: var(--surface-hi) !important;
-  border-radius: 50% !important;
-  font-size: 1.5rem !important;
-  cursor: pointer !important;
-  z-index: 9999 !important;
-  color: var(--text) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* منع التمرير عند فتح القائمة */
-body.no-scroll {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* الروابط - تأكد من أنها قابلة للنقر */
-.nav-link {
-  cursor: pointer !important;
-  touch-action: auto !important;
-  -webkit-tap-highlight-color: transparent !important;
-  user-select: none !important;
-}
-.container {
-  /* لا تستخدم overflow: hidden هنا */
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-/* زر الهمبرغر */
-.nav-toggle {
-  display: none;
-  background: transparent;
-  border: 1px solid var(--line);
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 1.2rem;
-  cursor: pointer;
-  color: var(--text);
-  z-index: 10000;
-  min-width: 42px;
-  min-height: 42px;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  position: relative;
-}
-
-/* موبايل */
-@media (max-width: 899px) {
-  .nav-toggle {
-    display: inline-flex;
-  }
-  .nav-user {
-    display: none !important;
-  }
-  .navbar-inner {
-    padding-right: 0;
-  }
-}
-
-/* ديسكتوب */
-@media (min-width: 900px) {
-  .nav-toggle {
-    display: none !important;
-  }
-}
-* {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-.nav-toggle,
-.nav-backdrop,
-.nav-close {
-  touch-action: manipulation !important;
-  pointer-events: auto !important;
-}
-
-.nav-links.open ~ * {
-  pointer-events: none !important;
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
