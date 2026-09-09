@@ -47,18 +47,21 @@ export default function Navbar() {
 
   // Close menu when navigation happens (page changes) - مع تأخير
   useEffect(() => {
-    if (closeTimerRef.current) {
-      clearTimeout(closeTimerRef.current);
+  // تأخير إغلاق القائمة لضمان اكتمال التنقل
+  if (closeTimeoutRef.current) {
+    clearTimeout(closeTimeoutRef.current);
+  }
+  closeTimeoutRef.current = setTimeout(() => {
+    setMenuOpen(false);
+  }, 150);
+  
+  return () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
     }
-    closeTimerRef.current = setTimeout(() => {
-      setMenuOpen(false);
-    }, 200);
-    return () => {
-      if (closeTimerRef.current) {
-        clearTimeout(closeTimerRef.current);
-      }
-    };
-  }, [location.pathname]);
+  };
+}, [location.pathname]);
+
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
