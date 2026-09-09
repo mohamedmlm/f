@@ -714,3 +714,41 @@ body.no-scroll {
   margin: 0 auto;
   padding: 0 20px;
 }
+/* زر الهمبرغر */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text);
+  z-index: 10000;
+  min-width: 42px;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  position: relative;
+}
+
+/* موبايل */
+@media (max-width: 899px) {
+  .nav-toggle {
+    display: inline-flex;
+  }
+  .nav-user {
+    display: none !important;
+  }
+  .navbar-inner {
+    padding-right: 0;
+  }
+}
+
+/* ديسكتوب */
+@media (min-width: 900px) {
+  .nav-toggle {
+    display: none !important;
+  }
+}
