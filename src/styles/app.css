@@ -253,37 +253,44 @@
 }
 }
 
-/* ===== Desktop ===== */
 @media (min-width: 900px) {
   .nav-toggle {
+    display: none !important;
+  }
+  .nav-close {
     display: none !important;
   }
   .nav-links {
     display: flex !important;
     position: static !important;
-    flex-direction: row !important;
+    height: auto !important;
     padding: 0 !important;
+    gap: 8px !important;
     background: transparent !important;
-    box-shadow: none !important;
-    width: auto !important;
+    flex-direction: row !important;
+    transform: none !important;
     pointer-events: auto !important;
-    right: auto !important;
+    box-shadow: none !important;
+    overflow-y: visible !important;
+    width: auto !important;
+    max-width: none !important;
     border-left: none !important;
+    margin: 0 !important;
+    top: auto !important;
+    right: auto !important;
   }
   .nav-links.open {
+    transform: none !important;
+    box-shadow: none !important;
     right: auto !important;
-  }
-  .nav-backdrop {
-    display: none !important;
   }
   .nav-user {
     display: flex !important;
-    align-items: center;
-    gap: 10px;
-    padding-left: 10px;
-    border-left: 1px solid var(--line);
   }
   .nav-user-mobile {
+    display: none !important;
+  }
+  .nav-backdrop {
     display: none !important;
   }
 }
