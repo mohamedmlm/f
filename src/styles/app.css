@@ -599,3 +599,42 @@
     gap: 28px;
   }
 }
+/* ===== حل مشكلة الـ reload والـ navigation ===== */
+@media (max-width: 899px) {
+  /* القائمة وكل محتوياتها فوق الكل */
+  .nav-links.open {
+    z-index: 999999 !important;
+    pointer-events: auto !important;
+  }
+
+  .nav-links.open * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  .nav-links.open .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 9999999 !important;
+  }
+
+  .nav-links.open .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 9999999 !important;
+  }
+
+  /* الخلفية لا تمنع النقر */
+  .nav-backdrop {
+    pointer-events: none !important;
+    z-index: 40 !important;
+  }
+
+  /* زر الهامبرغر فوق الكل */
+  .nav-toggle {
+    z-index: 9999999 !important;
+    pointer-events: auto !important;
+  }
+}
