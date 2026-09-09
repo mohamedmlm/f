@@ -376,6 +376,42 @@
   .nav-links.open {
     pointer-events: auto !important;
   }
+    /* ===== حل مشكلة الـ touch ===== */
+  /* تأكد أن القائمة وكل محتوياتها قابلة للنقر */
+  .nav-links.open {
+    pointer-events: auto !important;
+  }
+
+  .nav-links.open * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  .nav-links.open .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  .nav-links.open .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  .nav-links.open .nav-user-mobile {
+    pointer-events: auto !important;
+  }
+
+  .nav-links.open .nav-user-mobile * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* تأكد أن زر الإغلاق يعمل */
+  .nav-toggle {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 99999 !important;
+  }
 }
 
 /* Very small screens: full-screen menu and compact brand */
