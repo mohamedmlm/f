@@ -150,43 +150,42 @@ export default function Navbar() {
 
           {/* Only render nav when menu is open on mobile, but always show on desktop */}
           {(menuOpen || isDesktop) && (
-            <nav ref={navLinksRef} className={`nav-links${menuOpen ? " open" : ""}`}>
-              <NavLink
-                to="/"
-                end
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  `nav-link${isActive ? " active" : ""}`
-                }
-              >
-                المتجر
-              </NavLink>
-              <NavLink
-                to="/purchases"
-                onClick={closeMenu}
-                className={({ isActive }) =>
-                  `nav-link${isActive ? " active" : ""}`
-                }
-              >
-                مشترياتي
-              </NavLink>
-              {isStaff && (
-                <NavLink
-                  to="/admin"
-                  onClick={closeMenu}
-                  className={({ isActive }) =>
-                    `nav-link${isActive ? " active" : ""}`
-                  }
-                >
-                  لوحة التحكم
-                </NavLink>
-              )}
-              
-              {/* Mobile-only user menu */}
-              <div className="nav-user-mobile" aria-hidden={!menuOpen}>
-                <AuthButtons isMobile={true} />
-              </div>
-            </nav>
+            <nav
+  ref={navLinksRef}
+  className={`nav-links${menuOpen ? " open" : ""}`}
+>
+  <NavLink
+    to="/"
+    end
+    className={({ isActive }) =>
+      `nav-link${isActive ? " active" : ""}`
+    }
+  >
+    المتجر
+  </NavLink>
+  <NavLink
+    to="/purchases"
+    className={({ isActive }) =>
+      `nav-link${isActive ? " active" : ""}`
+    }
+  >
+    مشترياتي
+  </NavLink>
+  {isStaff && (
+    <NavLink
+      to="/admin"
+      className={({ isActive }) =>
+        `nav-link${isActive ? " active" : ""}`
+      }
+    >
+      لوحة التحكم
+    </NavLink>
+  )}
+  
+  <div className="nav-user-mobile" aria-hidden={!menuOpen}>
+    <AuthButtons isMobile={true} />
+  </div>
+</nav>
           )}
 
           {/* Desktop user section */}
