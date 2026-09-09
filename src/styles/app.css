@@ -752,3 +752,19 @@ body.no-scroll {
     display: none !important;
   }
 }
+* {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.nav-toggle,
+.nav-backdrop,
+.nav-close {
+  touch-action: manipulation !important;
+  pointer-events: auto !important;
+}
+
+.nav-links.open ~ * {
+  pointer-events: none !important;
+}
