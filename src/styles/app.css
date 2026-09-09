@@ -138,6 +138,7 @@
 
 /* ===== Mobile ===== */
 @media (max-width: 899px) {
+  /* ===== زر الهمبرغر ===== */
   .nav-toggle {
     display: inline-flex;
     position: fixed;
@@ -152,8 +153,27 @@
     border-radius: 10px;
     background: var(--surface);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    color: var(--text);
+    font-size: 1.05rem;
+    line-height: 1;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, transform 0.15s;
   }
 
+  .nav-toggle:hover {
+    background: var(--surface-hi);
+  }
+
+  .nav-toggle:active {
+    transform: scale(0.95);
+  }
+
+  /* ===== Brand ===== */
   .brand-mark {
     display: inline-flex;
   }
@@ -181,6 +201,7 @@
     padding-right: 52px;
   }
 
+  /* ===== القائمة المنزلقة ===== */
   .nav-links {
     position: fixed;
     top: 0;
@@ -192,14 +213,15 @@
     background: var(--surface);
     flex-direction: column;
     gap: 4px;
-    padding: 60px 14px 20px;
+    padding: 64px 14px 20px; /* زيادة padding-top لزر الإغلاق */
     border-left: 1px solid var(--line);
     z-index: 60;
     transform: translateX(100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     overflow-y: auto;
     pointer-events: none;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    overscroll-behavior: contain; /* منع التمرير الزائد */
   }
 
   .nav-links.open {
@@ -208,6 +230,41 @@
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
   }
 
+  /* ===== زر الإغلاق داخل القائمة ===== */
+  .nav-close {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    border: none;
+    background: var(--surface-hi);
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: var(--text);
+    transition: background 0.15s, transform 0.15s;
+    z-index: 70;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1;
+    padding: 0;
+  }
+
+  .nav-close:hover {
+    background: var(--line);
+  }
+
+  .nav-close:active {
+    transform: scale(0.9);
+  }
+
+  /* ===== الروابط ===== */
   .nav-link {
     padding: 12px 14px;
     width: 100%;
@@ -220,6 +277,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-link:hover {
@@ -233,14 +292,26 @@
     border-top: 1px solid rgba(0, 0, 0, 0.04);
   }
 
+  /* ===== الخلفية الشفافة (Backdrop) ===== */
   .nav-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(15, 17, 23, 0.18);
+    background: rgba(15, 17, 23, 0.45);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     z-index: 59;
+    opacity: 0;
     pointer-events: none;
+    transition: opacity 0.3s ease;
+    touch-action: none;
   }
 
+  .nav-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* ===== الموبايل بروفايل ===== */
   .mobile-profile {
     display: flex;
     align-items: center;
