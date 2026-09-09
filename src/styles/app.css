@@ -226,15 +226,10 @@
       opacity 180ms ease;
   }
 
-  .nav-links.open {
-    opacity: 1;
+    .nav-links.open {
+    transform: translateX(0);
     pointer-events: auto;
-    transform: translateX(0) scaleX(1);
-    padding: 16px 14px;
-    gap: 10px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
   .nav-link {
     padding: 12px 14px;
