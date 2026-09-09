@@ -17,7 +17,6 @@ export default function Navbar() {
   });
   const navLinksRef = useRef(null);
   const navToggleRef = useRef(null);
-  const navBackdropRef = useRef(null);
 
   // Check window size for desktop view
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function Navbar() {
       const desktop = window.innerWidth >= 900;
       setIsDesktop(desktop);
       if (desktop) {
-        setMenuOpen(false); // Close menu when resizing to desktop
+        setMenuOpen(false);
       }
     };
     
@@ -52,25 +51,6 @@ export default function Navbar() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
-
-  // Close menu on outside click
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const handlePointerDown = (event) => {
-      const target = event.target;
-      const clickedInsideMenu = navLinksRef.current?.contains(target);
-      const clickedToggle = navToggleRef.current?.contains(target);
-      const clickedBackdrop = navBackdropRef.current?.contains(target);
-
-      if (!clickedInsideMenu && !clickedToggle && !clickedBackdrop) {
-        setMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, [menuOpen]);
 
   const handleLogout = useCallback(() => {
@@ -141,9 +121,7 @@ export default function Navbar() {
     <>
       {menuOpen && (
         <div
-          ref={navBackdropRef}
           className="nav-backdrop"
-          onClick={closeMenu}
           aria-hidden={!menuOpen}
         />
       )}
