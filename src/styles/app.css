@@ -1377,3 +1377,53 @@ table.data-table tr:last-child td {
     cursor: pointer !important;
   }
 }
+/* ===== الحل النهائي لمشكلة الـ touch والـ pointer-events ===== */
+@media (max-width: 899px) {
+  /* 1. القائمة نفسها تسمح بالنقر */
+  .nav-links.open {
+    pointer-events: auto !important;
+    z-index: 99999 !important;
+  }
+
+  /* 2. كل العناصر داخل القائمة تسمح بالنقر */
+  .nav-links.open * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* 3. الروابط تحديداً */
+  .nav-links.open .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 999999 !important;
+  }
+
+  /* 4. الأزرار تحديداً */
+  .nav-links.open .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative !important;
+    z-index: 999999 !important;
+  }
+
+  /* 5. الخلفية تمنع النقر */
+  .nav-backdrop {
+    pointer-events: none !important;
+    z-index: 99998 !important;
+  }
+
+  /* 6. زر الإغلاق */
+  .nav-toggle {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 9999999 !important;
+  }
+
+  /* 7. الروابط في الموبايل */
+  .nav-user-mobile .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 999999 !important;
+  }
+}
