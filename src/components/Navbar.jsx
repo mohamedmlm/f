@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
@@ -6,6 +6,7 @@ import { fileUrl } from "../api/client";
 export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "dark",
   );
@@ -24,6 +25,7 @@ export default function Navbar() {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(max-width: 899px)");
     const handler = (e) => setIsMobile(e.matches);
+    // modern browsers
     if (mq.addEventListener) mq.addEventListener("change", handler);
     else mq.addListener(handler);
     return () => {
@@ -31,13 +33,21 @@ export default function Navbar() {
       else mq.removeListener(handler);
     };
   }, []);
-
   useEffect(() => {
+    // prevent background scroll when mobile menu is open
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
+
+  // Close the mobile menu only once navigation has actually happened,
+  // instead of racing a manual onClick against the outside-click
+  // listener below. This is what previously let the menu close
+  // without the page actually switching.
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -138,6 +148,7 @@ export default function Navbar() {
                 لوحة التحكم
               </NavLink>
             )}
+            {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
@@ -167,15 +178,15 @@ export default function Navbar() {
                 <>
                   <NavLink
                     to="/login"
-                    className="btn btn-ghost btn-block"
                     onClick={() => setMenuOpen(false)}
+                    className="btn btn-ghost btn-block"
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
-                    className="btn btn-primary btn-block"
                     onClick={() => setMenuOpen(false)}
+                    className="btn btn-primary btn-block"
                   >
                     حساب جديد
                   </NavLink>
