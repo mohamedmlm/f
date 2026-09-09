@@ -13,7 +13,7 @@
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 50; /* keep above page content but below mobile nav (60) */
+  z-index: 50;
   background: var(--surface);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
@@ -23,9 +23,6 @@
   align-items: center;
   gap: 24px;
   height: 72px;
-}
-/* Make header layout use space-between so brand is left and controls on right */
-.navbar-inner {
   justify-content: space-between;
   position: relative;
 }
@@ -37,10 +34,10 @@
   background: transparent;
   font-family: var(--font-display);
   font-weight: 800;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2 ease;
+  transition: transform 0.2s ease, opacity 0.2 ease;
   position: relative;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .brand::after {
@@ -73,7 +70,7 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  background-color: #e3a63e; /* fallback in case gradient/vars fail to load */
+  background-color: #e3a63e;
   background: linear-gradient(135deg, var(--accent-hi), var(--accent));
   color: var(--accent-ink);
   font-size: 1rem;
@@ -95,9 +92,7 @@
 .brand-name {
   font-size: 1.2rem;
   letter-spacing: -0.03em;
-  transition:
-    letter-spacing 0.2s ease,
-    text-shadow 0.2s ease;
+  transition: letter-spacing 0.2s ease, text-shadow 0.2s ease;
 }
 
 .brand-mark:hover {
@@ -143,6 +138,7 @@
   display: none;
 }
 
+/* ===== Mobile styles ===== */
 @media (max-width: 899px) {
   .nav-toggle {
     display: inline-flex;
@@ -160,7 +156,6 @@
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
   }
 
-  /* show brand mark/name on mobile */
   .brand-mark {
     display: inline-flex;
   }
@@ -171,7 +166,7 @@
 
   .brand {
     position: relative;
-    z-index: 61; /* keep brand above the backdrop so it stays visible */
+    z-index: 61;
     display: flex;
     align-items: center;
     margin-inline-start: 0 !important;
@@ -193,52 +188,53 @@
   }
 
   .nav-links {
-    display: flex;
     position: fixed;
     top: 0;
     bottom: 0;
-    right: 0; /* open from right so brand on left stays visible */
+    right: 0;
     left: auto;
-    width: 60%; /* slimmer so brand/logo on left doesn't get covered */
+    width: 60%;
     max-width: 420px;
     background: var(--surface);
     flex-direction: column;
-    gap: 0;
-    padding: 12px 14px;
+    gap: 4px;
+    padding: 60px 14px 20px;
     border-left: 1px solid var(--line);
     z-index: 60;
-    transform-origin: right center;
-  }
-
-  /* Make the mobile menu more touch-friendly */
-  .nav-links {
-    /* hidden by default; transform for smooth animation (slide from right) */
-    display: flex;
-    transform-origin: right center;
-    transform: translateX(12px) scaleX(0.98);
-    opacity: 0;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
     pointer-events: none;
-    transition:
-      transform 220ms ease,
-      opacity 180ms ease;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
   }
 
   .nav-links.open {
-    opacity: 1;
+    transform: translateX(0);
     pointer-events: auto;
-    transform: translateX(0) scaleX(1);
-    padding: 16px 14px;
-    gap: 10px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
+
   .nav-link {
     padding: 12px 14px;
     width: 100%;
     border-radius: 8px;
     font-size: 1rem;
-    text-align: left; /* force left alignment inside menu */
+    text-align: left;
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link:hover {
+    background: var(--surface-hi);
+  }
+
+  .nav-link.active {
+    background: var(--surface-hi);
+    color: var(--accent-hi);
   }
 
   .nav-link + .nav-link {
@@ -249,10 +245,151 @@
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-    z-index: 59; /* sit above the navbar (50) but under the mobile nav (60) */
-    pointer-events: auto;
-    backdrop-filter: none;
+    z-index: 59;
+    pointer-events: none;
   }
+
+  .nav-backdrop.visible {
+    pointer-events: none;
+  }
+
+  .mobile-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+  }
+
+  .mobile-name {
+    font-weight: 700;
+  }
+
+  .nav-user {
+    display: none;
+  }
+
+  .nav-user-mobile {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 10px 0 16px;
+    margin-top: auto;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-top: 1px solid var(--line);
+  }
+
+  .nav-user-mobile .btn {
+    padding: 12px 14px;
+    font-size: 1rem;
+    width: 48%;
+    max-width: 260px;
+    justify-content: center;
+  }
+
+  .navbar-inner {
+    height: 64px;
+    gap: 12px;
+  }
+
+  .brand-name {
+    font-size: 1rem;
+  }
+
+  .theme-toggle {
+    padding: 8px 10px;
+  }
+
+  .nav-user {
+    border-inline-start: none;
+    padding-inline-start: 0;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  .nav-links {
+    width: 100%;
+    max-width: 100%;
+    padding: 60px 14px 20px;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nav-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .theme-label {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    padding: 12px 14px;
+  }
+
+  .nav-user-mobile {
+    padding-bottom: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  .nav-link {
+    font-size: 0.98rem;
+    padding: 10px 12px;
+  }
+
+  .btn {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 900px) {
+  .nav-toggle {
+    display: none !important;
+  }
+  .nav-close {
+    display: none !important;
+  }
+  .nav-links {
+    display: flex !important;
+    position: static;
+    height: auto;
+    padding: 0;
+    gap: 8px;
+    background: transparent;
+    flex-direction: row;
+    transform: none !important;
+    pointer-events: auto !important;
+    box-shadow: none !important;
+    overflow-y: visible;
+  }
+  .nav-links.open {
+    transform: none !important;
+    box-shadow: none;
+  }
+  .nav-user {
+    display: flex;
+  }
+  .nav-user-mobile {
+    display: none !important;
+  }
+  .nav-backdrop {
+    display: none !important;
+  }
+
 
   .nav-links.open {
     position: fixed;
