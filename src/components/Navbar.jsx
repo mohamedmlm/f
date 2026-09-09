@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
 
-const closeTimerRef = useRef(null);
 export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
   const navigate = useNavigate();
@@ -36,7 +35,6 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    // منع scroll بس مش التأثير على pointer-events
     if (menuOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -48,24 +46,19 @@ export default function Navbar() {
   }, [menuOpen]);
 
   // Close menu when navigation happens (page changes) - مع تأخير
-  // Close menu when navigation happens (page changes)
-useEffect(() => {
-  // Clear any existing timer
-  if (closeTimerRef.current) {
-    clearTimeout(closeTimerRef.current);
-  }
-  
-  // تأخير إغلاق القائمة 200ms عشان الـ NavLink يخلص تنقل
-  closeTimerRef.current = setTimeout(() => {
-    setMenuOpen(false);
-  }, 200);
-  
-  return () => {
+  useEffect(() => {
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
     }
-  };
-}, [location.pathname]);
+    closeTimerRef.current = setTimeout(() => {
+      setMenuOpen(false);
+    }, 200);
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
+  }, [location.pathname]);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -87,9 +80,7 @@ useEffect(() => {
         <div
           ref={navBackdropRef}
           className="nav-backdrop"
-          style={{ pointerEvents: "none" }}
           aria-hidden={!menuOpen}
-          onClick={() => {}} 
         />
       )}
 
@@ -159,9 +150,7 @@ useEffect(() => {
                   </NavLink>
                   <button
                     className="btn btn-ghost btn-block"
-                    onClick={() => {
-                      handleLogout();
-                    }}
+                    onClick={handleLogout}
                   >
                     خروج
                   </button>
