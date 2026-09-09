@@ -55,6 +55,7 @@ export default function Navbar() {
 
   // دالة للتنقل مع إغلاق القائمة
   const handleNavigate = (path) => {
+    alert("🖱️ Clicked on: " + path); // ← أضف alert عشان تتأكد من الشغل
     console.log("🖱️ Clicked on:", path);
     console.log("🔴 Closing menu first...");
     setMenuOpen(false);
@@ -99,26 +100,35 @@ export default function Navbar() {
 
           {/* القائمة */}
           <nav 
-  ref={navLinksRef}
-  className={`nav-links${menuOpen ? " open" : ""}`}
-  onClick={() => console.log("🟢 Nav clicked!")}
->
+            ref={navLinksRef}
+            className={`nav-links${menuOpen ? " open" : ""}`}
+            onClick={() => console.log("🟢 Nav clicked!")}
+          >
             <button
               className="nav-link"
-              onClick={() => handleNavigate("/")}
+              onClick={() => {
+                alert("Test click - المتجر!");
+                handleNavigate("/");
+              }}
             >
               المتجر
             </button>
             <button
               className="nav-link"
-              onClick={() => handleNavigate("/purchases")}
+              onClick={() => {
+                alert("Test click - مشترياتي!");
+                handleNavigate("/purchases");
+              }}
             >
               مشترياتي
             </button>
             {isStaff && (
               <button
                 className="nav-link"
-                onClick={() => handleNavigate("/admin")}
+                onClick={() => {
+                  alert("Test click - لوحة التحكم!");
+                  handleNavigate("/admin");
+                }}
               >
                 لوحة التحكم
               </button>
