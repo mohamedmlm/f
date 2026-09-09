@@ -2,6 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
+import Menu from "./Menu"; // استيراد المكون الجديد
 
 export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
@@ -13,28 +14,17 @@ export default function Navbar() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // ===== Theme =====
+  // Theme
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // ===== Body scroll =====
-  useEffect(() => {
-    if (menuOpen) {
-      document.body.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-    }
-    return () => document.body.classList.remove("no-scroll");
-  }, [menuOpen]);
-
-  // ===== Close menu on navigation =====
+  // Close menu on navigation
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  // ===== Functions =====
   const handleNavigate = (path) => {
     setMenuOpen(false);
     navigate(path);
@@ -60,18 +50,15 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ===== BACKDROP ===== */}
-      <div
-        className={`nav-backdrop${menuOpen ? " open" : ""}`}
-        onClick={closeMenu}
-        onTouchEnd={closeMenu} // مهم جداً للموبايل
-      />
-
-      {/* ===== NAVBAR ===== */}
       <header className="navbar">
         <div className="container navbar-inner">
           {/* Brand */}
-          <button type="button" className="brand" onClick={() => handleNavigate("/")}>
+          <button
+            type="button"
+            className="brand"
+            onClick={() => handleNavigate("/")}
+            aria-label="الذهاب إلى المتجر"
+          >
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
           </button>
@@ -81,92 +68,69 @@ export default function Navbar() {
             type="button"
             className="nav-toggle"
             onClick={toggleMenu}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              toggleMenu();
-            }}
-            aria-label="Toggle menu"
+            aria-label={menuOpen ? "إغلاق القائمة" : "فتح القائمة"}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? "✕" : "☰"}
           </button>
 
-          {/* ===== MENU ===== */}
-          <nav className={`nav-links${menuOpen ? " open" : ""}`}>
-            {/* Close button inside menu */}
-            <button
-              type="button"
-              className="nav-close"
-              onClick={closeMenu}
-              onTouchEnd={(e) => {
-                e.preventDefault();
-                closeMenu();
-              }}
-            >
-              ✕
-            </button>
-
-            {/* Links */}
-            <button type="button" className="nav-link" onClick={() => handleNavigate("/")}>
-              المتجر
-            </button>
-
-            <button type="button" className="nav-link" onClick={() => handleNavigate("/purchases")}>
-              مشترياتي
-            </button>
-
-            {isStaff && (
-              <button type="button" className="nav-link" onClick={() => handleNavigate("/admin")}>
-                لوحة التحكم
-              </button>
-            )}
-
-            {/* Mobile User */}
-            <div className="nav-user-mobile">
-              {token ? (
-                <>
-                  <button type="button" className="nav-link mobile-profile" onClick={() => handleNavigate("/profile")}>
-                    <img className="nav-avatar" src={fileUrl("avatar", user?.avatar) || "/lantern.svg"} alt="Profile" />
-                    <span>{user?.name || "..."}</span>
-                  </button>
-                  <button type="button" className="btn btn-ghost btn-block" onClick={handleLogout}>
-                    خروج
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button type="button" className="btn btn-ghost btn-block" onClick={() => handleNavigate("/login")}>
-                    دخول
-                  </button>
-                  <button type="button" className="btn btn-primary btn-block" onClick={() => handleNavigate("/register")}>
-                    حساب جديد
-                  </button>
-                </>
-              )}
-            </div>
-          </nav>
-
           {/* Desktop User */}
           <div className="nav-user">
-            <button type="button" className="theme-toggle" onClick={toggleTheme}>
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={toggleTheme}
+              aria-label="تغيير المظهر"
+            >
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
 
             {token ? (
               <>
-                <button type="button" className="row" onClick={() => handleNavigate("/profile")} style={{ background: "none", border: "none", cursor: "pointer", gap: 8, display: "flex", alignItems: "center" }}>
-                  <img className="nav-avatar" src={fileUrl("avatar", user?.avatar) || "/lantern.svg"} alt="Profile" />
-                  <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>{user?.name || "..."}</span>
+                <button
+                  type="button"
+                  className="row"
+                  onClick={() => handleNavigate("/profile")}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    gap: 8,
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    className="nav-avatar"
+                    src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                    alt="الملف الشخصي"
+                  />
+                  <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>
+                    {user?.name || "..."}
+                  </span>
                 </button>
-                <button type="button" className="btn btn-ghost btn-sm" onClick={handleLogout}>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  onClick={handleLogout}
+                >
                   خروج
                 </button>
               </>
             ) : (
               <>
-                <button type="button" className="btn btn-ghost btn-sm" onClick={() => handleNavigate("/login")}>
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => handleNavigate("/login")}
+                >
                   دخول
                 </button>
-                <button type="button" className="btn btn-primary btn-sm" onClick={() => handleNavigate("/register")}>
+                <button
+                  type="button"
+                  className="btn btn-primary btn-sm"
+                  onClick={() => handleNavigate("/register")}
+                >
                   حساب جديد
                 </button>
               </>
@@ -174,6 +138,170 @@ export default function Navbar() {
           </div>
         </div>
       </header>
+
+      {/* ===== Menu Component ===== */}
+      <Menu isOpen={menuOpen} onClose={closeMenu}>
+        {/* Close Button */}
+        <button
+          type="button"
+          style={{
+            position: "absolute",
+            top: "14px",
+            right: "14px",
+            width: "40px",
+            height: "40px",
+            border: "none",
+            borderRadius: "50%",
+            background: "var(--surface-hi)",
+            fontSize: "1.4rem",
+            cursor: "pointer",
+            color: "var(--text)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={closeMenu}
+        >
+          ✕
+        </button>
+
+        {/* Navigation Links */}
+        <button
+          type="button"
+          className="nav-link"
+          onClick={() => handleNavigate("/")}
+          style={{
+            display: "flex",
+            width: "100%",
+            padding: "12px 14px",
+            borderRadius: "8px",
+            background: "transparent",
+            border: "none",
+            fontSize: "1rem",
+            color: "var(--text)",
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          المتجر
+        </button>
+
+        <button
+          type="button"
+          className="nav-link"
+          onClick={() => handleNavigate("/purchases")}
+          style={{
+            display: "flex",
+            width: "100%",
+            padding: "12px 14px",
+            borderRadius: "8px",
+            background: "transparent",
+            border: "none",
+            fontSize: "1rem",
+            color: "var(--text)",
+            cursor: "pointer",
+            textAlign: "left",
+          }}
+        >
+          مشترياتي
+        </button>
+
+        {isStaff && (
+          <button
+            type="button"
+            className="nav-link"
+            onClick={() => handleNavigate("/admin")}
+            style={{
+              display: "flex",
+              width: "100%",
+              padding: "12px 14px",
+              borderRadius: "8px",
+              background: "transparent",
+              border: "none",
+              fontSize: "1rem",
+              color: "var(--text)",
+              cursor: "pointer",
+              textAlign: "left",
+            }}
+          >
+            لوحة التحكم
+          </button>
+        )}
+
+        {/* Mobile User */}
+        <div
+          style={{
+            marginTop: "auto",
+            paddingTop: "16px",
+            borderTop: "1px solid var(--line)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
+          }}
+        >
+          {token ? (
+            <>
+              <button
+                type="button"
+                className="nav-link"
+                onClick={() => handleNavigate("/profile")}
+                style={{
+                  display: "flex",
+                  width: "100%",
+                  padding: "12px 14px",
+                  borderRadius: "8px",
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "1rem",
+                  color: "var(--text)",
+                  cursor: "pointer",
+                  textAlign: "left",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <img
+                  className="nav-avatar"
+                  src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                  alt="Profile"
+                  style={{
+                    width: "34px",
+                    height: "34px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: "1px solid var(--line)",
+                  }}
+                />
+                <span>{user?.name || "..."}</span>
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost btn-block"
+                onClick={handleLogout}
+              >
+                خروج
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                className="btn btn-ghost btn-block"
+                onClick={() => handleNavigate("/login")}
+              >
+                دخول
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary btn-block"
+                onClick={() => handleNavigate("/register")}
+              >
+                حساب جديد
+              </button>
+            </>
+          )}
+        </div>
+      </Menu>
     </>
   );
 }
