@@ -707,3 +707,10 @@ body.no-scroll {
   -webkit-tap-highlight-color: transparent !important;
   user-select: none !important;
 }
+.container {
+  /* لا تستخدم overflow: hidden هنا */
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
