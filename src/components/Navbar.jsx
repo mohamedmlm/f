@@ -41,21 +41,6 @@ export default function Navbar() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Close menu on location change - مع تأخير
-  useEffect(() => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-    }
-    closeTimeoutRef.current = setTimeout(() => {
-      setMenuOpen(false);
-    }, 150);
-    
-    return () => {
-      if (closeTimeoutRef.current) {
-        clearTimeout(closeTimeoutRef.current);
-      }
-    };
-  }, [location.pathname]);
 
   // Prevent scroll when menu is open
   useEffect(() => {
