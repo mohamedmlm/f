@@ -180,16 +180,23 @@
     left: auto;
     top: 12px;
     margin-inline-start: 0;
-    z-index: 9999; /* must stay above nav-links (9998) so it still works as the close button */
+    z-index: 99999;
     min-width: 40px;
     min-height: 40px;
     padding: 8px 8px;
     border-radius: 10px;
     background: var(--surface);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--line);
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text);
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    pointer-events: auto !important;
   }
 
-  /* show brand mark/name on mobile */
   .brand-mark {
     display: inline-flex;
   }
@@ -200,13 +207,15 @@
 
   .brand {
     position: relative;
-    z-index: 9999; /* keep brand above the backdrop (9997) so it stays visible */
+    z-index: 99998;
     display: flex;
     align-items: center;
     margin-inline-start: 0 !important;
     margin-inline-end: 48px !important;
     padding-right: 8px;
     max-width: calc(100% - 84px);
+    text-decoration: none;
+    color: var(--text);
   }
 
   .brand-name {
@@ -215,17 +224,18 @@
     white-space: nowrap;
     text-align: left;
     display: inline-block;
+    font-size: 1rem;
   }
 
   .navbar-inner {
     padding-right: 52px;
+    height: 64px;
   }
 
   .nav-links {
     position: fixed;
-    top: 72px; /* start below the header so the panel never overlaps
-                  the fixed toggle button — no padding hack needed */
-    right: -100%; /* hidden: pushed fully off-screen to the right */
+    top: 72px;
+    right: -100%;
     bottom: 0;
     left: auto;
     width: 75%;
@@ -235,7 +245,7 @@
     gap: 4px;
     padding: 16px 16px 30px;
     border-left: 2px solid var(--line);
-    z-index: 9998;
+    z-index: 99997;
     transition: right 0.3s ease;
     overflow-y: auto;
     pointer-events: none;
@@ -244,32 +254,60 @@
     height: calc(100vh - 72px);
   }
 
-  /* Single consolidated open-state rule — was previously split across
-     multiple `.nav-links` / `.nav-links.open` blocks, which made it
-     easy for an edit to one to accidentally drop a property (like
-     pointer-events) that another relied on. */
   .nav-links.open {
     right: 0;
-    pointer-events: auto;
+    pointer-events: auto !important;
   }
+
+  /* ===== المهم: كل العناصر داخل القائمة قابلة للنقر ===== */
+  .nav-links.open * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  .nav-links.open .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 99999 !important;
+  }
+
+  .nav-links.open .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 99999 !important;
+  }
+
   .nav-link {
     padding: 12px 14px;
     width: 100%;
     border-radius: 8px;
     font-size: 1rem;
-    text-align: left; /* force left alignment inside menu */
+    text-align: left;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  .nav-link + .nav-link {
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+  .nav-link:hover {
+    background: var(--surface-hi);
+  }
+
+  .nav-link.active {
+    background: var(--surface-hi);
+    color: var(--accent-hi);
   }
 
   .nav-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-    z-index: 9997;
-    pointer-events: none; /* التغيير */
+    z-index: 99996;
+    pointer-events: none !important; /* مهم جداً */
     backdrop-filter: none;
   }
 
@@ -285,11 +323,10 @@
   }
 
   .nav-user {
-    display: none;
+    display: none !important;
   }
 
-  /* mobile user actions: centered row at bottom */
-    .nav-user-mobile {
+  .nav-user-mobile {
     display: flex !important;
     flex-direction: column;
     gap: 10px;
@@ -329,14 +366,6 @@
   .nav-user-mobile .btn-block {
     width: 100%;
   }
-  .navbar-inner {
-    height: 64px;
-    gap: 12px;
-  }
-
-  .brand-name {
-    font-size: 1rem;
-  }
 
   .theme-toggle {
     padding: 8px 10px;
@@ -345,72 +374,6 @@
   .nav-user {
     border-inline-start: none;
     padding-inline-start: 0;
-  }
-    /* ===== حل مشكلة الـ touch والـ pointer-events ===== */
-  .nav-links.open .nav-user-mobile,
-  .nav-links.open .nav-user-mobile * {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-
-  .nav-links.open .nav-link {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    position: relative;
-    z-index: 99999;
-  }
-
-  .nav-links.open .btn {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    position: relative;
-    z-index: 99999;
-  }
-
-  /* تأكد أن الخلفية لا تمنع النقر */
-  .nav-backdrop {
-    pointer-events: none !important;
-  }
-
-  /* تأكد أن القائمة تسمح بالنقر */
-  .nav-links.open {
-    pointer-events: auto !important;
-  }
-    /* ===== حل مشكلة الـ touch ===== */
-  /* تأكد أن القائمة وكل محتوياتها قابلة للنقر */
-  .nav-links.open {
-    pointer-events: auto !important;
-  }
-
-  .nav-links.open * {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-
-  .nav-links.open .nav-link {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-
-  .nav-links.open .btn {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-
-  .nav-links.open .nav-user-mobile {
-    pointer-events: auto !important;
-  }
-
-  .nav-links.open .nav-user-mobile * {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-
-  /* تأكد أن زر الإغلاق يعمل */
-  .nav-toggle {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 99999 !important;
   }
 }
 
