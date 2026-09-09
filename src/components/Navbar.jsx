@@ -125,10 +125,7 @@ export default function Navbar() {
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
               {token ? (
                 <>
-                  <NavLink
-                    to="/profile"
-                    className="nav-link mobile-profile"
-                  >
+                  <NavLink to="/profile" className="nav-link mobile-profile">
                     <img
                       className="nav-avatar"
                       src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
@@ -147,16 +144,10 @@ export default function Navbar() {
                 </>
               ) : (
                 <>
-                  <NavLink
-                    to="/login"
-                    className="btn btn-ghost btn-block"
-                  >
+                  <NavLink to="/login" className="btn btn-ghost btn-block">
                     دخول
                   </NavLink>
-                  <NavLink
-                    to="/register"
-                    className="btn btn-primary btn-block"
-                  >
+                  <NavLink to="/register" className="btn btn-primary btn-block">
                     حساب جديد
                   </NavLink>
                 </>
@@ -183,11 +174,7 @@ export default function Navbar() {
 
             {token ? (
               <>
-                <NavLink
-                  to="/profile"
-                  className="row"
-                  style={{ gap: 8 }}
-                >
+                <NavLink to="/profile" className="row" style={{ gap: 8 }}>
                   <img
                     className="nav-avatar"
                     src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
@@ -203,16 +190,10 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <NavLink
-                  to="/login"
-                  className="btn btn-ghost btn-sm"
-                >
+                <NavLink to="/login" className="btn btn-ghost btn-sm">
                   دخول
                 </NavLink>
-                <NavLink
-                  to="/register"
-                  className="btn btn-primary btn-sm"
-                >
+                <NavLink to="/register" className="btn btn-primary btn-sm">
                   حساب جديد
                 </NavLink>
               </>
