@@ -289,31 +289,46 @@
   }
 
   /* mobile user actions: centered row at bottom */
-  .nav-user-mobile {
-    display: flex;
-    flex-direction: row; /* side-by-side */
-    gap: 12px;
-    padding: 10px 0 16px;
-    border-top: none; /* remove the separating line */
-    /* position slightly above bottom */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 40px;
-    justify-content: center;
-    align-items: center;
-    width: calc(100% - 36px);
-    max-width: 420px;
+    .nav-user-mobile {
+    display: flex !important;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px 0 20px;
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+    width: 100%;
+    pointer-events: auto !important;
   }
 
   .nav-user-mobile .btn {
-    padding: 12px 14px;
+    padding: 14px 16px;
     font-size: 1rem;
-    width: 48%;
-    max-width: 260px;
+    width: 100%;
     justify-content: center;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    border-radius: 10px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
+  .nav-user-mobile .btn-ghost {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--text);
+  }
+
+  .nav-user-mobile .btn-primary {
+    background: linear-gradient(160deg, var(--accent-hi), var(--accent));
+    color: var(--accent-ink);
+    border: none;
+  }
+
+  .nav-user-mobile .btn-block {
+    width: 100%;
+  }
   .navbar-inner {
     height: 64px;
     gap: 12px;
