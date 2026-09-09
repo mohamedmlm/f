@@ -1321,29 +1321,42 @@ table.data-table tr:last-child td {
 }
 
 /* ===== حل إضافي ===== */
+/* ===== حل مشكلة backdrop ===== */
 @media (max-width: 899px) {
-  /* منع أي عنصر من منع النقر */
-  .nav-links.open,
-  .nav-links.open > *,
-  .nav-links.open a,
-  .nav-links.open button,
-  .nav-links.open .nav-link,
-  .nav-links.open .btn {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    touch-action: manipulation !important;
-    -webkit-tap-highlight-color: transparent !important;
-  }
-
-  /* منع الخلفية من منع النقر */
+  /* الخلفية لا تمنع النقر */
   .nav-backdrop {
     pointer-events: none !important;
     touch-action: none !important;
   }
 
-  /* إجبار القائمة على الظهور فوق كل شيء */
+  /* القائمة تسمح بالنقر */
   .nav-links.open {
+    pointer-events: auto !important;
+    z-index: 99999 !important;
+  }
+
+  /* كل العناصر داخل القائمة */
+  .nav-links.open * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* الروابط */
+  .nav-links.open .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* الأزرار */
+  .nav-links.open .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* زر الإغلاق */
+  .nav-toggle {
+    pointer-events: auto !important;
+    cursor: pointer !important;
     z-index: 9999999 !important;
-    position: fixed !important;
   }
 }
