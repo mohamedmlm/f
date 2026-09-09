@@ -5,58 +5,40 @@ import { fileUrl } from "../api/client";
 
 export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
-
   const navigate = useNavigate();
   const location = useLocation();
 
   const [theme, setTheme] = useState(
     () => localStorage.getItem("theme") || "dark"
   );
-
   const [menuOpen, setMenuOpen] = useState(false);
 
-  /* ================= Theme ================= */
-
+  // ===== Theme =====
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  /* ================= Body scroll ================= */
-
+  // ===== Body scroll =====
   useEffect(() => {
     if (menuOpen) {
-      document.body.style.overflow = "hidden";
-      // منع اللمس خلف القائمة على iOS
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
+      document.body.classList.add("no-scroll");
     } else {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
+      document.body.classList.remove("no-scroll");
     }
-
-    return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-    };
+    return () => document.body.classList.remove("no-scroll");
   }, [menuOpen]);
 
-  /* ================= Close on navigation ================= */
-
+  // ===== Close menu on navigation =====
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
 
-  /* ================= Navigation ================= */
-
+  // ===== Functions =====
   const handleNavigate = (path) => {
     setMenuOpen(false);
     navigate(path);
   };
-
-  /* ================= Logout ================= */
 
   const handleLogout = () => {
     logout();
@@ -64,249 +46,132 @@ export default function Navbar() {
     navigate("/");
   };
 
-  /* ================= Theme ================= */
-
   const toggleTheme = () => {
-    setTheme((current) =>
-      current === "dark" ? "light" : "dark"
-    );
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
   };
 
-  /* ================= Menu ================= */
-
   const toggleMenu = () => {
-    setMenuOpen((current) => !current);
+    setMenuOpen(!menuOpen);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
   };
 
   return (
     <>
-      {/* ===================================================== */}
-      {/* ===================== BACKDROP ====================== */}
-      {/* ===================================================== */}
-
+      {/* ===== BACKDROP ===== */}
       <div
         className={`nav-backdrop${menuOpen ? " open" : ""}`}
-        onClick={() => setMenuOpen(false)}
-        aria-hidden="true"
+        onClick={closeMenu}
+        onTouchEnd={closeMenu} // مهم جداً للموبايل
       />
 
-      {/* ===================================================== */}
-      {/* ======================= NAVBAR ====================== */}
-      {/* ===================================================== */}
-
+      {/* ===== NAVBAR ===== */}
       <header className="navbar">
         <div className="container navbar-inner">
-
-          {/* ================= Brand ================= */}
-
-          <button
-            type="button"
-            className="brand"
-            onClick={() => handleNavigate("/")}
-            aria-label="الذهاب إلى المتجر"
-          >
+          {/* Brand */}
+          <button type="button" className="brand" onClick={() => handleNavigate("/")}>
             <span className="brand-mark">C</span>
-
-            <span className="brand-name">
-              Crocs Store
-            </span>
+            <span className="brand-name">Crocs Store</span>
           </button>
 
-          {/* ================= Hamburger ================= */}
-
+          {/* Hamburger Button */}
           <button
             type="button"
-            className={`nav-toggle${menuOpen ? " is-open" : ""}`}
+            className="nav-toggle"
             onClick={toggleMenu}
-            aria-label={
-              menuOpen
-                ? "إغلاق قائمة التنقل"
-                : "فتح قائمة التنقل"
-            }
-            aria-expanded={menuOpen}
-            aria-controls="main-navigation"
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              toggleMenu();
+            }}
+            aria-label="Toggle menu"
           >
             {menuOpen ? "✕" : "☰"}
           </button>
 
-          {/* ================================================= */}
-          {/* ===================== MENU ====================== */}
-          {/* ================================================= */}
-
-          <nav
-            id="main-navigation"
-            className={`nav-links${menuOpen ? " open" : ""}`}
-            aria-hidden={!menuOpen}
-          >
-            {/* زر إغلاق إضافي داخل القائمة (تحسين للموبايل) */}
+          {/* ===== MENU ===== */}
+          <nav className={`nav-links${menuOpen ? " open" : ""}`}>
+            {/* Close button inside menu */}
             <button
               type="button"
               className="nav-close"
-              onClick={() => setMenuOpen(false)}
-              aria-label="إغلاق القائمة"
+              onClick={closeMenu}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                closeMenu();
+              }}
             >
               ✕
             </button>
 
-            <button
-              type="button"
-              className="nav-link"
-              onClick={() => handleNavigate("/")}
-            >
+            {/* Links */}
+            <button type="button" className="nav-link" onClick={() => handleNavigate("/")}>
               المتجر
             </button>
 
-            <button
-              type="button"
-              className="nav-link"
-              onClick={() => handleNavigate("/purchases")}
-            >
+            <button type="button" className="nav-link" onClick={() => handleNavigate("/purchases")}>
               مشترياتي
             </button>
 
             {isStaff && (
-              <button
-                type="button"
-                className="nav-link"
-                onClick={() => handleNavigate("/admin")}
-              >
+              <button type="button" className="nav-link" onClick={() => handleNavigate("/admin")}>
                 لوحة التحكم
               </button>
             )}
 
-            {/* ================= Mobile User ================= */}
-
+            {/* Mobile User */}
             <div className="nav-user-mobile">
-
               {token ? (
                 <>
-                  <button
-                    type="button"
-                    className="nav-link mobile-profile"
-                    onClick={() => handleNavigate("/profile")}
-                  >
-                    <img
-                      className="nav-avatar"
-                      src={
-                        fileUrl("avatar", user?.avatar) || "/lantern.svg"
-                      }
-                      alt="الملف الشخصي"
-                    />
-
-                    <span>
-                      {user?.name || "..."}
-                    </span>
+                  <button type="button" className="nav-link mobile-profile" onClick={() => handleNavigate("/profile")}>
+                    <img className="nav-avatar" src={fileUrl("avatar", user?.avatar) || "/lantern.svg"} alt="Profile" />
+                    <span>{user?.name || "..."}</span>
                   </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-ghost btn-block"
-                    onClick={handleLogout}
-                  >
+                  <button type="button" className="btn btn-ghost btn-block" onClick={handleLogout}>
                     خروج
                   </button>
                 </>
               ) : (
                 <>
-                  <button
-                    type="button"
-                    className="btn btn-ghost btn-block"
-                    onClick={() => handleNavigate("/login")}
-                  >
+                  <button type="button" className="btn btn-ghost btn-block" onClick={() => handleNavigate("/login")}>
                     دخول
                   </button>
-
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-block"
-                    onClick={() => handleNavigate("/register")}
-                  >
+                  <button type="button" className="btn btn-primary btn-block" onClick={() => handleNavigate("/register")}>
                     حساب جديد
                   </button>
                 </>
               )}
-
             </div>
           </nav>
 
-          {/* ================================================= */}
-          {/* ================= DESKTOP USER ================== */}
-          {/* ================================================= */}
-
+          {/* Desktop User */}
           <div className="nav-user">
-
-            <button
-              type="button"
-              className="theme-toggle"
-              onClick={toggleTheme}
-              aria-label="تغيير المظهر"
-            >
+            <button type="button" className="theme-toggle" onClick={toggleTheme}>
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
 
             {token ? (
               <>
-                <button
-                  type="button"
-                  className="row"
-                  onClick={() => handleNavigate("/profile")}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    gap: 8,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
-                  <img
-                    className="nav-avatar"
-                    src={
-                      fileUrl("avatar", user?.avatar) || "/lantern.svg"
-                    }
-                    alt="الملف الشخصي"
-                  />
-
-                  <span
-                    style={{
-                      fontSize: "0.88rem",
-                      fontWeight: 600,
-                    }}
-                  >
-                    {user?.name || "..."}
-                  </span>
+                <button type="button" className="row" onClick={() => handleNavigate("/profile")} style={{ background: "none", border: "none", cursor: "pointer", gap: 8, display: "flex", alignItems: "center" }}>
+                  <img className="nav-avatar" src={fileUrl("avatar", user?.avatar) || "/lantern.svg"} alt="Profile" />
+                  <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>{user?.name || "..."}</span>
                 </button>
-
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  onClick={handleLogout}
-                >
+                <button type="button" className="btn btn-ghost btn-sm" onClick={handleLogout}>
                   خروج
                 </button>
               </>
             ) : (
               <>
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => handleNavigate("/login")}
-                >
+                <button type="button" className="btn btn-ghost btn-sm" onClick={() => handleNavigate("/login")}>
                   دخول
                 </button>
-
-                <button
-                  type="button"
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handleNavigate("/register")}
-                >
+                <button type="button" className="btn btn-primary btn-sm" onClick={() => handleNavigate("/register")}>
                   حساب جديد
                 </button>
               </>
             )}
-
           </div>
-
         </div>
       </header>
     </>
