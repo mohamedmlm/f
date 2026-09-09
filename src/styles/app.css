@@ -226,7 +226,7 @@
       opacity 180ms ease;
   }
 
-    .nav-links.open {
+  .nav-links.open {
     transform: translateX(0);
     pointer-events: auto;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
