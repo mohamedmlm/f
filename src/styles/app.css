@@ -249,10 +249,7 @@
   }
 
   /* ===== القائمة مفتوحة ===== */
-  .nav-links.open {
-    transform: translate3d(0, 0, 0);
-    pointer-events: auto !important;
-    visibility: visible;
+  sibility: visible;
   }
 
   /* ===== كل العناصر داخل القائمة ===== */
