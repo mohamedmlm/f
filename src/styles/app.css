@@ -1,10 +1,13 @@
 /* ================= Navbar ================= */
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
+.nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 17, 23, 0.18);
+
+  /* تحت الـ navbar */
+  z-index: 40;
+
+  pointer-events: auto;
 }
 
 .navbar-inner {
