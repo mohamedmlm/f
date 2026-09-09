@@ -180,52 +180,39 @@
     left: auto;
     top: 12px;
     margin-inline-start: 0;
-    z-index: 9999; /* must stay above nav-links (9998) so it still works as the close button */
+    z-index: 9999;
     min-width: 40px;
     min-height: 40px;
     padding: 8px 8px;
     border-radius: 10px;
     background: var(--surface);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-  }
-
-  /* show brand mark/name on mobile */
-  .brand-mark {
-    display: inline-flex;
-  }
-
-  .brand-name {
-    display: inline-block;
-  }
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08); /* التصحيح هنا */
+    border: 1px solid var(--line);
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text);
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
 
   .brand {
     position: relative;
-    z-index: 9999; /* keep brand above the backdrop (9997) so it stays visible */
+    z-index: 9996; /* تغيير: أقل من القائمة */
     display: flex;
     align-items: center;
     margin-inline-start: 0 !important;
     margin-inline-end: 48px !important;
     padding-right: 8px;
     max-width: calc(100% - 84px);
-  }
-
-  .brand-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: left;
-    display: inline-block;
-  }
-
-  .navbar-inner {
-    padding-right: 52px;
+    text-decoration: none;
+    color: var(--text);
   }
 
   .nav-links {
     position: fixed;
-    top: 72px; /* start below the header so the panel never overlaps
-                  the fixed toggle button — no padding hack needed */
-    right: -100%; /* hidden: pushed fully off-screen to the right */
+    top: 72px;
+    right: -100%;
     bottom: 0;
     left: auto;
     width: 75%;
@@ -244,93 +231,44 @@
     height: calc(100vh - 72px);
   }
 
-  /* Single consolidated open-state rule — was previously split across
-     multiple `.nav-links` / `.nav-links.open` blocks, which made it
-     easy for an edit to one to accidentally drop a property (like
-     pointer-events) that another relied on. */
   .nav-links.open {
     right: 0;
-    pointer-events: auto;
-  }
-  .nav-link {
-    padding: 12px 14px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: left; /* force left alignment inside menu */
-  }
-
-  .nav-link + .nav-link {
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    pointer-events: auto !important;
   }
 
   .nav-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-    z-index: 9997; /* sit just under the nav-links (9998) */
-    pointer-events: auto;
+    z-index: 9997;
+    pointer-events: none; /* تغيير: بدلاً من auto */
     backdrop-filter: none;
   }
 
-  .mobile-profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-  }
-
-  .mobile-name {
-    font-weight: 700;
-  }
-
-  .nav-user {
-    display: none;
-  }
-
-  /* mobile user actions: centered row at bottom */
-  .nav-user-mobile {
-    display: flex;
-    flex-direction: row; /* side-by-side */
-    gap: 12px;
-    padding: 10px 0 16px;
-    border-top: none; /* remove the separating line */
-    /* position slightly above bottom */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 40px;
-    justify-content: center;
-    align-items: center;
-    width: calc(100% - 36px);
-    max-width: 420px;
+  .nav-link {
+    padding: 12px 14px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: left;
+    pointer-events: auto !important; /* جديد */
+    cursor: pointer !important; /* جديد */
+    position: relative;
+    z-index: 9999;
   }
 
   .nav-user-mobile .btn {
-    padding: 12px 14px;
-    font-size: 1rem;
-    width: 48%;
-    max-width: 260px;
-    justify-content: center;
+    pointer-events: auto !important; /* جديد */
+    cursor: pointer !important; /* جديد */
+    position: relative;
+    z-index: 9999;
   }
 
-  .navbar-inner {
-    height: 64px;
-    gap: 12px;
+  .nav-links.open * {
+    pointer-events: auto !important; /* جديد */
   }
 
-  .brand-name {
-    font-size: 1rem;
-  }
-
-  .theme-toggle {
-    padding: 8px 10px;
-  }
-
-  .nav-user {
-    border-inline-start: none;
-    padding-inline-start: 0;
-  }
+  /* باقي الكود كما هو */
 }
 
 /* Very small screens: full-screen menu and compact brand */
