@@ -601,3 +601,21 @@
     gap: 28px;
   }
 }
+
+/* ===== زر الإغلاق (إخفاء في الديسكتوب) ===== */
+.nav-close {
+  display: none;
+}
+
+/* ===== الخلفية الشفافة (إخفاء في الديسكتوب) ===== */
+.nav-backdrop {
+  display: block;
+}
+
+/* ===== منع التمرير عند فتح القائمة ===== */
+body.menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
