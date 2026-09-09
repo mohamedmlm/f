@@ -160,7 +160,7 @@
     left: auto;
     top: 12px;
     margin-inline-start: 0;
-    z-index: 999999;
+    z-index: 99999999;
     min-width: 40px;
     min-height: 40px;
     padding: 8px 8px;
@@ -212,7 +212,7 @@
     height: 64px;
   }
 
-  /* ===== القائمة - الحل النهائي ===== */
+  /* ===== القائمة ===== */
   .nav-links {
     position: fixed;
     top: 64px;
@@ -226,24 +226,15 @@
     gap: 4px;
     padding: 16px 16px 30px;
     border-left: 2px solid var(--line);
-
-    /* Keep the menu above the backdrop through the navbar stacking context */
-    z-index: 99999;
-
-    /* Use transform instead of moving right:-100% */
+    z-index: 9999999;
     transform: translate3d(100%, 0, 0);
     transition: transform 0.3s ease, visibility 0.3s ease;
-
     overflow-y: auto;
     box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
     display: flex !important;
     height: calc(100vh - 64px);
-
-    /* Closed menu must not receive touch */
     pointer-events: none;
     visibility: hidden;
-
-    /* Allow vertical scrolling/touch inside the menu */
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
   }
@@ -253,33 +244,38 @@
     transform: translate3d(0, 0, 0);
     pointer-events: auto !important;
     visibility: visible;
-    z-index: 99999; /* تأكد من هذا */
   }
+
   /* ===== كل العناصر داخل القائمة ===== */
   .nav-links.open * {
-    pointer-events: auto;
+    pointer-events: auto !important;
+    cursor: pointer !important;
   }
 
-  /* ===== الروابط داخل القائمة ===== */
+  /* ===== الروابط ===== */
   .nav-links.open .nav-link {
-    pointer-events: auto;
-    cursor: pointer;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 99999999 !important;
+    position: relative;
   }
 
-  /* ===== الأزرار داخل القائمة ===== */
+  /* ===== الأزرار ===== */
   .nav-links.open .btn {
-    pointer-events: auto;
-    cursor: pointer;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 99999999 !important;
+    position: relative;
   }
 
   /* ===== الخلفية - لا تمنع النقر ===== */
-    .nav-backdrop {
+  .nav-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
     z-index: 40;
-    pointer-events: none; /* ← غير من auto إلى none */
-    touch-action: none;
+    pointer-events: none !important;
+    touch-action: none !important;
   }
 
   /* ===== الروابط ===== */
@@ -434,6 +430,7 @@
     margin: 0 !important;
     top: auto !important;
     right: auto !important;
+    visibility: visible !important;
   }
   .nav-links.open {
     transform: none !important;
@@ -599,42 +596,42 @@
     gap: 28px;
   }
 }
-/* ===== حل مشكلة الـ reload والـ navigation ===== */
+
+/* ===== الحل النهائي 100% للـ reload والـ navigation ===== */
 @media (max-width: 899px) {
-  /* القائمة وكل محتوياتها فوق الكل */
+  /* إجبار القائمة على الظهور فوق كل شيء */
   .nav-links.open {
-    z-index: 999999 !important;
+    z-index: 99999999 !important;
     pointer-events: auto !important;
+    visibility: visible !important;
   }
 
+  /* كل العناصر جوا القيمة تسمح بالنقر */
   .nav-links.open * {
     pointer-events: auto !important;
     cursor: pointer !important;
   }
 
-  .nav-links.open .nav-link {
+  /* الروابط */
+  .nav-links.open a,
+  .nav-links.open .nav-link,
+  .nav-links.open button {
     pointer-events: auto !important;
     cursor: pointer !important;
-    position: relative;
-    z-index: 9999999 !important;
+    z-index: 999999999 !important;
+    position: relative !important;
   }
 
-  .nav-links.open .btn {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    position: relative;
-    z-index: 9999999 !important;
-  }
-
-  /* الخلفية لا تمنع النقر */
+  /* الخلفية متمنعش النقر */
   .nav-backdrop {
     pointer-events: none !important;
     z-index: 40 !important;
   }
 
-  /* زر الهامبرغر فوق الكل */
+  /* زر الإغلاق */
   .nav-toggle {
-    z-index: 9999999 !important;
     pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 999999999 !important;
   }
 }
