@@ -143,7 +143,7 @@
   /* ===== القائمة الجانبية ===== */
   .nav-links {
     position: fixed;
-    top: 0;
+    top: 72px;
     right: -100%;
     bottom: 0;
     width: 75%;
@@ -151,8 +151,7 @@
     background: var(--surface);
     flex-direction: column;
     gap: 4px;
-    padding: 20px 16px 30px;
-    padding-top: 80px;
+    padding: 16px 16px 30px;
     border-left: 2px solid var(--line);
     z-index: 9998;
     transition: right 0.3s ease;
@@ -160,6 +159,7 @@
     pointer-events: none;
     box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
     display: flex !important;
+    height: calc(100vh - 72px);
   }
 
   .nav-links.open {
@@ -244,13 +244,6 @@
     border-inline-start: none;
     padding-inline-start: 0;
   }
-  @media (max-width: 899px) {
-  .nav-links {
-    top: 72px !important;
-    height: calc(100vh - 72px) !important;
-    padding-top: 16px !important;
-  }
-}
 }
 
 @media (max-width: 480px) {
