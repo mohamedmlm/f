@@ -12,6 +12,10 @@ export default function Navbar() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const navToggleRef = useRef(null);
+  const navLinksRef = useRef(null);
+
+  // ===== Debugging =====
+  console.log("🟢 Navbar rendered, menuOpen:", menuOpen);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -19,42 +23,55 @@ export default function Navbar() {
   }, [theme]);
 
   useEffect(() => {
+    console.log("📱 Menu state changed:", menuOpen);
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
 
-  // إغلاق القائمة عند تغيير الصفحة
+  // Close menu when navigation happens
   useEffect(() => {
+    console.log("📍 Location changed to:", location.pathname);
+    console.log("🔴 Closing menu due to navigation...");
     setMenuOpen(false);
   }, [location.pathname]);
 
   const handleLogout = () => {
+    console.log("🚪 Logging out...");
     logout();
     navigate("/");
   };
 
   const toggleTheme = () => {
+    console.log("🎨 Toggling theme...");
     setTheme((current) => (current === "dark" ? "light" : "dark"));
   };
 
   const toggleMenu = () => {
+    console.log("📱 Toggle menu clicked, current state:", menuOpen);
     setMenuOpen(!menuOpen);
   };
 
   // دالة للتنقل مع إغلاق القائمة
   const handleNavigate = (path) => {
+    console.log("🖱️ Clicked on:", path);
+    console.log("🔴 Closing menu first...");
     setMenuOpen(false);
+    console.log("🔄 Navigating to:", path);
     navigate(path);
   };
 
   return (
     <>
+      {/* الخلفية */}
       {menuOpen && (
         <div
           className="nav-backdrop"
-          onClick={() => setMenuOpen(false)}
+          onClick={() => {
+            console.log("🔙 Backdrop clicked, closing menu");
+            setMenuOpen(false);
+          }}
         />
       )}
 
@@ -81,7 +98,10 @@ export default function Navbar() {
           </button>
 
           {/* القائمة */}
-          <nav className={`nav-links${menuOpen ? " open" : ""}`}>
+          <nav 
+            ref={navLinksRef}
+            className={`nav-links${menuOpen ? " open" : ""}`}
+          >
             <button
               className="nav-link"
               onClick={() => handleNavigate("/")}
@@ -110,7 +130,7 @@ export default function Navbar() {
                   <button
                     className="nav-link mobile-profile"
                     onClick={() => handleNavigate("/profile")}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: '12px' }}
                   >
                     <img
                       className="nav-avatar"
