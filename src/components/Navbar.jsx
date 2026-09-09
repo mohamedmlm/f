@@ -1,5 +1,5 @@
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
 
@@ -8,41 +8,17 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "dark"
+    () => localStorage.getItem("theme") || "dark",
   );
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.innerWidth >= 900;
-  });
-  const navLinksRef = useRef(null);
   const navToggleRef = useRef(null);
-  const closeTimeoutRef = useRef(null);
 
-  // Check window size for desktop view
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    
-    const handleResize = () => {
-      const desktop = window.innerWidth >= 900;
-      setIsDesktop(desktop);
-      if (desktop) {
-        setMenuOpen(false);
-      }
-    };
-    
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  // Theme management
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-
-  // Prevent scroll when menu is open
+  // منع scroll
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -50,163 +26,125 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  const handleLogout = useCallback(() => {
+  // إغلاق القائمة عند تغيير الصفحة
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  const handleLogout = () => {
     logout();
     navigate("/");
-  }, [logout, navigate]);
+  };
 
-  const toggleTheme = useCallback(() => {
+  const toggleTheme = () => {
     setTheme((current) => (current === "dark" ? "light" : "dark"));
-  }, []);
+  };
 
-  const closeMenu = useCallback(() => {
-    setMenuOpen(false);
-  }, []);
-
-  const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
-
-  // Auth buttons component (reused for mobile and desktop)
-  const AuthButtons = ({ isMobile = false }) => {
-    if (token) {
-      return (
-        <>
-          <NavLink
-            to="/profile"
-            className={`nav-link mobile-profile ${isMobile ? "" : ""}`}
-            onClick={closeMenu}
-          >
-            <img
-              className="nav-avatar"
-              src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
-              alt={user?.name || "الملف الشخصي"}
-            />
-            {isMobile && (
-              <span className="mobile-name">{user?.name || "..."}</span>
-            )}
-          </NavLink>
-          <button
-            className={`btn btn-ghost ${isMobile ? "btn-block" : "btn-sm"}`}
-            onClick={() => {
-              closeMenu();
-              handleLogout();
-            }}
-          >
-            خروج
-          </button>
-        </>
-      );
-    }
-
-    return (
-      <>
-        <NavLink
-          to="/login"
-          onClick={closeMenu}
-          className={`btn btn-ghost ${isMobile ? "btn-block" : "btn-sm"}`}
-        >
-          دخول
-        </NavLink>
-        <NavLink
-          to="/register"
-          onClick={closeMenu}
-          className={`btn btn-primary ${isMobile ? "btn-block" : "btn-sm"}`}
-        >
-          حساب جديد
-        </NavLink>
-      </>
-    );
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
   };
 
   return (
     <>
+      {/* الخلفية */}
       {menuOpen && (
         <div
           className="nav-backdrop"
-          aria-hidden={!menuOpen}
+          onClick={() => setMenuOpen(false)}
         />
       )}
 
       <header className="navbar">
         <div className="container navbar-inner">
-          <NavLink
-            to="/"
-            className="brand"
-            onClick={closeMenu}
-            aria-label="العودة إلى الصفحة الرئيسية"
-          >
+          {/* البراند */}
+          <NavLink to="/" className="brand">
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
           </NavLink>
 
+          {/* زر الهامبرغر */}
           <button
             ref={navToggleRef}
             className={`nav-toggle${menuOpen ? " is-open" : ""}`}
-            aria-label={menuOpen ? "إغلاق القائمة" : "قائمة التنقل"}
-            aria-expanded={menuOpen}
             onClick={toggleMenu}
+            aria-label="قائمة التنقل"
           >
-            {menuOpen ? "×" : "☰"}
+            {menuOpen ? "✕" : "☰"}
           </button>
 
-          {/* Only render nav when menu is open on mobile, but always show on desktop */}
-          {(menuOpen || isDesktop) && (
-            <nav
-  ref={navLinksRef}
-  className={`nav-links${menuOpen ? " open" : ""}`}
->
-  <NavLink
-    to="/"
-    end
-    className={({ isActive }) =>
-      `nav-link${isActive ? " active" : ""}`
-    }
-  >
-    المتجر
-  </NavLink>
-  <NavLink
-    to="/purchases"
-    className={({ isActive }) =>
-      `nav-link${isActive ? " active" : ""}`
-    }
-  >
-    مشترياتي
-  </NavLink>
-  {isStaff && (
-    <NavLink
-      to="/admin"
-      className={({ isActive }) =>
-        `nav-link${isActive ? " active" : ""}`
-      }
-    >
-      لوحة التحكم
-    </NavLink>
-  )}
-  
-  <div className="nav-user-mobile" aria-hidden={!menuOpen}>
-    <AuthButtons isMobile={true} />
-  </div>
-</nav>
-          )}
+          {/* القائمة */}
+          <nav className={`nav-links${menuOpen ? " open" : ""}`}>
+            <NavLink to="/" end className="nav-link">
+              المتجر
+            </NavLink>
+            <NavLink to="/purchases" className="nav-link">
+              مشترياتي
+            </NavLink>
+            {isStaff && (
+              <NavLink to="/admin" className="nav-link">
+                لوحة التحكم
+              </NavLink>
+            )}
 
-          {/* Desktop user section */}
+            {/* موبايل */}
+            <div className="nav-user-mobile">
+              {token ? (
+                <>
+                  <NavLink to="/profile" className="nav-link mobile-profile">
+                    <img
+                      className="nav-avatar"
+                      src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                      alt="الملف الشخصي"
+                    />
+                    <span>{user?.name || "..."}</span>
+                  </NavLink>
+                  <button className="btn btn-ghost btn-block" onClick={handleLogout}>
+                    خروج
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/login" className="btn btn-ghost btn-block">
+                    دخول
+                  </NavLink>
+                  <NavLink to="/register" className="btn btn-primary btn-block">
+                    حساب جديد
+                  </NavLink>
+                </>
+              )}
+            </div>
+          </nav>
+
+          {/* ديسكتوب */}
           <div className="nav-user">
-            <button
-              type="button"
-              className="theme-toggle"
-              onClick={toggleTheme}
-              aria-label={
-                theme === "dark"
-                  ? "تبديل إلى الوضع المضيء"
-                  : "تبديل إلى الوضع الداكن"
-              }
-            >
-              {theme === "dark" ? "🌙" : "☀️"}
-              <span className="theme-label">
-                {theme === "dark" ? " Dark" : " Light"}
-              </span>
+            <button className="theme-toggle" onClick={toggleTheme}>
+              {theme === "dark" ? "☀️" : "🌙"}
             </button>
 
-            <AuthButtons />
+            {token ? (
+              <>
+                <NavLink to="/profile" className="row" style={{ gap: 8 }}>
+                  <img
+                    className="nav-avatar"
+                    src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                    alt="الملف الشخصي"
+                  />
+                  <span>{user?.name || "..."}</span>
+                </NavLink>
+                <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
+                  خروج
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className="btn btn-ghost btn-sm">
+                  دخول
+                </NavLink>
+                <NavLink to="/register" className="btn btn-primary btn-sm">
+                  حساب جديد
+                </NavLink>
+              </>
+            )}
           </div>
         </div>
       </header>
