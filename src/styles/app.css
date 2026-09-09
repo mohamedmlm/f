@@ -1308,3 +1308,8 @@ table.data-table tr:last-child td {
   font-weight: 700;
   padding: 0;
 }
+
+.nav-link {
+  cursor: pointer;  /* <- تأكد من هذا */
+  pointer-events: auto;  /* <- أضف هذا */
+}
