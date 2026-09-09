@@ -1,4 +1,3 @@
-
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
@@ -28,12 +27,19 @@ export default function Navbar() {
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
+      // منع اللمس خلف القائمة على iOS
+      document.body.style.position = "fixed";
+      document.body.style.width = "100%";
     } else {
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
     }
 
     return () => {
       document.body.style.overflow = "";
+      document.body.style.position = "";
+      document.body.style.width = "";
     };
   }, [menuOpen]);
 
@@ -78,13 +84,11 @@ export default function Navbar() {
       {/* ===================== BACKDROP ====================== */}
       {/* ===================================================== */}
 
-      {menuOpen && (
-        <div
-          className="nav-backdrop"
-          onClick={() => setMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
+      <div
+        className={`nav-backdrop${menuOpen ? " open" : ""}`}
+        onClick={() => setMenuOpen(false)}
+        aria-hidden="true"
+      />
 
       {/* ===================================================== */}
       {/* ======================= NAVBAR ====================== */}
@@ -112,9 +116,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className={`nav-toggle${
-              menuOpen ? " is-open" : ""
-            }`}
+            className={`nav-toggle${menuOpen ? " is-open" : ""}`}
             onClick={toggleMenu}
             aria-label={
               menuOpen
@@ -133,11 +135,18 @@ export default function Navbar() {
 
           <nav
             id="main-navigation"
-            className={`nav-links${
-              menuOpen ? " open" : ""
-            }`}
+            className={`nav-links${menuOpen ? " open" : ""}`}
             aria-hidden={!menuOpen}
           >
+            {/* زر إغلاق إضافي داخل القائمة (تحسين للموبايل) */}
+            <button
+              type="button"
+              className="nav-close"
+              onClick={() => setMenuOpen(false)}
+              aria-label="إغلاق القائمة"
+            >
+              ✕
+            </button>
 
             <button
               type="button"
@@ -150,9 +159,7 @@ export default function Navbar() {
             <button
               type="button"
               className="nav-link"
-              onClick={() =>
-                handleNavigate("/purchases")
-              }
+              onClick={() => handleNavigate("/purchases")}
             >
               مشترياتي
             </button>
@@ -161,9 +168,7 @@ export default function Navbar() {
               <button
                 type="button"
                 className="nav-link"
-                onClick={() =>
-                  handleNavigate("/admin")
-                }
+                onClick={() => handleNavigate("/admin")}
               >
                 لوحة التحكم
               </button>
@@ -178,17 +183,12 @@ export default function Navbar() {
                   <button
                     type="button"
                     className="nav-link mobile-profile"
-                    onClick={() =>
-                      handleNavigate("/profile")
-                    }
+                    onClick={() => handleNavigate("/profile")}
                   >
                     <img
                       className="nav-avatar"
                       src={
-                        fileUrl(
-                          "avatar",
-                          user?.avatar
-                        ) || "/lantern.svg"
+                        fileUrl("avatar", user?.avatar) || "/lantern.svg"
                       }
                       alt="الملف الشخصي"
                     />
@@ -211,9 +211,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     className="btn btn-ghost btn-block"
-                    onClick={() =>
-                      handleNavigate("/login")
-                    }
+                    onClick={() => handleNavigate("/login")}
                   >
                     دخول
                   </button>
@@ -221,9 +219,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     className="btn btn-primary btn-block"
-                    onClick={() =>
-                      handleNavigate("/register")
-                    }
+                    onClick={() => handleNavigate("/register")}
                   >
                     حساب جديد
                   </button>
@@ -253,9 +249,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   className="row"
-                  onClick={() =>
-                    handleNavigate("/profile")
-                  }
+                  onClick={() => handleNavigate("/profile")}
                   style={{
                     background: "none",
                     border: "none",
@@ -268,10 +262,7 @@ export default function Navbar() {
                   <img
                     className="nav-avatar"
                     src={
-                      fileUrl(
-                        "avatar",
-                        user?.avatar
-                      ) || "/lantern.svg"
+                      fileUrl("avatar", user?.avatar) || "/lantern.svg"
                     }
                     alt="الملف الشخصي"
                   />
@@ -299,9 +290,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   className="btn btn-ghost btn-sm"
-                  onClick={() =>
-                    handleNavigate("/login")
-                  }
+                  onClick={() => handleNavigate("/login")}
                 >
                   دخول
                 </button>
@@ -309,9 +298,7 @@ export default function Navbar() {
                 <button
                   type="button"
                   className="btn btn-primary btn-sm"
-                  onClick={() =>
-                    handleNavigate("/register")
-                  }
+                  onClick={() => handleNavigate("/register")}
                 >
                   حساب جديد
                 </button>
