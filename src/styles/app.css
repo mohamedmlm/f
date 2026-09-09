@@ -80,7 +80,6 @@
 .nav-user-mobile {
   display: none;
 }
-
 /* ===== Mobile ===== */
 @media (max-width: 899px) {
   .nav-toggle {
@@ -95,14 +94,14 @@
 
   .nav-links {
     position: fixed;
-    top: 0;
+    top: 72px; /* يبدأ تحت الـ navbar مباشرة */
     right: -100%;
     bottom: 0;
     width: 280px;
     max-width: 80vw;
     background: var(--surface);
     flex-direction: column;
-    padding: 80px 20px 30px;
+    padding: 20px 20px 30px; /* قلل padding-top */
     z-index: 9998;
     transition: right 0.3s ease;
     box-shadow: -8px 0 30px rgba(0,0,0,0.2);
@@ -111,6 +110,7 @@
     gap: 4px;
     border-left: 1px solid var(--line);
     pointer-events: none;
+    height: calc(100vh - 72px); /* ارتفاع القائمة = ارتفاع الشاشة - الـ navbar */
   }
 
   .nav-links.open {
