@@ -279,7 +279,14 @@
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
     z-index: 99996;
-    pointer-events: none !important;
+      .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 17, 23, 0.18);
+    z-index: 9997;
+    pointer-events: none; /* منع الضغط على الخلفية */
+    backdrop-filter: none;
+  }
     backdrop-filter: none;
   }
 
