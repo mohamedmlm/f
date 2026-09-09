@@ -1331,3 +1331,57 @@ table.data-table tr:last-child td {
     transform: translateX(0) !important;
   }
 }
+/* ===== Debugging - تحقق من الـ pointer-events ===== */
+@media (max-width: 899px) {
+  /* تأكد أن الق主义和 كل محتوياتها قابلة للنقر */
+  .nav-links.open,
+  .nav-links.open * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+  
+  /* تأكد أن الخلفية لا تمنع النقر */
+  .nav-backdrop {
+    pointer-events: none !important;
+  }
+  
+  /* زر الهامبرغر */
+  .nav-toggle {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 9999999 !important;
+  }
+  
+  /* القائمة نفسها */
+  .nav-links.open {
+    pointer-events: auto !important;
+    z-index: 99999 !important;
+  }
+}
+
+/* ===== التأكد من ظهور الأزرار بشكل صحيح ===== */
+.nav-link {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  text-align: left;
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.nav-link:hover {
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+.nav-link.active {
+  background: var(--surface-hi) !important;
+  color: var(--accent-hi) !important;
+}
