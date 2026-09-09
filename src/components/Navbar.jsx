@@ -2,6 +2,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
+
 const closeTimerRef = useRef(null);
 export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
