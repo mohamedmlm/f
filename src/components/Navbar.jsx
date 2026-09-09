@@ -69,7 +69,7 @@ export default function Navbar() {
         <div
         ref={navBackdropRef}
         className="nav-backdrop"
-    aria-hidden={!menuOpen}
+        aria-hidden={!menuOpen}
   />
   )}
 
