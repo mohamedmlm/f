@@ -253,6 +253,43 @@
 }
 }
 
+@media (max-width: 480px) {
+  .nav-links {
+    width: 85% !important;
+    max-width: 300px !important;
+    top: 64px !important;
+    height: calc(100vh - 64px) !important;
+    padding-top: 12px !important;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  .brand-mark {
+    width: 28px;
+    height: 28px;
+  }
+
+  .nav-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .theme-label {
+    display: none;
+  }
+
+  .nav-link {
+    font-size: 0.95rem;
+    padding: 12px 14px;
+  }
+
+  .nav-user-mobile {
+    padding-bottom: 10px;
+  }
+}
+
 @media (min-width: 900px) {
   .nav-toggle {
     display: none !important;
