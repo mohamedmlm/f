@@ -138,171 +138,42 @@
   display: none;
 }
 
+/* ===== حل القائمة الجانبية ===== */
 @media (max-width: 899px) {
-  .nav-toggle {
-    display: inline-flex;
-    position: fixed;
-    right: 12px;
-    left: auto;
-    top: 12px;
-    margin-inline-start: 0;
-    z-index: 80;
-    min-width: 40px;
-    min-height: 40px;
-    padding: 8px 8px;
-    border-radius: 10px;
-    background: var(--surface);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-  }
-
-  .brand-mark {
-    display: inline-flex;
-  }
-
-  .brand-name {
-    display: inline-block;
-  }
-
-  .brand {
-    position: relative;
-    z-index: 61;
-    display: flex;
-    align-items: center;
-    margin-inline-start: 0 !important;
-    margin-inline-end: 48px !important;
-    padding-right: 8px;
-    max-width: calc(100% - 84px);
-  }
-
-  .brand-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: left;
-    display: inline-block;
-  }
-
-  .navbar-inner {
-    padding-right: 52px;
-  }
-
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: auto;
-    width: 60%;
-    max-width: 420px;
-    background: var(--surface);
-    flex-direction: column;
-    gap: 4px;
-    padding: 20px 14px 20px; /* غيّر من 80px إلى 20px */
-    padding-top: 72px; /* أضف هذا عشان يبدأ تحت الـ navbar */
-    border-left: 1px solid var(--line);
-    z-index: 60;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    overflow-y: auto;
-    pointer-events: none;
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    width: 70% !important;
+    max-width: 350px !important;
+    background: var(--surface) !important;
+    flex-direction: column !important;
+    gap: 0 !important;
+    padding: 80px 16px 20px !important;
+    border-left: 1px solid var(--line) !important;
+    z-index: 60 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.3s ease !important;
+    overflow-y: auto !important;
+    pointer-events: none !important;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.1) !important;
   }
 
   .nav-links.open {
-    transform: translateX(0);
-    pointer-events: auto;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
-  }
-
-  .nav-link {
-    padding: 12px 14px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: left;
-    color: var(--text);
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .nav-link:hover {
-    background: var(--surface-hi);
-  }
-
-  .nav-link.active {
-    background: var(--surface-hi);
-    color: var(--accent-hi);
-  }
-
-  .nav-link + .nav-link {
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    transform: translateX(0) !important;
+    pointer-events: auto !important;
   }
 
   .nav-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 17, 23, 0.18);
-    z-index: 59;
-    pointer-events: none;
-  }
-
-  .mobile-profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-  }
-
-  .mobile-name {
-    font-weight: 700;
-  }
-
-  .nav-user {
-    display: none;
-  }
-
-  .nav-user-mobile {
-    display: flex;
-    flex-direction: row;
-    gap: 12px;
-    padding: 10px 0 16px;
-    margin-top: auto;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    border-top: 1px solid var(--line);
-  }
-
-  .nav-user-mobile .btn {
-    padding: 12px 14px;
-    font-size: 1rem;
-    width: 48%;
-    max-width: 260px;
-    justify-content: center;
-  }
-
-  .navbar-inner {
-    height: 64px;
-    gap: 12px;
-  }
-
-  .brand-name {
-    font-size: 1rem;
-  }
-
-  .theme-toggle {
-    padding: 8px 10px;
-  }
-
-  .nav-user {
-    border-inline-start: none;
-    padding-inline-start: 0;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.3) !important;
+    z-index: 59 !important;
+    pointer-events: none !important;
   }
 }
-
 
 
 /* Very small screens */
