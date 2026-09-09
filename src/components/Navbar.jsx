@@ -35,29 +35,25 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-  // منع scroll لما القائمة مفتوحة
-  if (menuOpen) {
-    document.body.style.overflow = "hidden";
-  } else {
-    document.body.style.overflow = "";
-  }
-  return () => {
-    document.body.style.overflow = "";
-  };
-}, [menuOpen]);
+    // منع scroll بس مش التأثير على pointer-events
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   // Close menu when navigation happens (page changes) - مع تأخير
   useEffect(() => {
-    // Clear any existing timer
     if (closeTimerRef.current) {
       clearTimeout(closeTimerRef.current);
     }
-    
-    // تأخير إغلاق القائمة عشان الـ NavLink يخلص تنقل
     closeTimerRef.current = setTimeout(() => {
       setMenuOpen(false);
     }, 200);
-    
     return () => {
       if (closeTimerRef.current) {
         clearTimeout(closeTimerRef.current);
@@ -82,13 +78,14 @@ export default function Navbar() {
   return (
     <>
       {menuOpen && (
-  <div
-    ref={navBackdropRef}
-    className="nav-backdrop"
-    style={{ pointerEvents: 'none' }}  // أضف هذا
-    aria-hidden={!menuOpen}
-  />
-)}
+        <div
+          ref={navBackdropRef}
+          className="nav-backdrop"
+          style={{ pointerEvents: "none" }}
+          aria-hidden={!menuOpen}
+          onClick={() => {}} 
+        />
+      )}
 
       <header className="navbar">
         <div className="container navbar-inner">
