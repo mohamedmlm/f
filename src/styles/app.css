@@ -1416,3 +1416,33 @@ table.data-table tr:last-child td {
     pointer-events: none !important;
   }
 }
+/* ===== حل نهائي للـ pointer-events ===== */
+@media (max-width: 899px) {
+  /* القائمة نفسها */
+  .nav-links.open {
+    pointer-events: auto !important;
+  }
+
+  /* كل العناصر جوا القائمة */
+  .nav-links.open * {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* الروابط تحديداً */
+  .nav-links.open .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* الأزرار */
+  .nav-links.open .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* الخلفية تمنع النقر */
+  .nav-backdrop {
+    pointer-events: none !important;
+  }
+}
