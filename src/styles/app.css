@@ -273,28 +273,32 @@
     z-index: 99999 !important;
   }
 
-  .nav-link {
-    padding: 12px 14px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: left;
-    color: var(--text);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  }
+  /* تأكد أن الأزرار في القائمة تشبه الروابط */
+.nav-link {
+  background: none !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-family: inherit;
+  font-size: inherit;
+  width: 100%;
+  text-align: left;
+  padding: 9px 14px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.15s, color 0.15s;
+}
 
-  .nav-link:hover {
-    background: var(--surface-hi);
-  }
+.nav-link:hover {
+  background: var(--surface);
+  color: var(--text);
+}
 
-  .nav-link.active {
-    background: var(--surface-hi);
-    color: var(--accent-hi);
-  }
+.nav-link.active {
+  background: var(--surface-hi);
+  color: var(--accent-hi);
+}
 
     .nav-backdrop {
     position: fixed;
