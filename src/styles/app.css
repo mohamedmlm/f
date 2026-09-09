@@ -80,37 +80,85 @@
 .nav-user-mobile {
   display: none;
 }
-/* ===== Mobile ===== */
 @media (max-width: 899px) {
   .nav-toggle {
-    display: flex;
+    display: inline-flex;
+    position: fixed;
+    right: 12px;
+    left: auto;
+    top: 12px;
+    margin-inline-start: 0;
+    z-index: 9999;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 8px 8px;
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--line);
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text);
     align-items: center;
     justify-content: center;
-    position: fixed;
-    right: 16px;
-    top: 16px;
-    z-index: 9999;
+    line-height: 1;
   }
 
+  .brand-mark {
+    display: inline-flex;
+  }
+
+  .brand-name {
+    display: inline-block;
+  }
+
+  .brand {
+    position: relative;
+    z-index: 61;
+    display: flex;
+    align-items: center;
+    margin-inline-start: 0 !important;
+    margin-inline-end: 48px !important;
+    padding-right: 8px;
+    max-width: calc(100% - 84px);
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .brand-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    display: inline-block;
+    font-size: 1rem;
+  }
+
+  .navbar-inner {
+    padding-right: 52px;
+    height: 64px;
+  }
+
+  /* ===== القائمة الجانبية ===== */
   .nav-links {
     position: fixed;
-    top: 72px; /* يبدأ تحت الـ navbar مباشرة */
+    top: 0;
     right: -100%;
     bottom: 0;
-    width: 280px;
-    max-width: 80vw;
+    width: 75%;
+    max-width: 320px;
     background: var(--surface);
     flex-direction: column;
-    padding: 20px 20px 30px; /* قلل padding-top */
+    gap: 4px;
+    padding: 20px 16px 30px;
+    padding-top: 80px;
+    border-left: 2px solid var(--line);
     z-index: 9998;
     transition: right 0.3s ease;
-    box-shadow: -8px 0 30px rgba(0,0,0,0.2);
     overflow-y: auto;
-    display: flex !important;
-    gap: 4px;
-    border-left: 1px solid var(--line);
     pointer-events: none;
-    height: calc(100vh - 72px); /* ارتفاع القائمة = ارتفاع الشاشة - الـ navbar */
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
+    display: flex !important;
   }
 
   .nav-links.open {
@@ -118,30 +166,19 @@
     pointer-events: auto;
   }
 
-  .nav-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 9997;
-    display: none;
-    pointer-events: none;
-  }
-
-  .nav-backdrop.show {
-    display: block;
-  }
-
   .nav-link {
     padding: 14px 16px;
     width: 100%;
     border-radius: 8px;
     font-size: 1rem;
+    text-align: left;
     color: var(--text);
     text-decoration: none;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .nav-link:hover {
@@ -153,6 +190,30 @@
     color: var(--accent-hi);
   }
 
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 9997;
+    pointer-events: none;
+    display: none;
+  }
+
+  .nav-backdrop.show {
+    display: block;
+  }
+
+  .mobile-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+  }
+
+  .mobile-name {
+    font-weight: 700;
+  }
+
   .nav-user {
     display: none !important;
   }
@@ -161,23 +222,26 @@
     display: flex !important;
     flex-direction: column;
     gap: 8px;
-    padding: 16px 0;
+    padding: 16px 0 8px;
     margin-top: auto;
     border-top: 1px solid var(--line);
     width: 100%;
   }
 
   .nav-user-mobile .btn {
-    width: 100%;
-    padding: 12px;
-  }
-
-  .brand-name {
+    padding: 12px 14px;
     font-size: 1rem;
+    width: 100%;
+    justify-content: center;
   }
 
-  .navbar-inner {
-    height: 64px;
+  .theme-toggle {
+    padding: 8px 10px;
+  }
+
+  .nav-user {
+    border-inline-start: none;
+    padding-inline-start: 0;
   }
 }
 
