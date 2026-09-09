@@ -65,21 +65,15 @@ export default function Navbar() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
 
-  // Handle navigation with menu close
-  const handleNavigate = useCallback((path) => {
-    setMenuOpen(false);
-    navigate(path);
-  }, [navigate]);
-
   // Auth buttons component (reused for mobile and desktop)
   const AuthButtons = ({ isMobile = false }) => {
     if (token) {
       return (
         <>
-          <button
+          <NavLink
+            to="/profile"
             className={`nav-link mobile-profile ${isMobile ? "" : ""}`}
-            onClick={() => handleNavigate("/profile")}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}
+            onClick={closeMenu}
           >
             <img
               className="nav-avatar"
@@ -89,7 +83,7 @@ export default function Navbar() {
             {isMobile && (
               <span className="mobile-name">{user?.name || "..."}</span>
             )}
-          </button>
+          </NavLink>
           <button
             className={`btn btn-ghost ${isMobile ? "btn-block" : "btn-sm"}`}
             onClick={() => {
@@ -105,18 +99,20 @@ export default function Navbar() {
 
     return (
       <>
-        <button
-          onClick={() => handleNavigate("/login")}
+        <NavLink
+          to="/login"
+          onClick={closeMenu}
           className={`btn btn-ghost ${isMobile ? "btn-block" : "btn-sm"}`}
         >
           دخول
-        </button>
-        <button
-          onClick={() => handleNavigate("/register")}
+        </NavLink>
+        <NavLink
+          to="/register"
+          onClick={closeMenu}
           className={`btn btn-primary ${isMobile ? "btn-block" : "btn-sm"}`}
         >
           حساب جديد
-        </button>
+        </NavLink>
       </>
     );
   };
@@ -132,15 +128,15 @@ export default function Navbar() {
 
       <header className="navbar">
         <div className="container navbar-inner">
-          <button
-            onClick={() => handleNavigate("/")}
+          <NavLink
+            to="/"
             className="brand"
-            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+            onClick={closeMenu}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
-          </button>
+          </NavLink>
 
           <button
             ref={navToggleRef}
@@ -155,25 +151,35 @@ export default function Navbar() {
           {/* Only render nav when menu is open on mobile, but always show on desktop */}
           {(menuOpen || isDesktop) && (
             <nav ref={navLinksRef} className={`nav-links${menuOpen ? " open" : ""}`}>
-              <button
-                onClick={() => handleNavigate("/")}
-                className="nav-link"
+              <NavLink
+                to="/"
+                end
+                onClick={closeMenu}
+                className={({ isActive }) =>
+                  `nav-link${isActive ? " active" : ""}`
+                }
               >
                 المتجر
-              </button>
-              <button
-                onClick={() => handleNavigate("/purchases")}
-                className="nav-link"
+              </NavLink>
+              <NavLink
+                to="/purchases"
+                onClick={closeMenu}
+                className={({ isActive }) =>
+                  `nav-link${isActive ? " active" : ""}`
+                }
               >
                 مشترياتي
-              </button>
+              </NavLink>
               {isStaff && (
-                <button
-                  onClick={() => handleNavigate("/admin")}
-                  className="nav-link"
+                <NavLink
+                  to="/admin"
+                  onClick={closeMenu}
+                  className={({ isActive }) =>
+                    `nav-link${isActive ? " active" : ""}`
+                  }
                 >
                   لوحة التحكم
-                </button>
+                </NavLink>
               )}
               
               {/* Mobile-only user menu */}
