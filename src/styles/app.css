@@ -265,30 +265,15 @@
   /* ========================================================= */
 
   .nav-backdrop {
-    position: fixed;
-    inset: 0;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 17, 23, 0.18);
 
-    background: rgba(15, 17, 23, 0.18);
+  /* تحت الـ navbar */
+  z-index: 40;
 
-    /*
-     * أقل من القائمة وأعلى من الصفحة
-     */
-    z-index: 99998;
-
-    /*
-     * مغلق = لا يستقبل أي لمس
-     */
-    pointer-events: none;
-
-    opacity: 0;
-
-    transition: opacity 0.25s ease;
-
-    /*
-     * منع مشاكل الـ touch
-     */
-    touch-action: manipulation;
-  }
+  pointer-events: auto;
+}
 
   /*
    * عند فتح القائمة:
