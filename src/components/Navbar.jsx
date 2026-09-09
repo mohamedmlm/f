@@ -1,4 +1,4 @@
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
@@ -18,7 +18,6 @@ export default function Navbar() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // منع scroll
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
@@ -44,9 +43,14 @@ export default function Navbar() {
     setMenuOpen(!menuOpen);
   };
 
+  // دالة للتنقل مع إغلاق القائمة
+  const handleNavigate = (path) => {
+    setMenuOpen(false);
+    navigate(path);
+  };
+
   return (
     <>
-      {/* الخلفية */}
       {menuOpen && (
         <div
           className="nav-backdrop"
@@ -57,10 +61,14 @@ export default function Navbar() {
       <header className="navbar">
         <div className="container navbar-inner">
           {/* البراند */}
-          <NavLink to="/" className="brand">
+          <button
+            className="brand"
+            onClick={() => handleNavigate("/")}
+            style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+          >
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
-          </NavLink>
+          </button>
 
           {/* زر الهامبرغر */}
           <button
@@ -74,42 +82,61 @@ export default function Navbar() {
 
           {/* القائمة */}
           <nav className={`nav-links${menuOpen ? " open" : ""}`}>
-            <NavLink to="/" end className="nav-link">
+            <button
+              className="nav-link"
+              onClick={() => handleNavigate("/")}
+            >
               المتجر
-            </NavLink>
-            <NavLink to="/purchases" className="nav-link">
+            </button>
+            <button
+              className="nav-link"
+              onClick={() => handleNavigate("/purchases")}
+            >
               مشترياتي
-            </NavLink>
+            </button>
             {isStaff && (
-              <NavLink to="/admin" className="nav-link">
+              <button
+                className="nav-link"
+                onClick={() => handleNavigate("/admin")}
+              >
                 لوحة التحكم
-              </NavLink>
+              </button>
             )}
 
             {/* موبايل */}
             <div className="nav-user-mobile">
               {token ? (
                 <>
-                  <NavLink to="/profile" className="nav-link mobile-profile">
+                  <button
+                    className="nav-link mobile-profile"
+                    onClick={() => handleNavigate("/profile")}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%', textAlign: 'left' }}
+                  >
                     <img
                       className="nav-avatar"
                       src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
                       alt="الملف الشخصي"
                     />
                     <span>{user?.name || "..."}</span>
-                  </NavLink>
+                  </button>
                   <button className="btn btn-ghost btn-block" onClick={handleLogout}>
                     خروج
                   </button>
                 </>
               ) : (
                 <>
-                  <NavLink to="/login" className="btn btn-ghost btn-block">
+                  <button
+                    className="btn btn-ghost btn-block"
+                    onClick={() => handleNavigate("/login")}
+                  >
                     دخول
-                  </NavLink>
-                  <NavLink to="/register" className="btn btn-primary btn-block">
+                  </button>
+                  <button
+                    className="btn btn-primary btn-block"
+                    onClick={() => handleNavigate("/register")}
+                  >
                     حساب جديد
-                  </NavLink>
+                  </button>
                 </>
               )}
             </div>
@@ -123,26 +150,38 @@ export default function Navbar() {
 
             {token ? (
               <>
-                <NavLink to="/profile" className="row" style={{ gap: 8 }}>
+                <button
+                  className="row"
+                  onClick={() => handleNavigate("/profile")}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', gap: 8, display: 'flex', alignItems: 'center' }}
+                >
                   <img
                     className="nav-avatar"
                     src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
                     alt="الملف الشخصي"
                   />
-                  <span>{user?.name || "..."}</span>
-                </NavLink>
+                  <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>
+                    {user?.name || "..."}
+                  </span>
+                </button>
                 <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
                   خروج
                 </button>
               </>
             ) : (
               <>
-                <NavLink to="/login" className="btn btn-ghost btn-sm">
+                <button
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => handleNavigate("/login")}
+                >
                   دخول
-                </NavLink>
-                <NavLink to="/register" className="btn btn-primary btn-sm">
+                </button>
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() => handleNavigate("/register")}
+                >
                   حساب جديد
-                </NavLink>
+                </button>
               </>
             )}
           </div>
