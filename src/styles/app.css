@@ -180,13 +180,13 @@
     left: auto;
     top: 12px;
     margin-inline-start: 0;
-    z-index: 9999;
+    z-index: 99999;
     min-width: 40px;
     min-height: 40px;
     padding: 8px 8px;
     border-radius: 10px;
     background: var(--surface);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08); /* التصحيح هنا */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--line);
     font-size: 1.5rem;
     cursor: pointer;
@@ -194,11 +194,11 @@
     align-items: center;
     justify-content: center;
     line-height: 1;
-}
+  }
 
   .brand {
     position: relative;
-    z-index: 9996; /* تغيير: أقل من القائمة */
+    z-index: 99998;
     display: flex;
     align-items: center;
     margin-inline-start: 0 !important;
@@ -207,6 +207,20 @@
     max-width: calc(100% - 84px);
     text-decoration: none;
     color: var(--text);
+  }
+
+  .brand-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+    display: inline-block;
+    font-size: 1rem;
+  }
+
+  .navbar-inner {
+    padding-right: 52px;
+    height: 64px;
   }
 
   .nav-links {
@@ -222,7 +236,7 @@
     gap: 4px;
     padding: 16px 16px 30px;
     border-left: 2px solid var(--line);
-    z-index: 9998;
+    z-index: 99997;
     transition: right 0.3s ease;
     overflow-y: auto;
     pointer-events: none;
@@ -236,12 +250,36 @@
     pointer-events: auto !important;
   }
 
+  /* ===== المهم: تأكد أن كل العناصر داخل القائمة قابلة للنقر ===== */
+  .nav-links.open * {
+    pointer-events: auto !important;
+  }
+
+  .nav-links.open .nav-link {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 99999 !important;
+  }
+
+  .nav-links.open .btn {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    position: relative;
+    z-index: 99999 !important;
+  }
+
+  .nav-links.open a {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
   .nav-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-    z-index: 9997;
-    pointer-events: none; /* تغيير: بدلاً من auto */
+    z-index: 99996;
+    pointer-events: none !important;
     backdrop-filter: none;
   }
 
@@ -251,24 +289,52 @@
     border-radius: 8px;
     font-size: 1rem;
     text-align: left;
-    pointer-events: auto !important; /* جديد */
-    cursor: pointer !important; /* جديد */
-    position: relative;
-    z-index: 9999;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .nav-link:hover {
+    background: var(--surface-hi);
+  }
+
+  .nav-link.active {
+    background: var(--surface-hi);
+    color: var(--accent-hi);
+  }
+
+  .nav-user {
+    display: none !important;
+  }
+
+  .nav-user-mobile {
+    display: flex !important;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 0 8px;
+    margin-top: auto;
+    border-top: 1px solid var(--line);
+    width: 100%;
   }
 
   .nav-user-mobile .btn {
-    pointer-events: auto !important; /* جديد */
-    cursor: pointer !important; /* جديد */
-    position: relative;
-    z-index: 9999;
+    padding: 12px 14px;
+    font-size: 1rem;
+    width: 100%;
+    justify-content: center;
   }
 
-  .nav-links.open * {
-    pointer-events: auto !important; /* جديد */
+  .theme-toggle {
+    padding: 8px 10px;
   }
 
-  /* باقي الكود كما هو */
+  .nav-user {
+    border-inline-start: none;
+    padding-inline-start: 0;
+  }
 }
 
 /* Very small screens: full-screen menu and compact brand */
