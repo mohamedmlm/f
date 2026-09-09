@@ -1377,53 +1377,30 @@ table.data-table tr:last-child td {
     cursor: pointer !important;
   }
 }
-/* ===== الحل النهائي لمشكلة الـ touch والـ pointer-events ===== */
+/* ===== حل إضافي ===== */
 @media (max-width: 899px) {
-  /* 1. القائمة نفسها تسمح بالنقر */
-  .nav-links.open {
-    pointer-events: auto !important;
-    z-index: 99999 !important;
-  }
-
-  /* 2. كل العناصر داخل القائمة تسمح بالنقر */
-  .nav-links.open * {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-
-  /* 3. الروابط تحديداً */
-  .nav-links.open .nav-link {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    position: relative !important;
-    z-index: 999999 !important;
-  }
-
-  /* 4. الأزرار تحديداً */
+  /* منع أي عنصر من منع النقر */
+  .nav-links.open,
+  .nav-links.open > *,
+  .nav-links.open a,
+  .nav-links.open button,
+  .nav-links.open .nav-link,
   .nav-links.open .btn {
     pointer-events: auto !important;
     cursor: pointer !important;
-    position: relative !important;
-    z-index: 999999 !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
   }
 
-  /* 5. الخلفية تمنع النقر */
+  /* منع الخلفية من منع النقر */
   .nav-backdrop {
     pointer-events: none !important;
-    z-index: 99998 !important;
+    touch-action: none !important;
   }
 
-  /* 6. زر الإغلاق */
-  .nav-toggle {
-    pointer-events: auto !important;
-    cursor: pointer !important;
+  /* إجبار القائمة على الظهور فوق كل شيء */
+  .nav-links.open {
     z-index: 9999999 !important;
-  }
-
-  /* 7. الروابط في الموبايل */
-  .nav-user-mobile .btn {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 999999 !important;
+    position: fixed !important;
   }
 }
