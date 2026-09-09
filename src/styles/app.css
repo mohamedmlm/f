@@ -13,7 +13,7 @@
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 50; /* keep above page content but below mobile nav (60) */
   background: var(--surface);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
@@ -21,60 +21,145 @@
 .navbar-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 24px;
   height: 72px;
-  padding: 0 16px;
-  max-width: 1200px;
-  margin: 0 auto;
+}
+/* Make header layout use space-between so brand is left and controls on right */
+.navbar-inner {
+  justify-content: space-between;
   position: relative;
 }
-
 .brand {
   display: flex;
   align-items: center;
   gap: 10px;
   color: var(--text);
-  text-decoration: none;
+  font-family: var(--font-display);
   font-weight: 800;
-  z-index: 61;
-  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2 ease;
+  position: relative;
+}
+
+.brand::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1.5px;
+  background: var(--accent);
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  border-radius: 999px;
+  transition: width 0.2s ease;
+}
+
+.brand:hover {
+  transform: translateY(-1px);
+}
+
+.brand:hover::after {
+  width: 100%;
+}
+
+@keyframes lantern-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 8px 20px rgba(227, 166, 62, 0.22),
+      0 0 0 0 rgba(242, 195, 104, 0.35);
+  }
+  50% {
+    box-shadow:
+      0 8px 22px rgba(227, 166, 62, 0.32),
+      0 0 16px 4px rgba(242, 195, 104, 0.28);
+  }
 }
 
 .brand-mark {
   width: 32px;
   height: 32px;
+  min-width: 32px;
   border-radius: 10px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--accent-hi), var(--accent));
+  flex-shrink: 0;
+  background-color: #e3a63e; /* fallback in case gradient/vars fail to load */
+  background: linear-gradient(
+    135deg,
+    var(--accent-hi),
+    var(--accent) 55%,
+    var(--mint)
+  );
+  background-size: 220% 220%;
+  background-position: 0% 50%;
   color: var(--accent-ink);
   font-size: 1rem;
+  line-height: 1;
   font-weight: 900;
+  animation: lantern-glow 3.2s ease-in-out infinite;
+  transition:
+    rotate 0.3s ease,
+    background-position 0.5s ease,
+    scale 0.2s ease;
 }
 
+.btn .brand-mark,
+.nav-link .brand-mark {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  border-radius: 7px;
+  font-size: 0.7rem;
+  box-shadow: none;
+}
 .brand-name {
   font-size: 1.2rem;
+  letter-spacing: -0.03em;
+  transition:
+    letter-spacing 0.2s ease,
+    text-shadow 0.2s ease;
+}
+
+.brand-mark:hover {
+  rotate: -20deg;
+}
+
+.brand:hover .brand-name {
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 18px rgba(227, 166, 62, 0.2);
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
+  margin-inline-start: auto;
 }
 
+/* Mobile hamburger toggle */
 .nav-toggle {
   display: none;
   background: transparent;
   border: 1px solid var(--line);
-  padding: 8px 12px;
+  padding: 8px 8px;
   border-radius: 8px;
-  font-size: 1.5rem;
+  font-size: 1.05rem;
   cursor: pointer;
   color: var(--text);
-  z-index: 80;
+  z-index: 60;
   min-width: 42px;
   min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.theme-label {
+  display: inline-block;
+  margin-left: 6px;
 }
 
 .nav-user-mobile {
@@ -89,22 +174,16 @@
     left: auto;
     top: 12px;
     margin-inline-start: 0;
-    z-index: 9999;
+    z-index: 80;
     min-width: 40px;
     min-height: 40px;
     padding: 8px 8px;
     border-radius: 10px;
     background: var(--surface);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--line);
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--text);
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
   }
 
+  /* show brand mark/name on mobile */
   .brand-mark {
     display: inline-flex;
   }
@@ -115,15 +194,13 @@
 
   .brand {
     position: relative;
-    z-index: 61;
+    z-index: 61; /* keep brand above the backdrop so it stays visible */
     display: flex;
     align-items: center;
     margin-inline-start: 0 !important;
     margin-inline-end: 48px !important;
     padding-right: 8px;
     max-width: calc(100% - 84px);
-    text-decoration: none;
-    color: var(--text);
   }
 
   .brand-name {
@@ -132,76 +209,83 @@
     white-space: nowrap;
     text-align: left;
     display: inline-block;
-    font-size: 1rem;
   }
 
   .navbar-inner {
     padding-right: 52px;
-    height: 64px;
   }
 
-  /* ===== القائمة الجانبية ===== */
   .nav-links {
+    display: flex;
     position: fixed;
-    top: 72px;
-    right: -100%;
+    top: 0;
     bottom: 0;
-    width: 75%;
-    max-width: 320px;
+    right: 0; /* open from right so brand on left stays visible */
+    left: auto;
+    width: 60%; /* slimmer so brand/logo on left doesn't get covered */
+    max-width: 420px;
     background: var(--surface);
     flex-direction: column;
-    gap: 4px;
-    padding: 16px 16px 30px;
-    border-left: 2px solid var(--line);
-    z-index: 9998;
-    transition: right 0.3s ease;
-    overflow-y: auto;
+    gap: 0;
+    padding: 12px 14px;
+    border-left: 1px solid var(--line);
+    z-index: 60;
+    transform-origin: right center;
+  }
+
+  /* Make the mobile menu more touch-friendly */
+  .nav-links {
+    /* hidden by default; transform for smooth animation (slide from right) */
+    display: flex;
+    transform-origin: right center;
+    transform: translateX(12px) scaleX(0.98);
+    opacity: 0;
     pointer-events: none;
-    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
-    display: flex !important;
-    height: calc(100vh - 72px);
+    transition:
+      transform 220ms ease,
+      opacity 180ms ease;
   }
 
+  /* Single consolidated rule for the open state — was previously split
+     across two separate `.nav-links.open` blocks, which made it easy
+     for an edit to one to accidentally drop a property (like
+     pointer-events) that the other relied on. */
   .nav-links.open {
-    right: 0;
+    opacity: 1;
     pointer-events: auto;
+    transform: translateX(0) scaleX(1);
+    /* enough top padding to clear the fixed toggle button (top:12px +
+       ~40px tall) at ALL mobile widths, not just <480px, so the first
+       link is never hidden/blocked underneath it */
+    padding: 64px 14px 16px;
+    gap: 10px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    position: fixed;
+    z-index: 60;
+    isolation: isolate;
+    background: var(--surface);
   }
-
   .nav-link {
-    padding: 14px 16px;
+    padding: 12px 14px;
     width: 100%;
     border-radius: 8px;
     font-size: 1rem;
-    text-align: left;
-    color: var(--text);
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: left; /* force left alignment inside menu */
   }
 
-  .nav-link:hover {
-    background: var(--surface-hi);
-  }
-
-  .nav-link.active {
-    background: var(--surface-hi);
-    color: var(--accent-hi);
+  .nav-link + .nav-link {
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
   }
 
   .nav-backdrop {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 9997;
-    pointer-events: none;
-    display: none;
-  }
-
-  .nav-backdrop.show {
-    display: block;
+    background: rgba(15, 17, 23, 0.18);
+    z-index: 59; /* sit above the navbar (50) but under the mobile nav (60) */
+    pointer-events: auto;
+    backdrop-filter: none;
   }
 
   .mobile-profile {
@@ -216,24 +300,42 @@
   }
 
   .nav-user {
-    display: none !important;
+    display: none;
   }
 
+  /* mobile user actions: centered row at bottom */
   .nav-user-mobile {
-    display: flex !important;
-    flex-direction: column;
-    gap: 8px;
-    padding: 16px 0 8px;
-    margin-top: auto;
-    border-top: 1px solid var(--line);
-    width: 100%;
+    display: flex;
+    flex-direction: row; /* side-by-side */
+    gap: 12px;
+    padding: 10px 0 16px;
+    border-top: none; /* remove the separating line */
+    /* position slightly above bottom */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 40px;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% - 36px);
+    max-width: 420px;
   }
 
   .nav-user-mobile .btn {
     padding: 12px 14px;
     font-size: 1rem;
-    width: 100%;
+    width: 48%;
+    max-width: 260px;
     justify-content: center;
+  }
+
+  .navbar-inner {
+    height: 64px;
+    gap: 12px;
+  }
+
+  .brand-name {
+    font-size: 1rem;
   }
 
   .theme-toggle {
@@ -246,13 +348,23 @@
   }
 }
 
+/* Very small screens: full-screen menu and compact brand */
 @media (max-width: 480px) {
   .nav-links {
-    width: 85% !important;
-    max-width: 300px !important;
-    top: 64px !important;
-    height: calc(100vh - 64px) !important;
-    padding-top: 12px !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    padding-top: 64px;
+    align-items: flex-start;
+    background: var(--surface);
+    overflow-y: auto;
+  }
+
+  .nav-links.open {
+    display: flex;
+    gap: 8px;
   }
 
   .brand-name {
@@ -274,81 +386,118 @@
   }
 
   .nav-link {
-    font-size: 0.95rem;
+    font-size: 1rem;
     padding: 12px 14px;
   }
 
   .nav-user-mobile {
-    padding-bottom: 10px;
+    padding-bottom: 14px;
   }
 }
 
+@media (max-width: 360px) {
+  .nav-link {
+    font-size: 0.98rem;
+    padding: 10px 12px;
+  }
+
+  .btn {
+    padding: 10px 12px;
+    font-size: 0.95rem;
+  }
+}
+
+/* ================= Fluid sizing + extra breakpoints ================= */
+:root {
+  --nav-font-min: 0.92rem;
+  --nav-font-max: 1.08rem;
+  --brand-font-min: 0.95rem;
+  --brand-font-max: 1.4rem;
+}
+
+@media (max-width: 720px) {
+  /* Fluid scaling using clamp for smoother transitions */
+  .brand-name {
+    font-size: clamp(
+      var(--brand-font-min),
+      1.2vw + 0.4rem,
+      var(--brand-font-max)
+    );
+  }
+  .nav-link {
+    font-size: clamp(var(--nav-font-min), 0.9vw + 0.45rem, var(--nav-font-max));
+  }
+  .btn {
+    padding: clamp(8px, 0.6vw + 6px, 14px) clamp(10px, 0.8vw + 8px, 20px);
+  }
+}
+
+/* Larger tablets and small desktops: show menu inline and hide hamburger */
 @media (min-width: 900px) {
   .nav-toggle {
     display: none !important;
   }
+  /* hide mobile close '×' on larger screens */
   .nav-close {
     display: none !important;
   }
   .nav-links {
     display: flex !important;
-    position: static !important;
-    height: auto !important;
-    padding: 0 !important;
-    gap: 8px !important;
-    background: transparent !important;
-    flex-direction: row !important;
-    transform: none !important;
-    pointer-events: auto !important;
-    box-shadow: none !important;
-    overflow-y: visible !important;
-    width: auto !important;
-    max-width: none !important;
-    border-left: none !important;
-    margin: 0 !important;
-    top: auto !important;
-    right: auto !important;
+    position: static;
+    height: auto;
+    padding: 0;
+    gap: 8px;
+    inset-inline-start: auto;
+    inset-inline-end: auto;
+    background: transparent;
+    flex-direction: row;
   }
   .nav-links.open {
-    transform: none !important;
-    box-shadow: none !important;
-    right: auto !important;
+    box-shadow: none;
   }
   .nav-user {
-    display: flex !important;
+    display: flex;
   }
   .nav-user-mobile {
-    display: none !important;
-  }
-  .nav-backdrop {
-    display: none !important;
+    display: none;
   }
 }
 
-/* ===== باقي الـ CSS ===== */
+/* Ensure toolbar spacing on very wide screens */
+@media (min-width: 1280px) {
+  .navbar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 28px;
+  }
+}
+
+/* Accessibility: increase focus ring for keyboard users */
+.nav-link:focus,
+.btn:focus,
+.nav-toggle:focus,
+.theme-toggle:focus {
+  outline: 3px solid rgba(100, 140, 255, 0.18);
+  outline-offset: 2px;
+}
 .nav-link {
   padding: 9px 14px;
   border-radius: var(--radius-sm);
   color: var(--text-dim);
   font-weight: 500;
   font-size: 0.95rem;
-  transition: background 0.15s, color 0.15s;
-  text-decoration: none;
-  cursor: pointer;
-  background: transparent;
-  border: none;
+  transition:
+    background 0.15s,
+    color 0.15s;
 }
-
 .nav-link:hover {
   background: var(--surface);
   color: var(--text);
 }
-
 .nav-link.active {
   background: var(--surface-hi);
   color: var(--accent-hi);
 }
-
 .nav-user {
   display: flex;
   align-items: center;
@@ -357,7 +506,6 @@
   margin-inline-start: 6px;
   border-inline-start: 1px solid var(--line);
 }
-
 .theme-toggle {
   border: 1px solid var(--line);
   background: linear-gradient(135deg, var(--surface), var(--surface-hi));
@@ -368,19 +516,20 @@
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 6px 16px var(--shadow);
-  transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.12s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 }
-
 .theme-toggle:hover {
   border-color: var(--accent);
   background: linear-gradient(135deg, var(--surface-hi), #f7ead3);
   box-shadow: 0 10px 22px rgba(201, 125, 26, 0.12);
 }
-
 .theme-toggle:active {
   transform: translateY(1px);
 }
-
 .nav-avatar {
   width: 34px;
   height: 34px;
@@ -389,6 +538,7 @@
   border: 1px solid var(--line);
 }
 
+/* ================= Buttons ================= */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -400,9 +550,12 @@
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.15s, border-color 0.15s, opacity 0.15s;
+  transition:
+    transform 0.12s ease,
+    background 0.15s,
+    border-color 0.15s,
+    opacity 0.15s;
   white-space: nowrap;
-  text-decoration: none;
 }
 .btn:active {
   transform: translateY(1px);
@@ -427,6 +580,14 @@
   border-color: var(--accent);
   color: var(--accent-hi);
 }
+.btn-danger {
+  background: transparent;
+  border-color: rgba(228, 87, 76, 0.4);
+  color: var(--rose);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(228, 87, 76, 0.1);
+}
 .btn-sm {
   padding: 7px 12px;
   font-size: 0.85rem;
@@ -434,7 +595,6 @@
 .btn-block {
   width: 100%;
 }
-
 
 /* ================= Forms ================= */
 .field {
@@ -1146,82 +1306,4 @@ table.data-table tr:last-child td {
   cursor: pointer;
   font-weight: 700;
   padding: 0;
-}
-/* ===== الحل النهائي للقائمة ===== */
-@media (max-width: 899px) {
-  .nav-links {
-    position: fixed !important;
-    top: 72px !important;
-    right: -100% !important;
-    bottom: 0 !important;
-    left: auto !important;
-    width: 75% !important;
-    max-width: 320px !important;
-    background: var(--surface) !important;
-    flex-direction: column !important;
-    gap: 4px !important;
-    padding: 16px 16px 30px !important;
-    border-left: 2px solid var(--line) !important;
-    z-index: 9998 !important;
-    transition: right 0.3s ease !important;
-    overflow-y: auto !important;
-    pointer-events: none !important;
-    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2) !important;
-    display: flex !important;
-    height: calc(100vh - 72px) !important;
-  }
-
-  .nav-links.open {
-    right: 0 !important;
-    pointer-events: auto !important;
-  }
-
-  .nav-backdrop {
-    position: fixed !important;
-    inset: 0 !important;
-    background: rgba(0, 0, 0, 0.4) !important;
-    z-index: 9997 !important;
-    pointer-events: none !important;
-  }
-
-  .nav-toggle {
-    z-index: 9999 !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .nav-links {
-    top: 64px !important;
-    height: calc(100vh - 64px) !important;
-    width: 85% !important;
-    max-width: 300px !important;
-    padding-top: 12px !important;
-  }
-}
-
-@media (min-width: 900px) {
-  .nav-links {
-    position: static !important;
-    right: auto !important;
-    top: auto !important;
-    height: auto !important;
-    width: auto !important;
-    max-width: none !important;
-    padding: 0 !important;
-    background: transparent !important;
-    box-shadow: none !important;
-    border-left: none !important;
-    pointer-events: auto !important;
-    flex-direction: row !important;
-    display: flex !important;
-  }
-  .nav-links.open {
-    right: auto !important;
-  }
-  .nav-backdrop {
-    display: none !important;
-  }
-  .nav-toggle {
-    display: none !important;
-  }
 }
