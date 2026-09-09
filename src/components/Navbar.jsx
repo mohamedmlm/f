@@ -17,6 +17,7 @@ export default function Navbar() {
   });
   const navLinksRef = useRef(null);
   const navToggleRef = useRef(null);
+  const closeTimeoutRef = useRef(null);
 
   // Check window size for desktop view
   useEffect(() => {
@@ -42,7 +43,19 @@ export default function Navbar() {
 
   // Close menu on location change
   useEffect(() => {
-    setMenuOpen(false);
+    // تأخير إغلاق القائمة لضمان اكتمال التنقل
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setMenuOpen(false);
+    }, 150);
+    
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
   }, [location.pathname]);
 
   // Prevent scroll when menu is open
@@ -62,7 +75,10 @@ export default function Navbar() {
     setTheme((current) => (current === "dark" ? "light" : "dark"));
   }, []);
 
-  const closeMenu = useCallback(() => setMenuOpen(false), []);
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+  }, []);
+
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
 
   // Auth buttons component (reused for mobile and desktop)
