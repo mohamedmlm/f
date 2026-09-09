@@ -273,18 +273,13 @@
   }
 
   /* ===== الخلفية - لا تمنع النقر ===== */
-  .nav-backdrop {
+    .nav-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-
-    /* IMPORTANT: below the navbar */
     z-index: 40;
-
-    /* It receives touches outside the menu */
-    pointer-events: auto;
-
-    touch-action: manipulation;
+    pointer-events: none; /* ← غير من auto إلى none */
+    touch-action: none;
   }
 
   /* ===== الروابط ===== */
