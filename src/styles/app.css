@@ -296,12 +296,13 @@
     color: var(--accent-hi);
   }
 
-    .nav-backdrop {
+  .nav-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-    z-index: 59;
-    pointer-events: none;  /* <- خليها none عشان ما تمنع الضغط */
+    z-index: 9997;
+    pointer-events: none; /* التغيير */
+    backdrop-filter: none;
   }
 
   .mobile-profile {
