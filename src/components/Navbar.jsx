@@ -82,12 +82,13 @@ export default function Navbar() {
   return (
     <>
       {menuOpen && (
-        <div
-          ref={navBackdropRef}
-          className="nav-backdrop"
-          aria-hidden={!menuOpen}
-        />
-      )}
+  <div
+    ref={navBackdropRef}
+    className="nav-backdrop"
+    style={{ pointerEvents: 'none' }}  // أضف هذا
+    aria-hidden={!menuOpen}
+  />
+)}
 
       <header className="navbar">
         <div className="container navbar-inner">
