@@ -1,10 +1,23 @@
+/* ================= Layout shell ================= */
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.app-main {
+  flex: 1;
+  padding: 40px 0 80px;
+}
+
 /* ================= Navbar ================= */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 50;
+  isolation: isolate;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
 }
-
 .navbar-inner {
   display: flex;
   align-items: center;
@@ -13,8 +26,6 @@
   justify-content: space-between;
   position: relative;
 }
-
-/* ================= Brand ================= */
 .brand {
   display: flex;
   align-items: center;
@@ -22,7 +33,7 @@
   color: var(--text);
   font-family: var(--font-display);
   font-weight: 800;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2 ease;
   position: relative;
   background: none;
   border: none;
@@ -45,24 +56,17 @@
 .brand:hover {
   transform: translateY(-1px);
 }
-
 .brand:hover::after {
   width: 100%;
 }
 
-/* ================= Brand Mark ================= */
 @keyframes lantern-glow {
   0%,
   100% {
-    box-shadow:
-      0 8px 20px rgba(227, 166, 62, 0.22),
-      0 0 0 0 rgba(242, 195, 104, 0.35);
+    box-shadow: 0 8px 20px rgba(227, 166, 62, 0.22), 0 0 0 0 rgba(242, 195, 104, 0.35);
   }
-
   50% {
-    box-shadow:
-      0 8px 22px rgba(227, 166, 62, 0.32),
-      0 0 16px 4px rgba(242, 195, 104, 0.28);
+    box-shadow: 0 8px 22px rgba(227, 166, 62, 0.32), 0 0 16px 4px rgba(242, 195, 104, 0.28);
   }
 }
 
@@ -75,28 +79,16 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-
   background-color: #e3a63e;
-  background: linear-gradient(
-    135deg,
-    var(--accent-hi),
-    var(--accent) 55%,
-    var(--mint)
-  );
-
+  background: linear-gradient(135deg, var(--accent-hi), var(--accent) 55%, var(--mint));
   background-size: 220% 220%;
   background-position: 0% 50%;
   color: var(--accent-ink);
   font-size: 1rem;
   line-height: 1;
   font-weight: 900;
-
   animation: lantern-glow 3.2s ease-in-out infinite;
-
-  transition:
-    rotate 0.3s ease,
-    background-position 0.5s ease,
-    scale 0.2s ease;
+  transition: rotate 0.3s ease, background-position 0.5s ease, scale 0.2s ease;
 }
 
 .btn .brand-mark,
@@ -108,25 +100,21 @@
   font-size: 0.7rem;
   box-shadow: none;
 }
-
 .brand-name {
   font-size: 1.2rem;
   letter-spacing: -0.03em;
-  transition:
-    letter-spacing 0.2s ease,
-    text-shadow 0.2s ease;
+  transition: letter-spacing 0.2s ease, text-shadow 0.2s ease;
 }
 
 .brand-mark:hover {
   rotate: -20deg;
 }
-
 .brand:hover .brand-name {
   letter-spacing: 0.02em;
   text-shadow: 0 0 18px rgba(227, 166, 62, 0.2);
 }
 
-/* ================= Desktop Nav ================= */
+/* ===== القائمة - Desktop ===== */
 .nav-links {
   display: flex;
   align-items: center;
@@ -134,12 +122,12 @@
   margin-inline-start: auto;
 }
 
-/* ================= Hamburger ================= */
+/* ===== زر الهامبرغر ===== */
 .nav-toggle {
   display: none;
   background: transparent;
   border: 1px solid var(--line);
-  padding: 8px;
+  padding: 8px 8px;
   border-radius: 8px;
   font-size: 1.05rem;
   cursor: pointer;
@@ -150,100 +138,67 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
-
-  /* مهم للموبايل */
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
 }
 
 .theme-label {
   display: inline-block;
   margin-left: 6px;
 }
-
 .nav-user-mobile {
   display: none;
 }
 
 /* ============================================================ */
-/* ======================= MOBILE ============================= */
+/* ===== الموبايل - الحل النهائي ===== */
 /* ============================================================ */
-
 @media (max-width: 899px) {
-
-  /* ================= Hamburger ================= */
+  /* زر الهامبرغر */
   .nav-toggle {
     display: inline-flex;
     position: fixed;
-
     right: 12px;
     left: auto;
     top: 12px;
-
     margin-inline-start: 0;
-
-    z-index: 100001;
-
+    z-index: 999999;
     min-width: 40px;
     min-height: 40px;
-    padding: 8px;
-
+    padding: 8px 8px;
     border-radius: 10px;
-
     background: var(--surface);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--line);
-
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--text);
-
     align-items: center;
     justify-content: center;
-
     line-height: 1;
-
-    pointer-events: auto;
-
-    /* Touch */
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
+    pointer-events: auto !important;
   }
 
-  /* ================= Brand ================= */
+  /* البراند */
   .brand-mark {
     display: inline-flex;
   }
-
   .brand-name {
     display: inline-block;
   }
-
   .brand {
     position: relative;
-    z-index: 100000;
-
+    z-index: 99998;
     display: flex;
     align-items: center;
-
     margin-inline-start: 0 !important;
     margin-inline-end: 48px !important;
-
     padding-right: 8px;
-
     max-width: calc(100% - 84px);
-
     text-decoration: none;
     color: var(--text);
-
     background: none;
     border: none;
-
     cursor: pointer;
-
-    touch-action: manipulation;
   }
-
   .brand-name {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -252,175 +207,124 @@
     display: inline-block;
     font-size: 1rem;
   }
-
   .navbar-inner {
     padding-right: 52px;
     height: 64px;
   }
 
-  /* ========================================================= */
-  /* ======================= BACKDROP ======================== */
-  /* ========================================================= */
-
-  .nav-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 17, 23, 0.18);
-
-  /* تحت الـ navbar */
-  z-index: 40;
-
-  pointer-events: auto;
-}
-
-  /*
-   * عند فتح القائمة:
-   * الـ backdrop يمسك اللمس خارج القائمة
-   */
-  .nav-backdrop.open {
-    pointer-events: auto;
-    opacity: 1;
-  }
-
-  /* ========================================================= */
-  /* ========================= MENU ========================== */
-  /* ========================================================= */
-
+  /* ===== القائمة - الحل النهائي ===== */
   .nav-links {
     position: fixed;
-
     top: 64px;
     right: 0;
     bottom: 0;
-
+    left: auto;
     width: 75%;
     max-width: 320px;
-
     background: var(--surface);
-
     flex-direction: column;
-    align-items: stretch;
-
     gap: 4px;
-
     padding: 16px 16px 30px;
-
     border-left: 2px solid var(--line);
 
-    /*
-     * القائمة فوق الـ backdrop
-     */
+    /* Keep the menu above the backdrop through the navbar stacking context */
     z-index: 99999;
 
-    /*
-     * مغلقة خارج الشاشة باستخدام transform
-     * وليس right:-100%
-     */
+    /* Use transform instead of moving right:-100% */
     transform: translate3d(100%, 0, 0);
-
-    transition:
-      transform 0.3s ease,
-      visibility 0.3s ease;
+    transition: transform 0.3s ease, visibility 0.3s ease;
 
     overflow-y: auto;
-    overflow-x: hidden;
-
     box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
-
     display: flex !important;
-
     height: calc(100vh - 64px);
 
-    /*
-     * القائمة المغلقة لا تستقبل touch
-     */
+    /* Closed menu must not receive touch */
     pointer-events: none;
-
     visibility: hidden;
 
-    /*
-     * مهم للمس
-     */
+    /* Allow vertical scrolling/touch inside the menu */
     touch-action: pan-y;
-
     -webkit-overflow-scrolling: touch;
   }
 
-  /* ================= OPEN MENU ================= */
+  /* ===== القائمة مفتوحة ===== */
   .nav-links.open {
     transform: translate3d(0, 0, 0);
-
-    /*
-     * الآن القائمة تستقبل اللمس
-     */
-    pointer-events: auto;
-
+    pointer-events: auto !important;
     visibility: visible;
   }
 
-  /*
-   * كل عناصر القائمة تستقبل touch
-   */
+  /* ===== كل العناصر داخل القائمة ===== */
   .nav-links.open * {
     pointer-events: auto;
   }
 
-  /* ================= Links ================= */
-  .nav-link {
-    padding: 12px 14px;
-
-    width: 100%;
-
-    min-height: 44px;
-
-    border-radius: 8px;
-
-    font-size: 1rem;
-
-    text-align: left;
-
-    color: var(--text);
-
-    text-decoration: none;
-
-    display: flex;
-    align-items: center;
-
-    gap: 10px;
-
-    background: none !important;
-    border: none !important;
-
+  /* ===== الروابط داخل القائمة ===== */
+  .nav-links.open .nav-link {
+    pointer-events: auto;
     cursor: pointer;
+  }
 
-    font-family: inherit;
+  /* ===== الأزرار داخل القائمة ===== */
+  .nav-links.open .btn {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  /* ===== الخلفية - لا تمنع النقر ===== */
+  .nav-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 17, 23, 0.18);
+
+    /* IMPORTANT: below the navbar */
+    z-index: 40;
+
+    /* It receives touches outside the menu */
+    pointer-events: auto;
 
     touch-action: manipulation;
+  }
 
-    -webkit-tap-highlight-color: transparent;
+  /* ===== الروابط ===== */
+  .nav-link {
+    padding: 12px 14px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: left;
+    color: var(--text);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-family: inherit;
+    font-size: inherit;
   }
 
   .nav-link:hover {
     background: var(--surface-hi) !important;
   }
-
   .nav-link.active {
     background: var(--surface-hi) !important;
     color: var(--accent-hi) !important;
   }
 
-  /* ================= User ================= */
+  /* ===== الموبايل - المستخدم ===== */
   .mobile-profile {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 10px 12px;
   }
-
   .mobile-name {
     font-weight: 700;
   }
-
   .nav-user {
     display: none !important;
   }
@@ -428,45 +332,26 @@
   .nav-user-mobile {
     display: flex !important;
     flex-direction: column;
-
     gap: 10px;
-
     padding: 16px 0 20px;
-
     margin-top: auto;
-
     border-top: 1px solid var(--line);
-
     width: 100%;
-
-    pointer-events: auto;
+    pointer-events: auto !important;
   }
 
   .nav-user-mobile .btn {
     padding: 14px 16px;
-
     font-size: 1rem;
-
     width: 100%;
-
     justify-content: center;
-
-    pointer-events: auto;
-
-    cursor: pointer;
-
+    pointer-events: auto !important;
+    cursor: pointer !important;
     border-radius: 10px;
-
     min-height: 48px;
-
     display: flex;
     align-items: center;
-
     gap: 8px;
-
-    touch-action: manipulation;
-
-    -webkit-tap-highlight-color: transparent;
   }
 
   .nav-user-mobile .btn-ghost {
@@ -474,19 +359,11 @@
     border: 1px solid var(--line);
     color: var(--text);
   }
-
   .nav-user-mobile .btn-primary {
-    background: linear-gradient(
-      160deg,
-      var(--accent-hi),
-      var(--accent)
-    );
-
+    background: linear-gradient(160deg, var(--accent-hi), var(--accent));
     color: var(--accent-ink);
-
     border: none;
   }
-
   .nav-user-mobile .btn-block {
     width: 100%;
   }
@@ -494,136 +371,92 @@
   .theme-toggle {
     padding: 8px 10px;
   }
-
   .nav-user {
     border-inline-start: none;
     padding-inline-start: 0;
   }
 }
 
-/* ============================================================ */
-/* ================= VERY SMALL SCREENS ====================== */
-/* ============================================================ */
-
+/* ===== Very small screens ===== */
 @media (max-width: 480px) {
-
   .brand-name {
     display: none;
   }
-
   .brand-mark {
     width: 28px;
     height: 28px;
   }
-
   .nav-avatar {
     width: 28px;
     height: 28px;
   }
-
   .theme-label {
     display: none;
   }
-
   .nav-link {
     font-size: 1rem;
     padding: 12px 14px;
   }
-
   .nav-user-mobile {
     padding-bottom: 14px;
   }
 }
 
 @media (max-width: 360px) {
-
   .nav-link {
     font-size: 0.98rem;
     padding: 10px 12px;
   }
-
   .btn {
     padding: 10px 12px;
     font-size: 0.95rem;
   }
 }
 
-/* ============================================================ */
-/* ======================== DESKTOP ========================== */
-/* ============================================================ */
-
+/* ===== Desktop ===== */
 @media (min-width: 900px) {
-
   .nav-toggle {
     display: none !important;
   }
-
   .nav-close {
     display: none !important;
   }
-
   .nav-links {
     display: flex !important;
-
     position: static !important;
-
     height: auto !important;
-
     padding: 0 !important;
-
     gap: 8px !important;
-
     background: transparent !important;
-
     flex-direction: row !important;
-
     transform: none !important;
-
     pointer-events: auto !important;
-
-    visibility: visible !important;
-
     box-shadow: none !important;
-
     overflow-y: visible !important;
-
-    overflow-x: visible !important;
-
     width: auto !important;
-
     max-width: none !important;
-
     border-left: none !important;
-
     margin: 0 !important;
-
     top: auto !important;
     right: auto !important;
-
-    touch-action: auto !important;
   }
-
   .nav-links.open {
     transform: none !important;
     box-shadow: none !important;
     right: auto !important;
   }
-
   .nav-user {
     display: flex !important;
   }
-
   .nav-user-mobile {
     display: none !important;
   }
-
   .nav-backdrop {
     display: none !important;
   }
 }
 
-/* ================= Focus ================= */
-
+/* ================= باقي الـ CSS ================= */
 .nav-link:focus,
 .btn:focus,
 .nav-toggle:focus,
@@ -631,23 +464,15 @@
   outline: 3px solid rgba(100, 140, 255, 0.18);
   outline-offset: 2px;
 }
-
-/* ================= General Nav Link ================= */
-
 .nav-link {
   padding: 9px 14px;
   border-radius: var(--radius-sm);
   color: var(--text-dim);
   font-weight: 500;
   font-size: 0.95rem;
-
-  transition:
-    background 0.15s,
-    color 0.15s;
-
+  transition: background 0.15s, color 0.15s;
   text-decoration: none;
   cursor: pointer;
-
   background: transparent;
   border: none;
 }
@@ -656,214 +481,123 @@
   background: var(--surface);
   color: var(--text);
 }
-
 .nav-link.active {
   background: var(--surface-hi);
   color: var(--accent-hi);
 }
-
-/* ================= User ================= */
-
 .nav-user {
   display: flex;
   align-items: center;
-
   gap: 10px;
-
   padding-inline-start: 10px;
   margin-inline-start: 6px;
-
   border-inline-start: 1px solid var(--line);
 }
-
-/* ================= Theme ================= */
-
 .theme-toggle {
   border: 1px solid var(--line);
-
-  background: linear-gradient(
-    135deg,
-    var(--surface),
-    var(--surface-hi)
-  );
-
+  background: linear-gradient(135deg, var(--surface), var(--surface-hi));
   color: var(--text);
-
   border-radius: 999px;
-
   padding: 8px 14px;
-
   font-size: 0.8rem;
   font-weight: 700;
-
   cursor: pointer;
-
   box-shadow: 0 6px 16px var(--shadow);
-
-  transition:
-    transform 0.12s ease,
-    border-color 0.15s ease,
-    background 0.15s ease,
-    box-shadow 0.15s ease;
-
-  touch-action: manipulation;
+  transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
 }
 
 .theme-toggle:hover {
   border-color: var(--accent);
-
-  background: linear-gradient(
-    135deg,
-    var(--surface-hi),
-    #f7ead3
-  );
-
+  background: linear-gradient(135deg, var(--surface-hi), #f7ead3);
   box-shadow: 0 10px 22px rgba(201, 125, 26, 0.12);
 }
-
 .theme-toggle:active {
   transform: translateY(1px);
 }
-
-/* ================= Avatar ================= */
-
 .nav-avatar {
   width: 34px;
   height: 34px;
-
   border-radius: 50%;
-
   object-fit: cover;
-
   border: 1px solid var(--line);
 }
 
 /* ================= Buttons ================= */
-
 .btn {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 8px;
-
   padding: 11px 20px;
-
   border-radius: var(--radius-sm);
-
   border: 1px solid transparent;
-
   font-weight: 700;
   font-size: 0.95rem;
-
   cursor: pointer;
-
-  transition:
-    transform 0.12s ease,
-    background 0.15s,
-    border-color 0.15s,
-    opacity 0.15s;
-
+  transition: transform 0.12s ease, background 0.15s, border-color 0.15s, opacity 0.15s;
   white-space: nowrap;
-
   text-decoration: none;
-
-  touch-action: manipulation;
 }
-
 .btn:active {
   transform: translateY(1px);
 }
-
 .btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
-
 .btn-primary {
-  background: linear-gradient(
-    160deg,
-    var(--accent-hi),
-    var(--accent)
-  );
-
+  background: linear-gradient(160deg, var(--accent-hi), var(--accent));
   color: var(--accent-ink);
 }
-
 .btn-primary:hover:not(:disabled) {
   filter: brightness(1.06);
 }
-
 .btn-ghost {
   background: transparent;
   border-color: var(--line);
   color: var(--text);
 }
-
 .btn-ghost:hover:not(:disabled) {
   border-color: var(--accent);
   color: var(--accent-hi);
 }
-
 .btn-danger {
   background: transparent;
-
   border-color: rgba(228, 87, 76, 0.4);
-
   color: var(--rose);
 }
-
 .btn-danger:hover:not(:disabled) {
   background: rgba(228, 87, 76, 0.1);
 }
-
 .btn-sm {
   padding: 7px 12px;
   font-size: 0.85rem;
 }
-
 .btn-block {
   width: 100%;
 }
 
 /* ================= Fluid sizing ================= */
-
 :root {
   --nav-font-min: 0.92rem;
   --nav-font-max: 1.08rem;
-
   --brand-font-min: 0.95rem;
   --brand-font-max: 1.4rem;
 }
 
 @media (max-width: 720px) {
-
   .brand-name {
-    font-size: clamp(
-      var(--brand-font-min),
-      1.2vw + 0.4rem,
-      var(--brand-font-max)
-    );
+    font-size: clamp(var(--brand-font-min), 1.2vw + 0.4rem, var(--brand-font-max));
   }
-
   .nav-link {
-    font-size: clamp(
-      var(--nav-font-min),
-      0.9vw + 0.45rem,
-      var(--nav-font-max)
-    );
+    font-size: clamp(var(--nav-font-min), 0.9vw + 0.45rem, var(--nav-font-max));
   }
-
   .btn {
-    padding:
-      clamp(8px, 0.6vw + 6px, 14px)
-      clamp(10px, 0.8vw + 8px, 20px);
+    padding: clamp(8px, 0.6vw + 6px, 14px) clamp(10px, 0.8vw + 8px, 20px);
   }
 }
 
 @media (min-width: 1280px) {
-
   .navbar-inner {
     max-width: 1200px;
     margin: 0 auto;
