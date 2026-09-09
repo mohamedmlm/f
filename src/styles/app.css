@@ -138,11 +138,18 @@
   text-shadow: 0 0 18px rgba(227, 166, 62, 0.2);
 }
 
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-inline-start: auto;
+/* ===== إجبار النقر على كل شيء ===== */
+.nav-links,
+.nav-links *,
+.nav-links button,
+.nav-links .nav-link,
+.nav-links .btn {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+.nav-backdrop {
+  pointer-events: none !important;
 }
 
 /* Mobile hamburger toggle */
