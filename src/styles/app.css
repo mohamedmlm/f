@@ -235,15 +235,14 @@
 
   /* Make the mobile menu more touch-friendly */
   .nav-links {
-    /* hidden by default; transform for smooth animation (slide from right) */
+    /* Hidden by moving it fully off-screen (not opacity/scale). This
+       guarantees it can never intercept a tap while "closed", even if
+       a browser is slow to apply pointer-events during the transition
+       — a real issue seen on mobile Safari with opacity+scale hiding. */
     display: flex;
-    transform-origin: right center;
-    transform: translateX(12px) scaleX(0.98);
-    opacity: 0;
+    transform: translateX(100%);
     pointer-events: none;
-    transition:
-      transform 220ms ease,
-      opacity 180ms ease;
+    transition: transform 220ms ease;
   }
 
   /* Single consolidated rule for the open state — was previously split
@@ -251,9 +250,8 @@
      for an edit to one to accidentally drop a property (like
      pointer-events) that the other relied on. */
   .nav-links.open {
-    opacity: 1;
     pointer-events: auto;
-    transform: translateX(0) scaleX(1);
+    transform: translateX(0);
     /* enough top padding to clear the fixed toggle button (top:12px +
        ~40px tall) at ALL mobile widths, not just <480px, so the first
        link is never hidden/blocked underneath it */
