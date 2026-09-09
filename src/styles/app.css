@@ -139,140 +139,75 @@
   display: none;
 }
 
-/* ================= Mobile Styles ================= */
+/* ===== حل القائمة الجانبية ===== */
 @media (max-width: 899px) {
-  .nav-toggle {
-    display: inline-flex;
-    position: fixed;
-    right: 12px;
-    left: auto;
-    top: 12px;
-    margin-inline-start: 0;
-    z-index: 80;
-    min-width: 40px;
-    min-height: 40px;
-    padding: 8px 8px;
-    border-radius: 10px;
-    background: var(--surface);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-  }
-
-  .brand {
-    position: relative;
-    z-index: 61;
-    display: flex;
-    align-items: center;
-    margin-inline-start: 0 !important;
-    margin-inline-end: 48px !important;
-    padding-right: 8px;
-    max-width: calc(100% - 84px);
-  }
-
-  .brand-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: left;
-    display: inline-block;
-    font-size: 1rem;
-  }
-
-  .navbar-inner {
-    padding-right: 52px;
-    height: 64px;
-  }
-
-  /* ===== القائمة الجانبية ===== */
+  /* إعادة تعيين كل شيء */
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: auto;
-    width: 75%;
-    max-width: 320px;
-    background: var(--surface);
-    flex-direction: column;
-    gap: 2px;
-    padding: 16px 16px 20px;
-    padding-top: 72px;
-    border-left: 1px solid var(--line);
-    z-index: 60;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    overflow-y: auto;
-    pointer-events: none;
-    box-shadow: -4px 0 30px rgba(0, 0, 0, 0.15);
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    width: 280px !important;
+    max-width: 80vw !important;
+    height: 100vh !important;
+    background: var(--surface) !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    padding: 20px 16px !important;
+    padding-top: 80px !important;
+    border-left: 1px solid var(--line) !important;
+    z-index: 9999 !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.3s ease !important;
+    overflow-y: auto !important;
+    pointer-events: none !important;
+    box-shadow: -8px 0 30px rgba(0,0,0,0.2) !important;
+    display: flex !important;
   }
 
   .nav-links.open {
-    transform: translateX(0);
-    pointer-events: auto;
-  }
-
-  .nav-link {
-    padding: 14px 16px;
-    width: 100%;
-    border-radius: 8px;
-    font-size: 1rem;
-    text-align: left;
-    color: var(--text);
-    text-decoration: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  }
-
-  .nav-link:hover {
-    background: var(--surface-hi);
-  }
-
-  .nav-link.active {
-    background: var(--surface-hi);
-    color: var(--accent-hi);
+    transform: translateX(0) !important;
+    pointer-events: auto !important;
   }
 
   .nav-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 59;
-    pointer-events: none;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,0.4) !important;
+    z-index: 9998 !important;
+    pointer-events: none !important;
   }
 
-  .mobile-profile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 12px;
-  }
-
-  .mobile-name {
-    font-weight: 700;
-  }
-
-  .nav-user {
-    display: none;
+  /* تأكد أن الروابط تظهر بشكل صحيح */
+  .nav-link {
+    padding: 12px 16px !important;
+    width: 100% !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    text-align: left !important;
+    color: var(--text) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.05) !important;
   }
 
   .nav-user-mobile {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 16px 0 8px;
-    margin-top: auto;
-    border-top: 1px solid var(--line);
-    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    padding: 16px 0 !important;
+    margin-top: auto !important;
+    border-top: 1px solid var(--line) !important;
+    width: 100% !important;
   }
 
   .nav-user-mobile .btn {
-    padding: 12px 14px;
-    font-size: 1rem;
-    width: 100%;
-    justify-content: center;
+    width: 100% !important;
+    padding: 12px !important;
   }
+
 
   .theme-toggle {
     padding: 8px 10px;
