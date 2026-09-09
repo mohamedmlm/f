@@ -50,24 +50,6 @@ export default function Navbar() {
   }, [location.pathname]);
 
   useEffect(() => {
-    if (!menuOpen) return;
-
-    const handlePointerDown = (event) => {
-      const target = event.target;
-      const clickedInsideMenu = navLinksRef.current?.contains(target);
-      const clickedToggle = navToggleRef.current?.contains(target);
-      const clickedBackdrop = navBackdropRef.current?.contains(target);
-
-      if (!clickedInsideMenu && !clickedToggle && !clickedBackdrop) {
-        setMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handlePointerDown);
-    return () => document.removeEventListener("mousedown", handlePointerDown);
-  }, [menuOpen]);
-
-  useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
