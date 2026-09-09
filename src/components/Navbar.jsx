@@ -25,7 +25,6 @@ export default function Navbar() {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(max-width: 899px)");
     const handler = (e) => setIsMobile(e.matches);
-    // modern browsers
     if (mq.addEventListener) mq.addEventListener("change", handler);
     else mq.addListener(handler);
     return () => {
@@ -33,18 +32,15 @@ export default function Navbar() {
       else mq.removeListener(handler);
     };
   }, []);
+
   useEffect(() => {
-    // prevent background scroll when mobile menu is open
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
 
-  // Close the mobile menu only once navigation has actually happened,
-  // instead of racing a manual onClick against the outside-click
-  // listener below. This is what previously let the menu close
-  // without the page actually switching.
+  // Close menu when navigation happens (page changes)
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
@@ -67,18 +63,17 @@ export default function Navbar() {
     <>
       {menuOpen && (
         <div
-        ref={navBackdropRef}
-        className="nav-backdrop"
-        aria-hidden={!menuOpen}
-  />
-  )}
+          ref={navBackdropRef}
+          className="nav-backdrop"
+          aria-hidden={!menuOpen}
+        />
+      )}
 
       <header className="navbar">
         <div className="container navbar-inner">
           <NavLink
             to="/"
             className="brand"
-            onClick={() => setMenuOpen(false)}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
@@ -102,7 +97,6 @@ export default function Navbar() {
             <NavLink
               to="/"
               end
-              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -111,7 +105,6 @@ export default function Navbar() {
             </NavLink>
             <NavLink
               to="/purchases"
-              onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
                 `nav-link${isActive ? " active" : ""}`
               }
@@ -121,7 +114,6 @@ export default function Navbar() {
             {isStaff && (
               <NavLink
                 to="/admin"
-                onClick={() => setMenuOpen(false)}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -136,7 +128,6 @@ export default function Navbar() {
                   <NavLink
                     to="/profile"
                     className="nav-link mobile-profile"
-                    onClick={() => setMenuOpen(false)}
                   >
                     <img
                       className="nav-avatar"
@@ -148,7 +139,6 @@ export default function Navbar() {
                   <button
                     className="btn btn-ghost btn-block"
                     onClick={() => {
-                      setMenuOpen(false);
                       handleLogout();
                     }}
                   >
@@ -159,14 +149,12 @@ export default function Navbar() {
                 <>
                   <NavLink
                     to="/login"
-                    onClick={() => setMenuOpen(false)}
                     className="btn btn-ghost btn-block"
                   >
                     دخول
                   </NavLink>
                   <NavLink
                     to="/register"
-                    onClick={() => setMenuOpen(false)}
                     className="btn btn-primary btn-block"
                   >
                     حساب جديد
@@ -199,7 +187,6 @@ export default function Navbar() {
                   to="/profile"
                   className="row"
                   style={{ gap: 8 }}
-                  onClick={() => setMenuOpen(false)}
                 >
                   <img
                     className="nav-avatar"
@@ -219,14 +206,12 @@ export default function Navbar() {
                 <NavLink
                   to="/login"
                   className="btn btn-ghost btn-sm"
-                  onClick={() => setMenuOpen(false)}
                 >
                   دخول
                 </NavLink>
                 <NavLink
                   to="/register"
                   className="btn btn-primary btn-sm"
-                  onClick={() => setMenuOpen(false)}
                 >
                   حساب جديد
                 </NavLink>
