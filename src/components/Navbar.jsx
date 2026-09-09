@@ -17,7 +17,6 @@ export default function Navbar() {
   });
   const navLinksRef = useRef(null);
   const navToggleRef = useRef(null);
-  const closeTimeoutRef = useRef(null);
 
   // Check window size for desktop view
   useEffect(() => {
@@ -41,23 +40,6 @@ export default function Navbar() {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Close menu on location change
-  useEffect(() => {
-    // تأخير إغلاق القائمة لضمان اكتمال التنقل
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-    }
-    closeTimeoutRef.current = setTimeout(() => {
-      setMenuOpen(false);
-    }, 150);
-    
-    return () => {
-      if (closeTimeoutRef.current) {
-        clearTimeout(closeTimeoutRef.current);
-      }
-    };
-  }, [location.pathname]);
-
   // Prevent scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -75,11 +57,15 @@ export default function Navbar() {
     setTheme((current) => (current === "dark" ? "light" : "dark"));
   }, []);
 
-  const closeMenu = useCallback(() => {
-    setMenuOpen(false);
-  }, []);
-
+  const closeMenu = useCallback(() => setMenuOpen(false), []);
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
+
+  // دالة مخصصة للتنقل مع إغلاق القائمة
+  const handleNavigation = useCallback((e, path) => {
+    e.preventDefault(); // منع السلوك الافتراضي لـ NavLink
+    setMenuOpen(false);
+    navigate(path);
+  }, [navigate]);
 
   // Auth buttons component (reused for mobile and desktop)
   const AuthButtons = ({ isMobile = false }) => {
@@ -89,7 +75,7 @@ export default function Navbar() {
           <NavLink
             to="/profile"
             className={`nav-link mobile-profile ${isMobile ? "" : ""}`}
-            onClick={closeMenu}
+            onClick={(e) => handleNavigation(e, "/profile")}
           >
             <img
               className="nav-avatar"
@@ -117,14 +103,14 @@ export default function Navbar() {
       <>
         <NavLink
           to="/login"
-          onClick={closeMenu}
+          onClick={(e) => handleNavigation(e, "/login")}
           className={`btn btn-ghost ${isMobile ? "btn-block" : "btn-sm"}`}
         >
           دخول
         </NavLink>
         <NavLink
           to="/register"
-          onClick={closeMenu}
+          onClick={(e) => handleNavigation(e, "/register")}
           className={`btn btn-primary ${isMobile ? "btn-block" : "btn-sm"}`}
         >
           حساب جديد
@@ -147,7 +133,7 @@ export default function Navbar() {
           <NavLink
             to="/"
             className="brand"
-            onClick={closeMenu}
+            onClick={(e) => handleNavigation(e, "/")}
             aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
@@ -170,7 +156,7 @@ export default function Navbar() {
               <NavLink
                 to="/"
                 end
-                onClick={closeMenu}
+                onClick={(e) => handleNavigation(e, "/")}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -179,7 +165,7 @@ export default function Navbar() {
               </NavLink>
               <NavLink
                 to="/purchases"
-                onClick={closeMenu}
+                onClick={(e) => handleNavigation(e, "/purchases")}
                 className={({ isActive }) =>
                   `nav-link${isActive ? " active" : ""}`
                 }
@@ -189,7 +175,7 @@ export default function Navbar() {
               {isStaff && (
                 <NavLink
                   to="/admin"
-                  onClick={closeMenu}
+                  onClick={(e) => handleNavigation(e, "/admin")}
                   className={({ isActive }) =>
                     `nav-link${isActive ? " active" : ""}`
                   }
