@@ -80,6 +80,7 @@
 .nav-user-mobile {
   display: none;
 }
+
 @media (max-width: 899px) {
   .nav-toggle {
     display: inline-flex;
