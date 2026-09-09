@@ -20,6 +20,7 @@ export default function Navbar() {
       ? window.matchMedia("(max-width: 899px)").matches
       : false;
   });
+  const closeTimerRef = useRef(null);
 
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
@@ -40,9 +41,23 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  // Close menu when navigation happens (page changes)
+  // Close menu when navigation happens (page changes) - مع تأخير
   useEffect(() => {
-    setMenuOpen(false);
+    // Clear any existing timer
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current);
+    }
+    
+    // تأخير إغلاق القائمة عشان الـ NavLink يخلص تنقل
+    closeTimerRef.current = setTimeout(() => {
+      setMenuOpen(false);
+    }, 200);
+    
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+      }
+    };
   }, [location.pathname]);
 
   useEffect(() => {
