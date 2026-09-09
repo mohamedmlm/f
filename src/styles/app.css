@@ -160,7 +160,7 @@
     left: auto;
     top: 12px;
     margin-inline-start: 0;
-    z-index: 99999999;
+    z-index: 999999999;
     min-width: 40px;
     min-height: 40px;
     padding: 8px 8px;
@@ -226,27 +226,25 @@
     gap: 4px;
     padding: 16px 16px 30px;
     border-left: 2px solid var(--line);
-    z-index: 9999999;
+    z-index: 99999999;
     transform: translate3d(100%, 0, 0);
-    transition: transform 0.3s ease, visibility 0.3s ease;
+    transition: transform 0.3s ease;
     overflow-y: auto;
     box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
     display: flex !important;
     height: calc(100vh - 64px);
     pointer-events: none;
-    visibility: hidden;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* ===== القائمة مفتوحة ===== */
+  /* ===== القائمة مفتوحة - أهم شيء ===== */
   .nav-links.open {
     transform: translate3d(0, 0, 0);
     pointer-events: auto !important;
-    visibility: visible;
   }
 
-  /* ===== كل العناصر داخل القائمة ===== */
+  /* ===== كل العناصر داخل القائمة تسمح بالنقر ===== */
   .nav-links.open * {
     pointer-events: auto !important;
     cursor: pointer !important;
@@ -256,7 +254,7 @@
   .nav-links.open .nav-link {
     pointer-events: auto !important;
     cursor: pointer !important;
-    z-index: 99999999 !important;
+    z-index: 999999999 !important;
     position: relative;
   }
 
@@ -264,16 +262,16 @@
   .nav-links.open .btn {
     pointer-events: auto !important;
     cursor: pointer !important;
-    z-index: 99999999 !important;
+    z-index: 999999999 !important;
     position: relative;
   }
 
-  /* ===== الخلفية - لا تمنع النقر ===== */
+  /* ===== الخلفية - لا تمنع النقر أبداً ===== */
   .nav-backdrop {
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-    z-index: 40;
+    z-index: 99999997;
     pointer-events: none !important;
     touch-action: none !important;
   }
@@ -430,7 +428,6 @@
     margin: 0 !important;
     top: auto !important;
     right: auto !important;
-    visibility: visible !important;
   }
   .nav-links.open {
     transform: none !important;
@@ -594,44 +591,5 @@
     max-width: 1200px;
     margin: 0 auto;
     gap: 28px;
-  }
-}
-
-/* ===== الحل النهائي 100% للـ reload والـ navigation ===== */
-@media (max-width: 899px) {
-  /* إجبار القائمة على الظهور فوق كل شيء */
-  .nav-links.open {
-    z-index: 99999999 !important;
-    pointer-events: auto !important;
-    visibility: visible !important;
-  }
-
-  /* كل العناصر جوا القيمة تسمح بالنقر */
-  .nav-links.open * {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-  }
-
-  /* الروابط */
-  .nav-links.open a,
-  .nav-links.open .nav-link,
-  .nav-links.open button {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 999999999 !important;
-    position: relative !important;
-  }
-
-  /* الخلفية متمنعش النقر */
-  .nav-backdrop {
-    pointer-events: none !important;
-    z-index: 40 !important;
-  }
-
-  /* زر الإغلاق */
-  .nav-toggle {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 999999999 !important;
   }
 }
