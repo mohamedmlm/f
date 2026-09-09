@@ -306,8 +306,8 @@
     position: fixed;
     inset: 0;
     background: rgba(15, 17, 23, 0.18);
-    z-index: 99996;
-    pointer-events: none !important; /* مهم جداً */
+    z-index: 9997;
+    pointer-events: none; /* التغيير */
     backdrop-filter: none;
   }
 
