@@ -99,9 +99,10 @@ export default function Navbar() {
 
           {/* القائمة */}
           <nav 
-            ref={navLinksRef}
-            className={`nav-links${menuOpen ? " open" : ""}`}
-          >
+  ref={navLinksRef}
+  className={`nav-links${menuOpen ? " open" : ""}`}
+  onClick={() => console.log("🟢 Nav clicked!")}
+>
             <button
               className="nav-link"
               onClick={() => handleNavigate("/")}
