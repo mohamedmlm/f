@@ -71,7 +71,7 @@ export default function Navbar() {
     className="nav-backdrop"
     aria-hidden={!menuOpen}
   />
-)}
+  )}
 
       <header className="navbar">
         <div className="container navbar-inner">
