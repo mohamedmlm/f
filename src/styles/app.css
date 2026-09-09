@@ -1313,3 +1313,15 @@ table.data-table tr:last-child td {
   cursor: pointer;
   pointer-events: auto;
 }
+/* إخفاء القائمة في الموبايل لما تكون مقفولة */
+@media (max-width: 899px) {
+  .nav-links:not(.open) {
+    pointer-events: none !important;
+    transform: translateX(100%) !important;
+  }
+  
+  .nav-links.open {
+    pointer-events: auto !important;
+    transform: translateX(0) !important;
+  }
+}
