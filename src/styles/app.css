@@ -800,3 +800,33 @@ body.menu-open {
   width: 100%;
   height: 100%;
 }
+/* ============================================================ */
+/* ========== MOBILE MENU FIX (ADDED - NO CHANGES) ============= */
+/* ============================================================ */
+
+body.menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+[data-menu="mobile"] .menu-close,
+[data-menu="mobile"] .menu-link,
+[data-menu="mobile"] .menu-profile,
+[data-menu="mobile"] .menu-logout,
+[data-menu="mobile"] .menu-login,
+[data-menu="mobile"] .menu-register {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+}
+
+.hamburger {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hamburger-line {
+  pointer-events: none;
+}
