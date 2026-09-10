@@ -775,16 +775,6 @@ body {
   pointer-events: auto;
 }
 
-/* إصلاح الروابط */
-[data-menu="mobile"] .menu-link,
-[data-menu="mobile"] .menu-profile,
-[data-menu="mobile"] .menu-logout,
-[data-menu="mobile"] .menu-login,
-[data-menu="mobile"] .menu-register {
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  pointer-events: auto;
-}
 
 /* إصلاح الـ Overlay */
 [data-menu="mobile"] ~ .menu-overlay,
