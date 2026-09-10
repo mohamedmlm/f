@@ -29,6 +29,14 @@ export default function Navbar() {
     }
     return () => document.body.classList.remove("no-scroll");
   }, [menuOpen]);
+  useEffect(() => {
+  if (isOpen) {
+    document.body.classList.add("menu-open");
+  } else {
+    document.body.classList.remove("menu-open");
+  }
+  return () => document.body.classList.remove("menu-open");
+}, [isOpen]);
 
   /* ================= Close on navigation ================= */
   useEffect(() => {
