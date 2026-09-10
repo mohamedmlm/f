@@ -30,6 +30,15 @@ export default function Navbar() {
     }
     return () => document.body.classList.remove("menu-open");
   }, [isOpen]);
+  /* ================= Body scroll lock ================= */
+useEffect(() => {
+  if (isOpen) {
+    document.body.classList.add("menu-open");
+  } else {
+    document.body.classList.remove("menu-open");
+  }
+  return () => document.body.classList.remove("menu-open");
+}, [isOpen]);
 
   // ===== إغلاق عند تغيير المسار =====
   useEffect(() => {
