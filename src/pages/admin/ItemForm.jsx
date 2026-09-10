@@ -106,7 +106,7 @@ export default function ItemForm() {
           <span className="field-hint">حتى ٥ صور، بحد أقصى ٥ ميجابايت للصورة الواحدة.</span>
         </div>
         <button className="btn btn-primary btn-block" disabled={saving}>
-          {saving ? "جارِ الحفظ..." : isEdit ? "حفظ التعديلات" : "إضافة الأداة"}
+          {saving ? "جارِ الحفظ..." : isEdit ? "حفظ التعديلات" : "إضافة المنتج"}
         </button>
       </form>
     </div>
