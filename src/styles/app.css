@@ -629,3 +629,243 @@ body.no-scroll {
   background: var(--accent);
   color: var(--accent-ink);
 }
+/* ============================================================ */
+/* ============= MOBILE BOTTOM NAV (NEW - ADD ONLY) ============ */
+/* ============================================================ */
+
+/* إخفاء الـ Bottom Nav والـ Sheet في الديسكتوب */
+.mobile-bottom-nav,
+.mobile-sheet,
+.mobile-sheet-overlay {
+  display: none;
+}
+
+/* منع التمرير */
+body.no-scroll {
+  overflow: hidden;
+}
+
+/* ===== في الموبايل ===== */
+@media (max-width: 899px) {
+  /* إخفاء روابط ومستخدم الديسكتوب */
+  .nav-links,
+  .nav-user {
+    display: none !important;
+  }
+
+  /* إظهار الـ Bottom Nav */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    height: 68px;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom, 0px));
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  /* إظهار الـ Bottom Sheet */
+  .mobile-sheet {
+    display: block;
+  }
+
+  .mobile-sheet-overlay {
+    display: block;
+  }
+
+  /* تعديل padding الرئيسي للمحتوى */
+  .app-main {
+    padding-bottom: calc(68px + 24px);
+  }
+}
+
+/* ===== Bottom Nav Items ===== */
+.bottom-nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-dim);
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 4px 2px;
+  border-radius: 10px;
+  transition: color 0.2s ease, background 0.2s ease;
+  font-family: inherit;
+  min-width: 0;
+}
+
+.bottom-nav-item svg {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.bottom-nav-item span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-size: 0.68rem;
+}
+
+.bottom-nav-item.active {
+  color: var(--accent);
+  background: var(--surface-hi);
+}
+
+.bottom-nav-item:active {
+  transform: scale(0.95);
+}
+
+.bottom-nav-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--line);
+}
+
+.bottom-nav-item.active .bottom-nav-avatar {
+  border-color: var(--accent);
+}
+
+/* ============================================================ */
+/* ==================== MOBILE BOTTOM SHEET ==================== */
+/* ============================================================ */
+
+.mobile-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-sheet-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 210;
+  background: var(--surface);
+  border-radius: 24px 24px 0 0;
+  padding: 12px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-sheet.active {
+  transform: translateY(0);
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--line);
+  border-radius: 999px;
+  margin: 0 auto 16px;
+}
+
+.sheet-profile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  background: var(--surface-hi);
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.sheet-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent);
+}
+
+.sheet-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sheet-user-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sheet-user-email {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sheet-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sheet-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+
+.sheet-link:active {
+  background: var(--surface-hi);
+  transform: scale(0.98);
+}
+
+.sheet-icon {
+  font-size: 1.2rem;
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sheet-link-danger {
+  color: var(--rose);
+}
