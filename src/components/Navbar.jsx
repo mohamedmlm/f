@@ -154,16 +154,6 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* Mobile Theme Toggle (يظهر بس في الموبايل) */}
-          <button
-            type="button"
-            className="mobile-theme-toggle"
-            onClick={toggleTheme}
-            aria-label="تغيير المظهر"
-          >
-            {theme === "dark" ? "☀️" : "🌙"}
-          </button>
-
         </div>
       </header>
 
@@ -264,7 +254,6 @@ export default function Navbar() {
 
         {token ? (
           <>
-            {/* Profile */}
             <div className="sheet-profile">
               <img
                 className="sheet-avatar"
@@ -277,7 +266,6 @@ export default function Navbar() {
               </div>
             </div>
 
-            {/* Links */}
             <div className="sheet-links">
               <button
                 className="sheet-link"
