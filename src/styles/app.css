@@ -362,8 +362,16 @@ body {
   display: flex;
   flex-direction: column;
   box-shadow: -20px 0 60px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
+.mobile-menu.active {
+  transform: translateX(0);
+  pointer-events: auto;
+}
 .mobile-menu.active {
   transform: translateX(0);
 }
