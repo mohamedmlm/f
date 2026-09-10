@@ -82,10 +82,7 @@ export default function Navbar() {
       {/* ============================================================ */}
       {/* ======================== MENU =============================== */}
       {/* ============================================================ */}
-      <div
-        className={`mobile-menu ${isOpen ? "active" : ""}`}
-        data-menu="mobile"
-      >
+      <div className={`mobile-menu ${isOpen ? "active" : ""}`}>
         {/* Close Button */}
         <button className="menu-close" onClick={closeMenu} type="button">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
