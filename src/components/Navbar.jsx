@@ -1,5 +1,5 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
 
@@ -7,53 +7,51 @@ export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
   const [theme, setTheme] = useState(
-    () => localStorage.getItem("theme") || "dark"
+    () => localStorage.getItem("theme") || "dark",
   );
-  const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef(null);
-  const toggleRef = useRef(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navLinksRef = useRef(null);
+  const navToggleRef = useRef(null);
+  const navBackdropRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia
+      ? window.matchMedia("(max-width: 899px)").matches
+      : false;
+  });
 
-  // ===== Theme =====
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(max-width: 899px)");
+    const handler = (e) => setIsMobile(e.matches);
+    if (mq.addEventListener) mq.addEventListener("change", handler);
+    else mq.addListener(handler);
+    return () => {
+      if (mq.removeEventListener) mq.removeEventListener("change", handler);
+      else mq.removeListener(handler);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  // Close menu when navigation happens (page changes)
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // ===== منع التمرير =====
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("menu-open");
-    } else {
-      document.body.classList.remove("menu-open");
-    }
-    return () => document.body.classList.remove("menu-open");
-  }, [isOpen]);
-
-  // ===== إغلاق عند تغيير المسار =====
-  useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
-
-  // ===== إغلاق بالـ Escape =====
-  useEffect(() => {
-    const handleEscape = (e) => {
-      if (e.key === "Escape") setIsOpen(false);
-    };
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
-  }, []);
-
-  // ===== Functions =====
-  const handleNavigate = (path) => {
-    setIsOpen(false);
-    navigate(path);
-  };
-
   const handleLogout = () => {
     logout();
-    setIsOpen(false);
     navigate("/");
   };
 
@@ -61,212 +59,145 @@ export default function Navbar() {
     setTheme((current) => (current === "dark" ? "light" : "dark"));
   };
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const closeMenu = () => {
-    setIsOpen(false);
-  };
-
   return (
     <>
-      {/* ============================================================ */}
-      {/* ======================== OVERLAY ============================ */}
-      {/* ============================================================ */}
-      <div
-        className={`menu-overlay ${isOpen ? "active" : ""}`}
-        onClick={closeMenu}
-      />
+      {menuOpen && (
+        <div
+          ref={navBackdropRef}
+          className="nav-backdrop"
+          aria-hidden={!menuOpen}
+        />
+      )}
 
-      {/* ============================================================ */}
-      {/* ======================== MENU =============================== */}
-      {/* ============================================================ */}
-      <div className={`mobile-menu ${isOpen ? "active" : ""}`} data-menu="mobile">
-        {/* Close Button */}
-        <button className="menu-close" onClick={closeMenu} type="button">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M18 6L6 18M6 6L18 18"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-          </svg>
-        </button>
-
-        {/* Brand in Menu */}
-        <div className="menu-brand">
-          <span className="brand-mark">C</span>
-          <span className="brand-name">Crocs Store</span>
-        </div>
-
-        {/* Links */}
-        <nav className="menu-nav">
-          <button
-            type="button"
-            className={`menu-link ${location.pathname === "/" ? "active" : ""}`}
-            onClick={() => handleNavigate("/")}
-          >
-            <span className="menu-icon">🏠</span>
-            المتجر
-          </button>
-
-          <button
-            type="button"
-            className={`menu-link ${location.pathname === "/purchases" ? "active" : ""}`}
-            onClick={() => handleNavigate("/purchases")}
-          >
-            <span className="menu-icon">🛍️</span>
-            مشترياتي
-          </button>
-
-          {isStaff && (
-            <button
-              type="button"
-              className={`menu-link ${location.pathname === "/admin" ? "active" : ""}`}
-              onClick={() => handleNavigate("/admin")}
-            >
-              <span className="menu-icon">⚙️</span>
-              لوحة التحكم
-            </button>
-          )}
-        </nav>
-
-        {/* Divider */}
-        <div className="menu-divider" />
-
-        {/* User Section */}
-        <div className="menu-user">
-          {token ? (
-            <>
-              <button
-                type="button"
-                className="menu-profile"
-                onClick={() => handleNavigate("/profile")}
-              >
-                <img
-                  src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
-                  alt={user?.name}
-                  className="menu-avatar"
-                />
-                <div className="menu-user-info">
-                  <span className="menu-user-name">{user?.name || "..."}</span>
-                  <span className="menu-user-email">{user?.email}</span>
-                </div>
-              </button>
-              <button
-                type="button"
-                className="menu-logout"
-                onClick={handleLogout}
-              >
-                تسجيل الخروج
-              </button>
-            </>
-          ) : (
-            <div className="menu-auth">
-              <button
-                type="button"
-                className="menu-login"
-                onClick={() => handleNavigate("/login")}
-              >
-                دخول
-              </button>
-              <button
-                type="button"
-                className="menu-register"
-                onClick={() => handleNavigate("/register")}
-              >
-                حساب جديد
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ============================================================ */}
-      {/* ======================== NAVBAR ============================= */}
-      {/* ============================================================ */}
       <header className="navbar">
         <div className="container navbar-inner">
-          {/* ===== Brand ===== */}
-          <button
-            type="button"
+          <NavLink
+            to="/"
             className="brand"
-            onClick={() => handleNavigate("/")}
+            aria-label="العودة إلى الصفحة الرئيسية"
           >
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
+          </NavLink>
+
+          <button
+            ref={navToggleRef}
+            className={`nav-toggle${menuOpen ? " is-open" : ""}`}
+            aria-label={menuOpen ? "إغلاق القائمة" : "قائمة التنقل"}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((v) => !v)}
+          >
+            {menuOpen ? "×" : "☰"}
           </button>
 
-          {/* ===== Desktop Actions ===== */}
-          <div className="nav-actions">
+          <nav
+            ref={navLinksRef}
+            className={`nav-links${menuOpen ? " open" : ""}`}
+          >
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                `nav-link${isActive ? " active" : ""}`
+              }
+            >
+              المتجر
+            </NavLink>
+            <NavLink
+              to="/purchases"
+              className={({ isActive }) =>
+                `nav-link${isActive ? " active" : ""}`
+              }
+            >
+              مشترياتي
+            </NavLink>
+            {isStaff && (
+              <NavLink
+                to="/admin"
+                className={({ isActive }) =>
+                  `nav-link${isActive ? " active" : ""}`
+                }
+              >
+                لوحة التحكم
+              </NavLink>
+            )}
+            {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
+            <div className="nav-user-mobile" aria-hidden={!menuOpen}>
+              {token ? (
+                <>
+                  <NavLink to="/profile" className="nav-link mobile-profile">
+                    <img
+                      className="nav-avatar"
+                      src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                      alt={user?.name || "الملف الشخصي"}
+                    />
+                    <span className="mobile-name">{user?.name || "..."}</span>
+                  </NavLink>
+                  <button
+                    className="btn btn-ghost btn-block"
+                    onClick={() => {
+                      handleLogout();
+                    }}
+                  >
+                    خروج
+                  </button>
+                </>
+              ) : (
+                <>
+                  <NavLink to="/login" className="btn btn-ghost btn-block">
+                    دخول
+                  </NavLink>
+                  <NavLink to="/register" className="btn btn-primary btn-block">
+                    حساب جديد
+                  </NavLink>
+                </>
+              )}
+            </div>
+          </nav>
+
+          <div className="nav-user">
             <button
               type="button"
               className="theme-toggle"
               onClick={toggleTheme}
-              aria-label="Toggle theme"
+              aria-label={
+                theme === "dark"
+                  ? "تبديل إلى الوضع المضيء"
+                  : "تبديل إلى الوضع الداكن"
+              }
             >
               {theme === "dark" ? "☀️" : "🌙"}
               <span className="theme-label">
-                {theme === "dark" ? "فاتح" : "داكن"}
+                {theme === "dark" ? " Light" : " Dark"}
               </span>
             </button>
 
             {token ? (
-              <div className="nav-user">
-                <button
-                  type="button"
-                  className="nav-profile"
-                  onClick={() => handleNavigate("/profile")}
-                >
+              <>
+                <NavLink to="/profile" className="row" style={{ gap: 8 }}>
                   <img
-                    src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
-                    alt={user?.name}
                     className="nav-avatar"
+                    src={fileUrl("avatar", user?.avatar) || "/lantern.svg"}
+                    alt={user?.name || "الملف الشخصي"}
                   />
-                  <span className="nav-username">{user?.name || "..."}</span>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  onClick={handleLogout}
-                >
+                  <span style={{ fontSize: "0.88rem", fontWeight: 600 }}>
+                    {user?.name || "..."}
+                  </span>
+                </NavLink>
+                <button className="btn btn-ghost btn-sm" onClick={handleLogout}>
                   خروج
                 </button>
-              </div>
+              </>
             ) : (
-              <div className="nav-user">
-                <button
-                  type="button"
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => handleNavigate("/login")}
-                >
+              <>
+                <NavLink to="/login" className="btn btn-ghost btn-sm">
                   دخول
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-sm"
-                  onClick={() => handleNavigate("/register")}
-                >
+                </NavLink>
+                <NavLink to="/register" className="btn btn-primary btn-sm">
                   حساب جديد
-                </button>
-              </div>
+                </NavLink>
+              </>
             )}
-
-            {/* ===== Hamburger ===== */}
-            <button
-              ref={toggleRef}
-              type="button"
-              className={`hamburger ${isOpen ? "active" : ""}`}
-              onClick={toggleMenu}
-              aria-label={isOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isOpen}
-            >
-              <span className="hamburger-line" />
-              <span className="hamburger-line" />
-              <span className="hamburger-line" />
-            </button>
           </div>
         </div>
       </header>
