@@ -24,24 +24,11 @@ export default function Navbar() {
   // ===== منع التمرير =====
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden";
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-      document.body.style.top = `-${window.scrollY}px`;
+      document.body.classList.add("menu-open");
     } else {
-      const scrollY = document.body.style.top;
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
-      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      document.body.classList.remove("menu-open");
     }
-    return () => {
-      document.body.style.overflow = "";
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
-    };
+    return () => document.body.classList.remove("menu-open");
   }, [isOpen]);
 
   // ===== إغلاق عند تغيير المسار =====
@@ -90,21 +77,24 @@ export default function Navbar() {
       <div
         className={`menu-overlay ${isOpen ? "active" : ""}`}
         onClick={closeMenu}
-        onTouchStart={(e) => {
-          if (e.target === e.currentTarget) {
-            closeMenu();
-          }
-        }}
       />
 
       {/* ============================================================ */}
       {/* ======================== MENU =============================== */}
       {/* ============================================================ */}
-      <div className={`mobile-menu ${isOpen ? "active" : ""}`}>
+      <div
+        className={`mobile-menu ${isOpen ? "active" : ""}`}
+        data-menu="mobile"
+      >
         {/* Close Button */}
-        <button className="menu-close" onClick={closeMenu}>
+        <button className="menu-close" onClick={closeMenu} type="button">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            <path
+              d="M18 6L6 18M6 6L18 18"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
 
@@ -117,6 +107,7 @@ export default function Navbar() {
         {/* Links */}
         <nav className="menu-nav">
           <button
+            type="button"
             className={`menu-link ${location.pathname === "/" ? "active" : ""}`}
             onClick={() => handleNavigate("/")}
           >
@@ -125,6 +116,7 @@ export default function Navbar() {
           </button>
 
           <button
+            type="button"
             className={`menu-link ${location.pathname === "/purchases" ? "active" : ""}`}
             onClick={() => handleNavigate("/purchases")}
           >
@@ -134,6 +126,7 @@ export default function Navbar() {
 
           {isStaff && (
             <button
+              type="button"
               className={`menu-link ${location.pathname === "/admin" ? "active" : ""}`}
               onClick={() => handleNavigate("/admin")}
             >
@@ -151,6 +144,7 @@ export default function Navbar() {
           {token ? (
             <>
               <button
+                type="button"
                 className="menu-profile"
                 onClick={() => handleNavigate("/profile")}
               >
@@ -164,19 +158,25 @@ export default function Navbar() {
                   <span className="menu-user-email">{user?.email}</span>
                 </div>
               </button>
-              <button className="menu-logout" onClick={handleLogout}>
+              <button
+                type="button"
+                className="menu-logout"
+                onClick={handleLogout}
+              >
                 تسجيل الخروج
               </button>
             </>
           ) : (
             <div className="menu-auth">
               <button
+                type="button"
                 className="menu-login"
                 onClick={() => handleNavigate("/login")}
               >
                 دخول
               </button>
               <button
+                type="button"
                 className="menu-register"
                 onClick={() => handleNavigate("/register")}
               >
