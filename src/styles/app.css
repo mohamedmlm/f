@@ -335,7 +335,9 @@ body {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.35s ease;
-  
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+
 }
 
 .menu-overlay.active {
