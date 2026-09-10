@@ -64,7 +64,7 @@ export default function ItemForm() {
 
   return (
     <div className="panel" style={{ maxWidth: 640 }}>
-      <h2>{isEdit ? "تعديل الأداة" : "إضافة أداة جديدة"}</h2>
+      <h2>{isEdit ? "تعديل منتج" : "إضافة منتج جديدة"}</h2>
       <Alert>{error}</Alert>
 
       <form onSubmit={submit}>
@@ -82,7 +82,7 @@ export default function ItemForm() {
         </div>
         <div className="field-row">
           <div className="field">
-            <label>الكمية الدنيا (min)</label>
+            <label> أقل مقاس (min)</label>
             <input type="number" required value={form.min} onChange={update("min")} />
           </div>
           <div className="field">
