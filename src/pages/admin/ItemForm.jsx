@@ -86,7 +86,7 @@ export default function ItemForm() {
             <input type="number" required value={form.min} onChange={update("min")} />
           </div>
           <div className="field">
-            <label> أصغر مق (max)</label>
+            <label> أصغر مقاس (max)</label>
             <input type="number" required value={form.max} onChange={update("max")} />
           </div>
         </div>
