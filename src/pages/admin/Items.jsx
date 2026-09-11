@@ -24,10 +24,10 @@ export default function AdminItems() {
 
   const remove = async (id) => {
     if (!id) {
-      alert("لا يمكن تحديد هذه الأداة — رقمها غير متوفر في استجابة السيرفر.");
+      alert("لا يمكن تحديد هذه المنتج — رقمها غير متوفر في استجابة السيرفر.");
       return;
     }
-    if (!confirm("هل تريد حذف هذه الأداة؟")) return;
+    if (!confirm("هل تريد حذف هذه المنتج")) return;
     try {
       await itemsApi.remove(id);
       load();
@@ -39,9 +39,9 @@ export default function AdminItems() {
   return (
     <div>
       <div className="row between mt-1" style={{ marginBottom: 18 }}>
-        <span className="text-faint">{items.length} أداة</span>
+        <span className="text-faint">{items.length} المنتج</span>
         <Link to="/admin/items/new" className="btn btn-primary btn-sm">
-          + إضافة أداة جديدة
+          + إضافة منتجات جديدة
         </Link>
       </div>
 
@@ -50,7 +50,7 @@ export default function AdminItems() {
       {loading ? (
         <Loader />
       ) : items.length === 0 ? (
-        <EmptyState title="لا توجد أدوات بعد" hint="ابدأ بإضافة أول أداة إلى المتجر." />
+        <EmptyState title="لا توجد منتجات بعد" hint="ابدأ بإضافة أول المنتج إلى المتجر." />
       ) : (
         <div className="table-wrap">
           <table className="data-table">
@@ -60,7 +60,7 @@ export default function AdminItems() {
                 <th>الاسم</th>
                 <th>الفئة</th>
                 <th>السعر</th>
-                <th>الكمية</th>
+                <th>المقاس</th>
                 <th></th>
               </tr>
             </thead>

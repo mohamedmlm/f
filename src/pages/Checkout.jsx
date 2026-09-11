@@ -91,8 +91,8 @@ export default function Checkout() {
             </>
           ) : (
             <>
-              <h2>تم إرسال طلب الحجز 🎉</h2>
-              <p className="auth-sub">سيتم التواصل معك على الرقم المُدخل لتأكيدالدفع.</p>
+              <h2>تم إرسال طلب المنتج 🎉</h2>
+              <p className="auth-sub">سيتم التواصل معك على الرقم المُدخل.</p>
               <div className="panel">
                 <div className="row between">
                   <span className="text-faint">المنتج</span>
