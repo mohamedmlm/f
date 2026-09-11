@@ -197,7 +197,7 @@
     display: inline-flex;
     min-width: 42px;
     min-height: 42px;
-    padding: 8px 8px;
+    padding: 8px 8px !important;
     border-radius: 10px;
     background: var(--surface);
     box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
@@ -240,35 +240,6 @@
     padding-right: 116px;
     height: 64px;
   }
-.mobile-theme-toggle .theme-label {
-  display: none;
-}
-  .brand {
-  position: relative;
-  z-index: 99998;
-  display: flex;
-  align-items: center;
-  margin-inline-start: 0 !important;
-  margin-inline-end: 96px !important;
-  padding-right: 8px;
-  max-width: calc(100% - 132px);
-  text-decoration: none;
-  color: var(--text);
-}
-
-  .brand-name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: left;
-    display: inline-block;
-    font-size: 1rem;
-  }
-
-  .navbar-inner {
-  padding-right: 100px;
-  height: 64px;
-}
 
   .nav-links {
     position: fixed;
@@ -371,15 +342,6 @@
     font-size: 1rem;
     width: 100%;
     justify-content: center;
-  }
-
-  .theme-toggle {
-    padding: 8px 10px;
-  }
-
-  .nav-user {
-    border-inline-start: none;
-    padding-inline-start: 0;
   }
 }
 
