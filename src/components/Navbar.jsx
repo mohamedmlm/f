@@ -123,6 +123,22 @@ export default function Navbar() {
             )}
             {/* Mobile-only compact user/menu block shown inside the hamburger menu */}
             <div className="nav-user-mobile" aria-hidden={!menuOpen}>
+              <button
+                type="button"
+                className="theme-toggle"
+                onClick={toggleTheme}
+                aria-label={
+                  theme === "dark"
+                    ? "تبديل إلى الوضع المضيء"
+                    : "تبديل إلى الوضع الداكن"
+                }
+              >
+                {theme === "dark" ? "☀️" : "🌙"}
+                <span className="theme-label">
+                  {theme === "dark" ? " Light" : " Dark"}
+                </span>
+              </button>
+
               {token ? (
                 <>
                   <NavLink to="/profile" className="nav-link mobile-profile">
