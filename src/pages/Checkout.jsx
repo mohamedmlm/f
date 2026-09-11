@@ -125,10 +125,10 @@ export default function Checkout() {
                   <span className="text-faint">السعر</span>
                   <strong className="mono">{confirmation.itemprice} ج.م</strong>
                 </div>
-                {/*<div className="row between mt-1">
+                <div className="row between mt-1">
                   <span className="text-faint">رقم التواصل</span>
                   <strong className="mono">{confirmation.callnumber}</strong>
-                </div>*/}
+                </div>
               </div>
               <Alert>{error}</Alert>
               <button className="btn btn-danger btn-block mt-2" onClick={cancelRequest} disabled={cancelling}>
