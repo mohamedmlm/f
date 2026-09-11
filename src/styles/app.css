@@ -169,7 +169,7 @@
 }
 
 @media (max-width: 899px) {
-    .mobile-header-actions {
+  .mobile-header-actions {
     display: flex !important;
     align-items: center;
     gap: 10px;
