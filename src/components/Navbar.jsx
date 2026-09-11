@@ -2,7 +2,7 @@ import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { fileUrl } from "../api/client";
- 
+
 export default function Navbar() {
   const { user, token, logout, isStaff } = useAuth();
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ export default function Navbar() {
       ? window.matchMedia("(max-width: 899px)").matches
       : false;
   });
- 
+
   useEffect(() => {
     if (typeof window === "undefined" || !window.matchMedia) return;
     const mq = window.matchMedia("(max-width: 899px)");
@@ -32,33 +32,33 @@ export default function Navbar() {
       else mq.removeListener(handler);
     };
   }, []);
- 
+
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
- 
+
   // Close menu when navigation happens (page changes)
   useEffect(() => {
     setMenuOpen(false);
   }, [location.pathname]);
- 
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
- 
+
   const handleLogout = () => {
     logout();
     navigate("/");
   };
- 
+
   const toggleTheme = () => {
     setTheme((current) => (current === "dark" ? "light" : "dark"));
   };
- 
+
   return (
     <>
       {menuOpen && (
@@ -68,7 +68,7 @@ export default function Navbar() {
           aria-hidden={!menuOpen}
         />
       )}
- 
+
       <header className="navbar">
         <div className="container navbar-inner">
           <NavLink
@@ -79,9 +79,19 @@ export default function Navbar() {
             <span className="brand-mark">C</span>
             <span className="brand-name">Crocs Store</span>
           </NavLink>
- 
-          {/* Fixed action buttons shown on mobile: theme toggle + hamburger, always visible in the header */}
+
+          {/* Fixed action buttons shown on mobile: hamburger (outer/right edge) + theme toggle, always visible in the header */}
           <div className="mobile-header-actions">
+            <button
+              ref={navToggleRef}
+              className={`nav-toggle${menuOpen ? " is-open" : ""}`}
+              aria-label={menuOpen ? "إغلاق القائمة" : "قائمة التنقل"}
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((v) => !v)}
+            >
+              {menuOpen ? "×" : "☰"}
+            </button>
+
             <button
               type="button"
               className="theme-toggle mobile-theme-toggle"
@@ -94,18 +104,8 @@ export default function Navbar() {
             >
               {theme === "dark" ? "☀️" : "🌙"}
             </button>
- 
-            <button
-              ref={navToggleRef}
-              className={`nav-toggle${menuOpen ? " is-open" : ""}`}
-              aria-label={menuOpen ? "إغلاق القائمة" : "قائمة التنقل"}
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen((v) => !v)}
-            >
-              {menuOpen ? "×" : "☰"}
-            </button>
           </div>
- 
+
           <nav
             ref={navLinksRef}
             className={`nav-links${menuOpen ? " open" : ""}`}
@@ -170,7 +170,7 @@ export default function Navbar() {
               )}
             </div>
           </nav>
- 
+
           <div className="nav-user">
             <button
               type="button"
@@ -187,7 +187,7 @@ export default function Navbar() {
                 {theme === "dark" ? " Light" : " Dark"}
               </span>
             </button>
- 
+
             {token ? (
               <>
                 <NavLink to="/profile" className="row" style={{ gap: 8 }}>
