@@ -71,7 +71,7 @@ export default function AdminPayments() {
             <thead>
               <tr>
                 <th>المستخدم</th>
-                <th>الأداة</th>
+                <th></th>
                 <th>السعر</th>
                 <th>العنوان</th>
                 <th>الهاتف</th>
