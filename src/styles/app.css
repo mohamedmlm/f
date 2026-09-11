@@ -1,5 +1,7 @@
 
-
+.mobile-header-actions {
+  display: none;
+}
 /* ================= Layout shell ================= */
 .app-shell {
   min-height: 100vh;
