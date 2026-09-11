@@ -16,7 +16,7 @@ export default function Dashboard() {
           المنتجات
         </NavLink>
         <NavLink to="/admin/payments" className={({ isActive }) => `tab${isActive ? " active" : ""}`}>
-          طلبات الحجز
+          طلبات 
         </NavLink>
         <NavLink to="/admin/users" className={({ isActive }) => `tab${isActive ? " active" : ""}`}>
           المستخدمون
