@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { itemsApi, payApi } from "../api/endpoints";
 import { extractError, fileUrl } from "../api/client";
@@ -30,22 +30,42 @@ export default function Checkout() {
   const [confirmation, setConfirmation] = useState(null);
   const [cancelling, setCancelling] = useState(false);
 
+  // refs بتاعة الحماية من race conditions (فحص فوري، مش بينتظر re-render زي الـ state)
+  const submittingRef = useRef(false);
+  const cancellingRef = useRef(false);
+
   useEffect(() => {
+    let ignore = false;
+    setLoading(true);
+    setLoadError("");
+
     itemsApi
       .details(itemId)
       .then(({ data }) => {
+        if (ignore) return;
         setItem(data.item);
         setMin(data.item.min ?? "");
         setMax(data.item.max ?? "");
       })
-      .catch((err) => setLoadError(extractError(err)))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        if (!ignore) setLoadError(extractError(err));
+      })
+      .finally(() => {
+        if (!ignore) setLoading(false);
+      });
+
+    return () => {
+      ignore = true;
+    };
   }, [itemId]);
 
   const updateAddress = (key) => (e) => setAddress((a) => ({ ...a, [key]: e.target.value }));
 
   const submit = async (e) => {
     e.preventDefault();
+    if (submittingRef.current) return;
+    submittingRef.current = true;
+
     setError("");
     setSubmitting(true);
     try {
@@ -55,11 +75,13 @@ export default function Checkout() {
       setError(extractError(err));
     } finally {
       setSubmitting(false);
+      submittingRef.current = false;
     }
   };
 
   const cancelRequest = async () => {
-    if (!confirmation?._id) return;
+    if (!confirmation?._id || cancellingRef.current) return;
+    cancellingRef.current = true;
     setCancelling(true);
     try {
       await payApi.remove(confirmation._id);
@@ -68,6 +90,7 @@ export default function Checkout() {
       setError(extractError(err));
     } finally {
       setCancelling(false);
+      cancellingRef.current = false;
     }
   };
 
