@@ -169,8 +169,8 @@
 }
 
 @media (max-width: 899px) {
-  .mobile-header-actions {
-    display: flex;
+    .mobile-header-actions {
+    display: flex !important;
     align-items: center;
     gap: 10px;
     position: fixed;
@@ -179,6 +179,7 @@
     top: 14px;
     z-index: 99999;
   }
+
 
   .nav-toggle {
     display: inline-flex;
