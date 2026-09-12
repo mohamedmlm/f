@@ -84,12 +84,12 @@ export default function ItemForm() {
             onChange={update("category")}
             className="input-select"
           >
-  <option value="">اختر التصنيف...</option>
-  <option value="men">رجالي</option>
-  <option value="women">حريمي</option>
-  <option value="boys">أولادي</option>
-  <option value="girls">بناتي</option>
-</select>
+            <option value="">اختر التصنيف...</option>
+            <option value="men">رجالي</option>
+            <option value="women">حريمي</option>
+            <option value="boys">أولادي</option>
+            <option value="girls">بناتي</option>
+          </select>
         </div>
         <div className="field-row">
           <div className="field">
