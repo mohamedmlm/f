@@ -80,10 +80,10 @@ export default function ItemForm() {
           <label>الفئة</label>
           <select
             required
-  value={form.category}
-  onChange={update("category")}
-  className="input-select"
->
+            value={form.category}
+            onChange={update("category")}
+            className="input-select"
+          >
   <option value="">اختر التصنيف...</option>
   <option value="men">رجالي</option>
   <option value="women">حريمي</option>
