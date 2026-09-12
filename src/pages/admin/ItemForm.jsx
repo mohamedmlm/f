@@ -79,7 +79,7 @@ export default function ItemForm() {
         <div className="field">
           <label>الفئة</label>
           <select
-    required
+            required
   value={form.category}
   onChange={update("category")}
   className="input-select"
