@@ -181,11 +181,11 @@ export default function Checkout() {
             </div>
             <div className="field-row">
               <div className="field">
-                <label>اصغر مقاس</label>
+                <label>مقاسك من</label>
                 <input type="number" required value={min} onChange={(e) => setMin(e.target.value)} />
               </div>
               <div className="field">
-                <label>اكبر مقاس</label>
+                <label>الى</label>
                 <input type="number" required value={max} onChange={(e) => setMax(e.target.value)} />
               </div>
             </div>
