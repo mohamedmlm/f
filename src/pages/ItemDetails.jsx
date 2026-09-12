@@ -148,7 +148,7 @@ export default function ItemDetails() {
               <span className="v">{item.min}</span>
             </div>
             <div className="spec">
-              <span className="k">أقصى مقاس</span>
+              <span className="k"> </span>
               <span className="v">{item.max}</span>
             </div>
           </div>
