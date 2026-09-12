@@ -120,7 +120,7 @@ export default function AdminPayments() {
       {loading ? (
         <Loader />
       ) : pays.length === 0 ? (
-        <EmptyState title="لا توجد طلبات حجز" />
+        <EmptyState title="لا توجد طلبات " />
       ) : (
         <div className="table-wrap">
           <table className="data-table">
