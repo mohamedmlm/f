@@ -46,6 +46,7 @@ export default function Home() {
       ...(search.trim() && { search: search.trim() }),
       ...(minPrice && { minPrice }),
       ...(maxPrice && { maxPrice }),
+      ...(category && { category }),
     });
   };
 
