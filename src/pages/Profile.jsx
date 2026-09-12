@@ -76,8 +76,8 @@ export default function Profile() {
     const pays = await loadMyPays();
     
     const blockingPay = pays.find(
-      (p) => !p.ispayed && Date.now() - new Date(p.createdAt).getTime() >= 30 * 60 * 1000
-    );
+  (p) => !p.ispayed && !p.isRejected && Date.now() - new Date(p.createdAt).getTime() >= 30 * 60 * 1000
+);
 
     if (blockingPay) {
       setError("لا يمكنك حذف حسابك — لديك طلب غير مدفوع أقدم من ٣٠ دقيقة.");
