@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { payApi } from "../../api/endpoints";
 import { extractError } from "../../api/client";
 import Loader from "../../components/Loader";
@@ -142,7 +143,15 @@ export default function AdminPayments() {
                 return (
                   <tr key={p._id}>
                     <td>{p.username}</td>
-                    <td>{p.itemname}</td>
+                    <td>
+                      {p.itemId ? (
+                        <Link to={`/items/${p.itemId}`} className="link">
+                          {p.itemname}
+                        </Link>
+                      ) : (
+                        p.itemname
+                      )}
+                    </td>
                     <td className="mono">{p.itemprice} ج.م</td>
                     <td className="text-faint" style={{ fontSize: "0.82rem" }}>
                       {p.addressDetails?.city} — {p.addressDetails?.district} — {p.addressDetails?.street}
