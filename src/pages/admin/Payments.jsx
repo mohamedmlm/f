@@ -76,7 +76,7 @@ export default function AdminPayments() {
     if (busyIds.has(id)) return;
 
     const reason = prompt("سبب الرفض (اختياري):", "");
-    if (reason === null) return; // المستخدم عمل إلغاء
+    if (reason === null) return;
     if (!confirm("هل تريد رفض هذا الطلب؟")) return;
 
     markBusy(id, true);
