@@ -65,6 +65,17 @@ export default function Home() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <select
+          className="input-select shrink"
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value="">كل التصنيفات</option>
+          <option value="men">رجالي</option>
+          <option value="women">حريمي</option>
+          <option value="boys">أولادي</option>
+          <option value="girls">بناتي</option>
+        </select>
         <input
           type="number"
           className="shrink"
