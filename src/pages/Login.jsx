@@ -40,7 +40,7 @@ export default function Login() {
           </div>
           <div className="field">
             <label>كلمة المرور</label>
-            <input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+            <input type="text" required value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
           <button className="btn btn-primary btn-block" disabled={loading}>
             {loading ? "جارِ الدخول..." : "دخول"}

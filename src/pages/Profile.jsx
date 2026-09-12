@@ -122,7 +122,7 @@ export default function Profile() {
           <div className="field">
             <label>كلمة المرور الحالية أو الجديدة</label>
             <input
-              type="password"
+              type="text"
               required
               minLength={8}
               maxLength={25}

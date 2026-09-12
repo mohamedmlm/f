@@ -34,7 +34,7 @@ export default function Register() {
     <div className="container">
       <div className="auth-card">
         <h2>إنشاء حساب جديد</h2>
-        <p className="auth-sub">انضم لـ Shopify وابدأ باستئجار أدواتك المفضّلة.</p>
+        <p className="auth-sub">انضم لـ Crocs Store وابدأ بشراء منتجاتك المفضّلة.</p>
 
         <Alert>{error}</Alert>
 
@@ -61,7 +61,7 @@ export default function Register() {
           <div className="field">
             <label>كلمة المرور</label>
             <input
-              type="password"
+              type="text"
               required
               minLength={8}
               maxLength={25}
