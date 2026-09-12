@@ -12,7 +12,6 @@ export default function AdminPayments() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  // ✅ تتبع الطلبات اللي جاري تنفيذ إجراء عليها (تأكيد/رفض) لمنع الضغط المتكرر
   const [busyIds, setBusyIds] = useState(new Set());
 
   const requestIdRef = useRef(0);
