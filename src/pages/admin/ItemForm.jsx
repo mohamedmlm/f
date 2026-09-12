@@ -78,7 +78,18 @@ export default function ItemForm() {
         </div>
         <div className="field">
           <label>الفئة</label>
-          <input type="text" required minLength={3} maxLength={30} value={form.category} onChange={update("category")} />
+          <select
+  required
+  value={form.category}
+  onChange={update("category")}
+  className="input-select"
+>
+  <option value="">اختر التصنيف...</option>
+  <option value="men">رجالي</option>
+  <option value="women">حريمي</option>
+  <option value="boys">أولادي</option>
+  <option value="girls">بناتي</option>
+</select>
         </div>
         <div className="field-row">
           <div className="field">
