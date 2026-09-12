@@ -80,7 +80,7 @@ export default function Profile() {
     );
 
     if (blockingPay) {
-      setError("لا يمكنك حذف حسابك — لديك طلب حجز غير مدفوع أقدم من ٣٠ دقيقةا.");
+      setError("لا يمكنك حذف حسابك — لديك طلب غير مدفوع أقدم من ٣٠ دقيقةا.");
       return;
     }
     
