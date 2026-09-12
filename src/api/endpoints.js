@@ -46,7 +46,9 @@ export const payApi = {
   create: (itemId, payload) => client.post(`/payments/${itemId}/createpay`, payload),
   remove: (payId) => client.delete(`/payments/${payId}/deletepay`),
   confirm: (payId) => client.put(`/payments/${payId}/confirm`),
+  reject: (payId, reason) => client.put(`/payments/${payId}/reject`, { reason }),
   my: (params) => client.get(`/payments/my`, { params }),
   all: (params) => client.get("/payments/getallpays", { params }),
   unpaid: (params) => client.get("/payments/getisnotpayed", { params }),
 };
+

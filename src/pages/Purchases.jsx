@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { payApi } from "../api/endpoints";
 import { extractError } from "../api/client";
 import Loader from "../components/Loader";
@@ -8,17 +8,25 @@ export default function Purchases() {
   const [pays, setPays] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const requestIdRef = useRef(0);
 
   const load = async () => {
+    const thisRequestId = ++requestIdRef.current;
     setLoading(true);
     setError("");
     try {
       const { data } = await payApi.my();
-      setPays(data.pays || []);
+      if (thisRequestId === requestIdRef.current) {
+        setPays(data.pays || []);
+      }
     } catch (err) {
-      setError(extractError(err));
+      if (thisRequestId === requestIdRef.current) {
+        setError(extractError(err));
+      }
     } finally {
-      setLoading(false);
+      if (thisRequestId === requestIdRef.current) {
+        setLoading(false);
+      }
     }
   };
 
@@ -36,6 +44,12 @@ export default function Purchases() {
     }
   };
 
+  const statusOf = (p) => {
+    if (p.isRejected) return { label: "مرفوض", className: "badge-rejected" };
+    if (p.ispayed) return { label: "مدفوع", className: "badge-paid" };
+    return { label: "قيد الانتظار", className: "badge-unpaid" };
+  };
+
   return (
     <div className="container">
       <h2>مشترياتي</h2>
@@ -49,33 +63,45 @@ export default function Purchases() {
           <table className="data-table">
             <thead>
               <tr>
-                <th>الأداة</th>
+                <th>المنتج</th>
                 <th>السعر</th>
                 <th>العنوان</th>
                 <th>الهاتف</th>
                 <th>التاريخ</th>
+                <th>الحالة</th>
                 <th></th>
               </tr>
             </thead>
             <tbody>
-              {pays.map((p) => (
-                <tr key={p._id}>
-                  <td>{p.itemname}</td>
-                  <td className="mono">{p.itemprice} ج.م</td>
-                  <td className="text-faint" style={{ fontSize: "0.82rem" }}>
-                    {p.addressDetails?.city} — {p.addressDetails?.district} — {p.addressDetails?.street}
-                  </td>
-                  <td className="mono">{p.callnumber}</td>
-                  <td className="text-faint">{new Date(p.createdAt).toLocaleString()}</td>
-                  <td>
-                    {p.createdAt && Date.now() - new Date(p.createdAt).getTime() < 30 * 60 * 1000 ? (
-                      <button className="btn btn-danger btn-sm" onClick={() => removePay(p._id)}>حذف</button>
-                    ) : (
-                      <span className="text-faint">انقضى وقت الحذف</span>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {pays.map((p) => {
+                const status = statusOf(p);
+                return (
+                  <tr key={p._id}>
+                    <td>{p.itemname}</td>
+                    <td className="mono">{p.itemprice} ج.م</td>
+                    <td className="text-faint" style={{ fontSize: "0.82rem" }}>
+                      {p.addressDetails?.city} — {p.addressDetails?.district} — {p.addressDetails?.street}
+                    </td>
+                    <td className="mono">{p.callnumber}</td>
+                    <td className="text-faint">{new Date(p.createdAt).toLocaleString()}</td>
+                    <td>
+                      <span className={`badge ${status.className}`}>{status.label}</span>
+                      {p.isRejected && p.rejectionReason && (
+                        <div className="text-faint" style={{ fontSize: "0.75rem", marginTop: 4 }}>
+                          {p.rejectionReason}
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      {!p.ispayed && !p.isRejected && p.createdAt && Date.now() - new Date(p.createdAt).getTime() < 30 * 60 * 1000 ? (
+                        <button className="btn btn-danger btn-sm" onClick={() => removePay(p._id)}>حذف</button>
+                      ) : !p.ispayed && !p.isRejected ? (
+                        <span className="text-faint">انقضى وقت الحذف</span>
+                      ) : null}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

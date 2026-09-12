@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { payApi } from "../../api/endpoints";
 import { extractError } from "../../api/client";
 import Loader from "../../components/Loader";
@@ -11,17 +11,34 @@ export default function AdminPayments() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  // ✅ تتبع الطلبات اللي جاري تنفيذ إجراء عليها (تأكيد/رفض) لمنع الضغط المتكرر
+  const [busyIds, setBusyIds] = useState(new Set());
+
+  const requestIdRef = useRef(0);
 
   const load = () => {
+    const thisRequestId = ++requestIdRef.current;
     setLoading(true);
     setError("");
     const call = onlyUnpaid ? payApi.unpaid : payApi.all;
     const params = { ...(search && { search }), older: true };
 
     call(params)
-      .then(({ data }) => setPays(data.pays || []))
-      .catch((err) => setError(extractError(err)))
-      .finally(() => setLoading(false));
+      .then(({ data }) => {
+        if (thisRequestId === requestIdRef.current) {
+          setPays(data.pays || []);
+        }
+      })
+      .catch((err) => {
+        if (thisRequestId === requestIdRef.current) {
+          setError(extractError(err));
+        }
+      })
+      .finally(() => {
+        if (thisRequestId === requestIdRef.current) {
+          setLoading(false);
+        }
+      });
   };
 
   useEffect(load, [onlyUnpaid]);
@@ -30,14 +47,53 @@ export default function AdminPayments() {
     e.preventDefault();
     load();
   };
+
+  const markBusy = (id, isBusy) => {
+    setBusyIds((prev) => {
+      const next = new Set(prev);
+      if (isBusy) next.add(id);
+      else next.delete(id);
+      return next;
+    });
+  };
+
   const confirmPay = async (id) => {
+    if (busyIds.has(id)) return;
     if (!confirm("هل تريد تأكيد استلام هذا الدفع وتغيير حالته إلى مدفوع؟")) return;
+
+    markBusy(id, true);
     try {
       await payApi.confirm(id);
       load();
     } catch (err) {
       setError(extractError(err));
+    } finally {
+      markBusy(id, false);
     }
+  };
+
+  const rejectPay = async (id) => {
+    if (busyIds.has(id)) return;
+
+    const reason = prompt("سبب الرفض (اختياري):", "");
+    if (reason === null) return; // المستخدم عمل إلغاء
+    if (!confirm("هل تريد رفض هذا الطلب؟")) return;
+
+    markBusy(id, true);
+    try {
+      await payApi.reject(id, reason);
+      load();
+    } catch (err) {
+      setError(extractError(err));
+    } finally {
+      markBusy(id, false);
+    }
+  };
+
+  const statusOf = (p) => {
+    if (p.isRejected) return { label: "مرفوض", className: "badge-rejected" };
+    if (p.ispayed) return { label: "مدفوع", className: "badge-paid" };
+    return { label: "غير مدفوع", className: "badge-unpaid" };
   };
 
   return (
@@ -71,7 +127,7 @@ export default function AdminPayments() {
             <thead>
               <tr>
                 <th>المستخدم</th>
-                <th>المنتج</th>
+                <th>الأداة</th>
                 <th>السعر</th>
                 <th>العنوان</th>
                 <th>الهاتف</th>
@@ -80,29 +136,49 @@ export default function AdminPayments() {
               </tr>
             </thead>
             <tbody>
-              {pays.map((p) => (
-                <tr key={p._id}>
-                  <td>{p.username}</td>
-                  <td>{p.itemname}</td>
-                  <td className="mono">{p.itemprice} ج.م</td>
-                  <td className="text-faint" style={{ fontSize: "0.82rem" }}>
-                    {p.addressDetails?.city} — {p.addressDetails?.district} — {p.addressDetails?.street}
-                  </td>
-                  <td className="mono">{p.callnumber}</td>
-                  <td>
-                    <span className={`badge ${p.ispayed ? "badge-paid" : "badge-unpaid"}`}>
-                      {p.ispayed ? "مدفوع" : "غير مدفوع"}
-                    </span>
-                  </td>
-                  <td>
-                    {!p.ispayed && (
-                      <button className="btn btn-success btn-sm" onClick={() => confirmPay(p._id)}>
-                        تم الاستلام
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              {pays.map((p) => {
+                const status = statusOf(p);
+                const isBusy = busyIds.has(p._id);
+                return (
+                  <tr key={p._id}>
+                    <td>{p.username}</td>
+                    <td>{p.itemname}</td>
+                    <td className="mono">{p.itemprice} ج.م</td>
+                    <td className="text-faint" style={{ fontSize: "0.82rem" }}>
+                      {p.addressDetails?.city} — {p.addressDetails?.district} — {p.addressDetails?.street}
+                    </td>
+                    <td className="mono">{p.callnumber}</td>
+                    <td>
+                      <span className={`badge ${status.className}`}>{status.label}</span>
+                      {p.isRejected && p.rejectionReason && (
+                        <div className="text-faint" style={{ fontSize: "0.75rem", marginTop: 4 }}>
+                          {p.rejectionReason}
+                        </div>
+                      )}
+                    </td>
+                    <td>
+                      {!p.ispayed && !p.isRejected && (
+                        <div className="row" style={{ gap: 6 }}>
+                          <button
+                            className="btn btn-success btn-sm"
+                            onClick={() => confirmPay(p._id)}
+                            disabled={isBusy}
+                          >
+                            {isBusy ? "..." : "تم الاستلام"}
+                          </button>
+                          <button
+                            className="btn btn-danger btn-sm"
+                            onClick={() => rejectPay(p._id)}
+                            disabled={isBusy}
+                          >
+                            {isBusy ? "..." : "رفض"}
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

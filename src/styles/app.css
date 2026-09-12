@@ -1198,6 +1198,11 @@ table.data-table tr:last-child td {
   background: rgba(228, 87, 76, 0.15);
   color: #f5a79e;
 }
+.badge-rejected {
+  background: rgba(217, 83, 79, 0.15);
+  color: #d9534f;
+  border: 1px solid rgba(217, 83, 79, 0.3);
+}
 
 .tabs {
   display: flex;
