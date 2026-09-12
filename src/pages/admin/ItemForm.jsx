@@ -82,7 +82,7 @@ export default function ItemForm() {
         </div>
         <div className="field-row">
           <div className="field">
-            <label> جميع المقاسات موجودة من(min siz)</label>
+            <label> جميع المقاسات موجودة من(min size)</label>
             <input type="number" required value={form.min} onChange={update("min")} />
           </div>
           <div className="field">
