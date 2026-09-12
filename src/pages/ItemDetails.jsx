@@ -144,7 +144,7 @@ export default function ItemDetails() {
 
           <div className="spec-row">
             <div className="spec">
-              <span className="k">أقل مقاس</span>
+              <span className="k">جميع المقاسات موجود مقاس</span>
               <span className="v">{item.min}</span>
             </div>
             <div className="spec">
