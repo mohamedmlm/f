@@ -18,9 +18,6 @@ export default function NotFound() {
             <Link to="/" className="btn btn-primary">
               العودة للرئيسية
             </Link>
-            <Link to="/" className="btn btn-ghost">
-              تصفح المتجر
-            </Link>
           </div>
         </div>
       </section>
