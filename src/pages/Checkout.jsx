@@ -201,7 +201,7 @@ export default function Checkout() {
               />
             </div>
             <button className="btn btn-primary btn-block" disabled={submitting}>
-              {submitting ? "جارِ الإرسال يرجى عدم غلق ..." : "تأكيد الطلب"}
+              {submitting ? "جارِ الإرسال يرجى عدم غلق الصف..." : "تأكيد الطلب"}
             </button>
           </form>
         </div>
