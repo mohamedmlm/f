@@ -115,7 +115,7 @@ export default function Checkout() {
           ) : (
             <>
               <h2>تم إرسال طلب المنتج 🎉</h2>
-              <p className="auth-sub">سيتم التواصل معك على الرقم المُدخل. وسيتم دفع 30 جنيه ايضافيه سعر التوصيله</p>
+              <p className="auth-sub">سيتم التواصل معك على الرقم المُدخل. وسيتم دفع 30 جنيه اضافيه سعر التوصيله</p>
               <div className="panel">
                 <div className="row between">
                   <span className="text-faint">المنتج</span>
